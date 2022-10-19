@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+  <link rel="stylesheet" href="./pages/index.css">
+</head>
+
+<body class="page">
+
+  <!-- удаление из строки модификатора popup_opened позволит скрыть попап -->
+  <div class="popup popup_opened">
+    <div class="popup__background"></div>
+    <form class="popup__container">
+      <img src="./images/close-icon.svg" alt="" class="popup__close-icon">
+      <h1 class="popup__title">Редактировать профиль</h1>
+
+      <fieldset class="popup__info">
+        <label for="name" class="">
+          <input type="text" class="popup__invisible-textfield" id="name" value="name">
+          <span class="popup__visible-textfield">Жак-Ив Кусто</span>
+        </label>
+
+      </fieldset>
+      <fieldset class="popup__info">
+        <label for="profession" class="">
+          <input type="text" class="popup__invisible-textfield" id="profession" value="profession">
+          <span class="popup__visible-textfield">Исследователь океана</span>
+        </label>
+      </fieldset>
+
+      <button type="submit" class="popup__submit-button">Сохранить</button>
+    </form>
+  </div>
+
+  <header class="header">
+    <img src="./images/logo-mesto.svg" alt="Логотип место" class="logo">
+    <div class="header__line"></div>
+  </header>
+
+  <main class="content">
+    <div class="profile">
+      <div class="profile__avatar">
+        <img src="./images/avatar-kusto.png" alt="" class="profile__avatar-image">
+      </div>
+      <div class="profile__container">
+        <div class="profile__info">
+          <div class="profile__name-container">
+            <p class="profile__name">Жак-Ив Кусто</p>
+            <button class="edit-button">
+              <img src="./images/edit-pen.svg" alt="" class="edit-button__image">
+            </button>
+          </div>
+          <p class="profile__profession">Исследователь океана</p>
+        </div>
+        <button class="add-button">
+          <img src="./images/Vector+.svg" alt="" class="add-button__image">
+        </button>
+      </div>
+    </div>
+
+    <div class="grid-places">
+
+      <div class="place">
+        <img class="place__image" src="./images/karachaevsk.jpg" alt="Старинная постройка из кирпича">
+        <div class="place__name-container">
+          <p class="place__name">Карачаевск</p>
+          <button class="place__like" type="button"></button>
+        </div>
+      </div>
+
+      <div class="place">
+        <img class="place__image" src="./images/gora-elbrus.png" alt="Гора в рассветном тумане">
+        <div class="place__name-container">
+          <p class="place__name">Гора Эльбрус</p>
+          <button class="place__like" type="button"></button>
+        </div>
+      </div>
+
+      <div class="place">
+        <img class="place__image" src="./images/dombai.png" alt="Старинная постройка из кирпича">
+        <div class="place__name-container">
+          <p class="place__name">Домбай</p>
+          <button class="place__like"></button>
+        </div>
+      </div>
+
+      <div class="place">
+        <img class="place__image" src="./images/gora-elbrus.png" alt="Гора в рассветном тумане">
+        <div class="place__name-container">
+          <p class="place__name">Гора Эльбрус</p>
+          <button class="place__like"></button>
+        </div>
+      </div>
+
+      <div class="place">
+        <img class="place__image" src="./images/dombai.png" alt="Старинная постройка из кирпича">
+        <div class="place__name-container">
+          <p class="place__name">Домбай</p>
+          <button class="place__like"></button>
+        </div>
+      </div>
+
+      <div class="place">
+        <img class="place__image" src="./images/karachaevsk.jpg" alt="Старинная постройка из кирпича">
+        <div class="place__name-container">
+          <p class="place__name">Карачаево-Черкесия</p>
+          <button class="place__like"></button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p class="copyright">© 2020 Mesto Russia</p>
+  </footer>
+
+</body>
+
+</html>

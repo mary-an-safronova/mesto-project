@@ -1,0 +1,25 @@
+.profile__profession {
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(18px, 1.41vw, 2.34vw);
+  /* 18px */
+  line-height: 1.22em;
+  /* 22px */
+  margin: 16px 0 0;
+}
+
+@media screen and (min-width: 1280px) {
+  .profile__profession {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .profile__profession {
+    margin-top: 14px;
+    font-size: clamp(14px, 4.375vw, 1.825vw);
+    /* 14px */
+    line-height: 1.2em;
+    /* 17px */
+  }
+}

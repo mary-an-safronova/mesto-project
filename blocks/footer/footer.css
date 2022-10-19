@@ -1,0 +1,23 @@
+.footer {
+  width: 68.75%;
+  margin: auto;
+}
+
+@media screen and (min-width: 1280px) {
+  .footer {
+    max-width: 880px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .footer {
+    width: clamp(78.39vw, 78.39vw, 68.75vw);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .footer {
+    width: clamp(88.125vw, 88.125vw, 78.39vw);
+  }
+}

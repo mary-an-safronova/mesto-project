@@ -1,0 +1,23 @@
+.content {
+  width: clamp(68.75vw, 68.75vw, 88.125vw);
+  margin: auto;
+}
+
+@media screen and (min-width: 1280px) {
+  .content {
+    max-width: 880px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .content {
+    width: clamp(78.39vw, 78.39vw, 68.75vw);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .content {
+    width: clamp(88.125vw, 88.125vw, 78.39vw);
+  }
+}
