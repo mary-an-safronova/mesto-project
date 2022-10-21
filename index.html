@@ -11,113 +11,106 @@
 
 <body class="page">
 
-  <!-- удаление из строки модификатора popup_opened позволит скрыть попап -->
-  <div class="popup popup_opened">
-    <div class="popup__background"></div>
-    <form class="popup__container">
-      <img src="./images/close-icon.svg" alt="" class="popup__close-icon">
-      <h1 class="popup__title">Редактировать профиль</h1>
-
-      <fieldset class="popup__info">
-        <label for="name" class="">
-          <input type="text" class="popup__invisible-textfield" id="name" value="name">
-          <span class="popup__visible-textfield">Жак-Ив Кусто</span>
-        </label>
-
-      </fieldset>
-      <fieldset class="popup__info">
-        <label for="profession" class="">
-          <input type="text" class="popup__invisible-textfield" id="profession" value="profession">
-          <span class="popup__visible-textfield">Исследователь океана</span>
-        </label>
-      </fieldset>
-
-      <button type="submit" class="popup__submit-button">Сохранить</button>
-    </form>
-  </div>
-
   <header class="header">
     <img src="./images/logo-mesto.svg" alt="Логотип место" class="logo">
-    <div class="header__line"></div>
   </header>
 
   <main class="content">
-    <div class="profile">
-      <div class="profile__avatar">
-        <img src="./images/avatar-kusto.png" alt="" class="profile__avatar-image">
-      </div>
+    <section class="profile">
+      <div class="profile__avatar"></div>
+
       <div class="profile__container">
         <div class="profile__info">
           <div class="profile__name-container">
-            <p class="profile__name">Жак-Ив Кусто</p>
-            <button class="edit-button">
-              <img src="./images/edit-pen.svg" alt="" class="edit-button__image">
-            </button>
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button class="edit-button button" type="button" form="edit-form" aria-label="Редактировать"></button>
           </div>
           <p class="profile__profession">Исследователь океана</p>
         </div>
-        <button class="add-button">
-          <img src="./images/Vector+.svg" alt="" class="add-button__image">
-        </button>
+        <button class="add-button button" type="button" aria-label="Добавить"></button>
       </div>
-    </div>
+    </section>
 
-    <div class="grid-places">
-
-      <div class="place">
+    <section class="grid-places">
+      <article class="place">
         <img class="place__image" src="./images/karachaevsk.jpg" alt="Старинная постройка из кирпича">
         <div class="place__name-container">
-          <p class="place__name">Карачаевск</p>
-          <button class="place__like" type="button"></button>
+          <h2 class="place__name">Карачаевск</h2>
+          <button class="place__like button" type="button" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
 
-      <div class="place">
+      <article class="place">
         <img class="place__image" src="./images/gora-elbrus.png" alt="Гора в рассветном тумане">
         <div class="place__name-container">
-          <p class="place__name">Гора Эльбрус</p>
-          <button class="place__like" type="button"></button>
+          <h2 class="place__name">Гора Эльбрус</h2>
+          <button class="place__like button" type="button" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
 
-      <div class="place">
+      <article class="place">
         <img class="place__image" src="./images/dombai.png" alt="Старинная постройка из кирпича">
         <div class="place__name-container">
-          <p class="place__name">Домбай</p>
-          <button class="place__like"></button>
+          <h2 class="place__name">Домбай</h2>
+          <button class="place__like button" type="button" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
 
-      <div class="place">
+      <article class="place">
         <img class="place__image" src="./images/gora-elbrus.png" alt="Гора в рассветном тумане">
         <div class="place__name-container">
-          <p class="place__name">Гора Эльбрус</p>
-          <button class="place__like"></button>
+          <h2 class="place__name">Гора Эльбрус</h2>
+          <button class="place__like button" type="button" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
 
-      <div class="place">
+      <article class="place">
         <img class="place__image" src="./images/dombai.png" alt="Старинная постройка из кирпича">
         <div class="place__name-container">
-          <p class="place__name">Домбай</p>
-          <button class="place__like"></button>
+          <h2 class="place__name">Домбай</h2>
+          <button class="place__like button" type="button" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
 
-      <div class="place">
+      <article class="place">
         <img class="place__image" src="./images/karachaevsk.jpg" alt="Старинная постройка из кирпича">
         <div class="place__name-container">
-          <p class="place__name">Карачаево-Черкесия</p>
-          <button class="place__like"></button>
+          <h2 class="place__name">Карачаево-Черкесия</h2>
+          <button class="place__like button" type="button" aria-label="Нравится"></button>
         </div>
-      </div>
-
-    </div>
+      </article>
+    </section>
   </main>
 
   <footer class="footer">
-    <p class="copyright">© 2020 Mesto Russia</p>
+    <p class="footer__copyright">© 2020 Mesto Russia</p>
   </footer>
+
+  <!-- удаление из строки модификатора popup_opened позволит скрыть попап -->
+  <div class="popup popup_opened">
+    <div class="popup__container">
+      <button class="popup__close-icon button" type="button" aria-label="Закрыть"></button>
+
+      <form class="edit-form" id="edit-form" name="edit-form">
+        <fieldset class="edit-form__field">
+          <legend class="edit-form__title">Редактировать профиль</legend>
+
+          <label for="name" class="edit-form__info">
+            <input type="text" class="edit-form__textfield" id="name" name="user-name" placeholder="Жак-Ив Кусто"
+              required>
+          </label>
+
+          <label for="profession" class="edit-form__info">
+            <input type="text" class="edit-form__textfield" id="profession" name="user-profession"
+              placeholder="Исследователь океана" required>
+          </label>
+
+          <button type="submit" class="edit-form__submit-button button">Сохранить</button>
+        </fieldset>
+      </form>
+
+    </div>
+  </div>
 
 </body>
 

@@ -2,29 +2,28 @@
   display: block;
   max-width: 430px;
   width: 100%;
-  aspect-ratio: 1 / 0.767;
+  aspect-ratio: 1 / 0.765;
   /* 330px */
   background: #FFFFFF;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
   z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
 }
 
 @media screen and (min-width: 1280px) {
   .popup__container {
-    max-width: 430px;
-    width: 100%;
+    max-height: 330px;
+    height: 100%;
   }
 }
 
 @media screen and (max-width: 425px) {
   .popup__container {
-    width: clamp(88.1vw, 88.1vw, 38.7vw);
+    width: 88.1%;
     /* 282px */
+    aspect-ratio: 1 / 1.14;
   }
 }

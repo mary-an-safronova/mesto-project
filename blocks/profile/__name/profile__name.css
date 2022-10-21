@@ -6,6 +6,10 @@
   line-height: 1.14em;
   /* 48px */
   margin: 0 1.4vw 0 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 40vw;
 }
 
 @media screen and (min-width: 1280px) {
@@ -24,5 +28,6 @@
     /* 33px */
     margin-right: 4.77vw;
     /* 15.25px */
+    max-width: 59.6vw;
   }
 }

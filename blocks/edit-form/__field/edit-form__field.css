@@ -1,0 +1,19 @@
+.edit-form__field {
+  margin: 34px auto 37px;
+  padding: 0;
+  border: none;
+  width: 83.26%;
+  aspect-ratio: 1 / 0.723;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-top: 0;
+}
+
+@media screen and (max-width: 425px) {
+  .edit-form__field {
+    width: 84.4%;
+    /* 238px */
+    aspect-ratio: 1 / 1.14;
+  }
+}

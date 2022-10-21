@@ -2,8 +2,6 @@
   width: 22px;
   height: 19px;
   border: none;
-  padding: 0;
-  background-color: #fff;
   background: center / cover no-repeat url(../../../images/heart-like.svg);
 }
 

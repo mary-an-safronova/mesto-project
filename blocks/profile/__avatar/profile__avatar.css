@@ -1,8 +1,8 @@
 .profile__avatar {
-  max-width: 120px;
-  max-height: 120px;
+  background-image: url("../../../images/avatar-kusto.png");
+  width: 120px;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
-  overflow: hidden;
   margin-right: 30px;
 }
 

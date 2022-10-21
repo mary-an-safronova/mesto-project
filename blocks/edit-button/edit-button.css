@@ -1,9 +1,9 @@
 .edit-button {
+  background: center no-repeat url("../../images/edit-pen.svg");
+  background-size: inherit;
   width: 24px;
   aspect-ratio: 1 / 1;
-  /* height: 24px; */
   border: 1px solid #FFFFFF;
-  background-color: #000;
   align-self: center;
 }
 

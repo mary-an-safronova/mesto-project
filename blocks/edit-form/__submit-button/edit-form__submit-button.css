@@ -1,4 +1,4 @@
-.popup__submit-button {
+.edit-form__submit-button {
   background: #000000;
   border-radius: 2px;
   font-style: normal;
@@ -8,31 +8,24 @@
   line-height: 1.22em;
   /* 22px */
   color: #FFFFFF;
-  padding: 0;
   border: none;
-  margin-left: 8.37%;
-  margin-bottom: 37px;
-  /* 37px */
-  width: 83.25%;
-  /* 358px; */
+  width: 100%;
   aspect-ratio: 1 / 0.14;
 }
 
-.popup__submit-button:hover {
+.edit-form__submit-button:hover {
   opacity: 0.8;
   transition: opacity 0.3s ease;
 }
 
 @media screen and (min-width: 1280px) {
-  .popup__submit-button {
+  .edit-form__submit-button {
     font-size: 18px;
   }
 }
 
 @media screen and (max-width: 425px) {
-  .popup__submit-button {
-    width: 84.39%;
-    margin-left: 7.8%;
+  .edit-form__submit-button {
     aspect-ratio: 1 / 0.193;
     margin-bottom: 25px;
   }

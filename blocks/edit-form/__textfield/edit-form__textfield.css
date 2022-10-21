@@ -1,0 +1,15 @@
+.edit-form__textfield {
+  color: #000000;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1em;
+  padding: 0;
+  opacity: 1;
+  border: none;
+}
+
+.edit-form__textfield:focus {
+  outline: none;
+}

@@ -1,26 +1,26 @@
-.popup__title {
+.edit-form__title {
   color: #000000;
   font-style: normal;
   font-weight: 900;
   font-size: clamp(1.5em, 5.647vw, 1.875vw);
   /* 24px */
-  line-height: 1.21em;
-  /* 29px */
-  margin: 34px 36px 54px;
+  line-height: 1em;
+  /* 1.21em=29px */
+  margin-bottom: 54px;
 }
 
 @media screen and (min-width: 1280px) {
-  .popup__title {
+  .edit-form__title {
     font-size: 24px;
   }
 }
 
 @media screen and (max-width: 425px) {
-  .popup__title {
+  .edit-form__title {
     font-size: clamp(1.125em, 5.625vw, 4.2vw);
     /* 18px */
     line-height: 1.22em;
     /* 22px */
-    margin: 25px 22px 75px;
+    margin-bottom: 75px;
   }
 }
