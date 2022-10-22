@@ -3,14 +3,14 @@
   border-radius: 2px;
   font-style: normal;
   font-weight: 400;
-  font-size: clamp(1.125em, 1.406vw, 4.235vw);
+  font-size: 18px;
   /* 18px */
   line-height: 1.22em;
   /* 22px */
   color: #FFFFFF;
   border: none;
   width: 100%;
-  aspect-ratio: 1 / 0.14;
+  padding: 14px 0;
 }
 
 .edit-form__submit-button:hover {
@@ -26,7 +26,6 @@
 
 @media screen and (max-width: 425px) {
   .edit-form__submit-button {
-    aspect-ratio: 1 / 0.193;
-    margin-bottom: 25px;
+    font-size: 14px;
   }
 }

@@ -1,28 +1,21 @@
-.add-button {
-  background: center no-repeat url("../../images/Vector+.svg");
+.profile__add-button {
+  background: center no-repeat url("../../../images/Vector+.svg");
   background-size: 22px 22px;
-  width: 11.7vw;
+  width: 150px;
   height: 50px;
   border: 2px solid #FFFFFF;
   border-radius: 2px;
   align-self: center;
 }
 
-.add-button:hover {
+.profile__add-button:hover {
   opacity: 0.6;
   transition: opacity 0.3s ease;
 }
 
-@media screen and (min-width: 1280px) {
-  .add-button {
-    max-width: 150px;
-    width: 100%;
-  }
-}
-
 @media screen and (max-width: 767px) {
-  .add-button {
-    width: 100%;
+  .profile__add-button {
     background-size: 16px 16px;
+    width: 100%
   }
 }
