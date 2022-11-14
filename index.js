@@ -17,8 +17,26 @@ popupCloseIcon.addEventListener('click', popupClosed);
 let profileName = document.querySelector('.profile__name');
 let profileProfession = document.querySelector('.profile__profession');
 
-let inputName = document.getElementById('name');
-let inputProfession = document.getElementById('profession');
+const inputName = document.getElementById('name');
+const inputProfession = document.getElementById('profession');
 
 inputName.value = (inputName !== "") ? profileName.innerHTML : "";
 inputProfession.value = (inputProfession !== "") ? profileProfession.innerHTML : "";
+
+
+const EditFormElement = document.querySelector('.edit-form');
+
+// Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
+function formSubmitHandler (evt) {
+  evt.preventDefault();
+// Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки.
+
+  console.log(inputName.value);
+  console.log(inputProfession.value);
+
+  profileName.textContent = inputName.value;
+  profileProfession.textContent = inputProfession.value;
+}
+
+// Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
+EditFormElement.addEventListener('submit', formSubmitHandler);
