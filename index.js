@@ -12,3 +12,13 @@ function popupClosed() {
 
 addButton.addEventListener('click', popupOpend);
 popupCloseIcon.addEventListener('click', popupClosed);
+
+
+let profileName = document.querySelector('.profile__name');
+let profileProfession = document.querySelector('.profile__profession');
+
+let inputName = document.getElementById('name');
+let inputProfession = document.getElementById('profession');
+
+inputName.value = (inputName !== "") ? profileName.innerHTML : "";
+inputProfession.value = (inputProfession !== "") ? profileProfession.innerHTML : "";
