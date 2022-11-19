@@ -1,4 +1,4 @@
-.edit-form__title {
+.form__title {
   color: #000000;
   font-style: normal;
   font-weight: 900;
@@ -10,13 +10,13 @@
 }
 
 @media screen and (min-width: 1280px) {
-  .edit-form__title {
+  .form__title {
     font-size: 24px;
   }
 }
 
 @media screen and (max-width: 425px) {
-  .edit-form__title {
+  .form__title {
     font-size: clamp(1.125em, 5.625vw, 4.2vw);
     /* 18px */
     line-height: 1.22em;

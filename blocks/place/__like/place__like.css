@@ -9,21 +9,3 @@
   opacity: 0.5;
   transition: opacity 0.3s ease;
 }
-
-.place__like:focus {
-  background-image: url(../../../images/black-heart.svg);
-  opacity: 1;
-}
-
-.place__like::before {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  width: 22px;
-  height: 19px;
-  background: center / cover no-repeat url(../../../images/black-heart.svg);
-  opacity: 1;
-}

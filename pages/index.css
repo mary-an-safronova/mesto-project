@@ -11,7 +11,7 @@
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/logo/logo.css);
 @import url(../blocks/popup/popup.css);
-@import url(../blocks/edit-form/edit-form.css);
+@import url(../blocks/form/form.css);
 @import url(../blocks/button/button.css);
 
 @import url(../blocks/popup/__container/popup__container.css);
@@ -28,11 +28,13 @@
 @import url(../blocks/place/__name-container/place__name-container.css);
 @import url(../blocks/place/__name/place__name.css);
 @import url(../blocks/place/__like/place__like.css);
+@import url(../blocks/place/__delete-button/place__delete-button.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
-@import url(../blocks/edit-form/__field/edit-form__field.css);
-@import url(../blocks/edit-form/__title/edit-form__title.css);
-@import url(../blocks/edit-form/__info/edit-form__info.css);
-@import url(../blocks/edit-form/__textfield/edit-form__textfield.css);
-@import url(../blocks/edit-form/__submit-button/edit-form__submit-button.css);
+@import url(../blocks/form/__field/form__field.css);
+@import url(../blocks/form/__title/form__title.css);
+@import url(../blocks/form/__info/form__info.css);
+@import url(../blocks/form/__textfield/form__textfield.css);
+@import url(../blocks/form/__submit-button/form__submit-button.css);
 
 @import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/place/__like/_active/place__like_active.css);

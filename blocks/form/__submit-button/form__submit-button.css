@@ -1,4 +1,4 @@
-.edit-form__submit-button {
+.form__submit-button {
   background: #000000;
   border-radius: 2px;
   font-style: normal;
@@ -13,19 +13,19 @@
   padding: 14px 0;
 }
 
-.edit-form__submit-button:hover {
+.form__submit-button:hover {
   opacity: 0.8;
   transition: opacity 0.3s ease;
 }
 
 @media screen and (min-width: 1280px) {
-  .edit-form__submit-button {
+  .form__submit-button {
     font-size: 18px;
   }
 }
 
 @media screen and (max-width: 425px) {
-  .edit-form__submit-button {
+  .form__submit-button {
     font-size: 14px;
   }
 }

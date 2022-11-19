@@ -1,4 +1,4 @@
-.edit-form__textfield {
+.form__textfield {
   color: #000000;
   font-family: inherit;
   font-style: normal;
@@ -10,6 +10,6 @@
   border: none;
 }
 
-.edit-form__textfield:focus {
+.form__textfield:focus {
   outline: none;
 }

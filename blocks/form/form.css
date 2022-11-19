@@ -1,4 +1,4 @@
-.edit-form {
+.form {
   border-radius: 10px;
   width: 100%;
   aspect-ratio: 1 / 0.767;
@@ -6,7 +6,7 @@
 }
 
 @media screen and (max-width: 425px) {
-  .edit-form {
+  .form {
     width: clamp(88.1vw, 88.1vw, 38.7vw);
     /* 282px */
     aspect-ratio: 1 / 1.14;

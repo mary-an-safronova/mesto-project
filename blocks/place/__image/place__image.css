@@ -1,3 +1,5 @@
 .place__image {
   width: 100%;
+  grid-area: image;
+  position: relative;
 }
