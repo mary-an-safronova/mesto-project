@@ -90,15 +90,22 @@ const cardsArr = initialCards.map(function (item) {
   };
 });
 
+function createNewCardFromTemplate(template, name, link, removeChild) {
+  const placeElement = template.querySelector('.place').cloneNode(true);
+  placeElement.querySelector('.place__name').textContent = name;
+  placeElement.querySelector('.place__image').src = link;
+  placeElement.querySelector('.place__image').style.aspectRatio = '1 / 1';
+
+  if (removeChild === true) {
+    placesContainer.removeChild(placesContainer.lastElementChild);
+  }
+
+  placesContainer.prepend(placeElement);
+}
+
 cardsArr.forEach(
   function ({ name, link }) {
-    const placeElement = placeTemplate.querySelector(".place").cloneNode(true);
-    placeElement.querySelector(".place__name").textContent = name;
-    placeElement.querySelector('.place__image').src = link;
-    placeElement.querySelector('.place__image').style.aspectRatio = '1 / 1';
-
-    placesContainer.removeChild(placesContainer.lastElementChild);
-    placesContainer.prepend(placeElement);
+    createNewCardFromTemplate(placeTemplate, name, link, true);
   });
 
 
@@ -138,12 +145,7 @@ const addFormElement = document.querySelector('.add-form');
 function AddFormSubmitHandler(evt) {
   evt.preventDefault();
 
-  const placeElement = placeTemplate.querySelector(".place").cloneNode(true);
-  placeElement.querySelector('.place__name').textContent = inputCardName.value;
-  placeElement.querySelector('.place__image').src = inputCardImg.value;
-  placeElement.querySelector('.place__image').style.aspectRatio = '1 / 1';
-
-  placesContainer.prepend(placeElement);
+  createNewCardFromTemplate(placeTemplate, inputCardName.value, inputCardImg.value, false);
 }
 
 addFormElement.addEventListener('submit', AddFormSubmitHandler);
