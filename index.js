@@ -35,19 +35,16 @@ inputProfession.value = (inputProfession !== "") ? profileProfession.innerHTML :
 
 //Редактирование имени и информации о пользователе СДЕЛАНО
 
-const EditFormElement = document.querySelector('.edit-form');
+const editFormElement = document.querySelector('.edit-form');
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
 function formSubmitHandler(evt) {
   evt.preventDefault();
-
-  console.log(inputName.value);
-  console.log(inputProfession.value);
 
   profileName.textContent = inputName.value;
   profileProfession.textContent = inputProfession.value;
 }
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
-EditFormElement.addEventListener('submit', formSubmitHandler);
+editFormElement.addEventListener('submit', formSubmitHandler);
 
 
 
@@ -139,16 +136,17 @@ deleteBtnElements.forEach((deleteBtnElement) => {
 const inputCardName = document.getElementById('card-name');
 const inputCardImg = document.getElementById('card-image');
 
-
 const addFormElement = document.querySelector('.add-form');
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
 function AddFormSubmitHandler(evt) {
   evt.preventDefault();
 
   createNewCardFromTemplate(placeTemplate, inputCardName.value, inputCardImg.value, false);
+
 }
 
 addFormElement.addEventListener('submit', AddFormSubmitHandler);
+
 
 
 
