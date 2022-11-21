@@ -76,15 +76,11 @@ const cardsArr = initialCards.map(function (item) {
   };
 });
 
-function createNewCardFromTemplate(template, name, link, removeChild) {
+function createNewCardFromTemplate(template, name, link) {
   const cardElement = template.querySelector('.place').cloneNode(true);
   cardElement.querySelector('.place__name').textContent = name;
   cardElement.querySelector('.place__image').src = link;
   cardElement.querySelector('.place__image').style.aspectRatio = '1 / 1';
-
-  if (removeChild === true) {
-    cardsContainerEl.removeChild(cardsContainerEl.lastElementChild);
-  }
 
   cardsContainerEl.prepend(cardElement);
 }
@@ -94,7 +90,7 @@ cardsArr.forEach(
     name,
     link
   }) {
-    createNewCardFromTemplate(cardTemplate, name, link, true);
+    createNewCardFromTemplate(cardTemplate, name, link);
   });
 
 // Добавление новых карточек через форму
@@ -106,7 +102,7 @@ const cardAddFormEl = document.querySelector('.add-form');
 function AddFormSubmitHandler(evt) {
   evt.preventDefault();
 
-  createNewCardFromTemplate(cardTemplate, inputCardName.value, inputCardImg.value, false);
+  createNewCardFromTemplate(cardTemplate, inputCardName.value, inputCardImg.value);
 }
 
 cardAddFormEl.addEventListener('submit', AddFormSubmitHandler);
