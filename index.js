@@ -1,48 +1,50 @@
 const profileBtnEl = document.querySelector('.profile__edit-button');
 const profileBtnSubmitEl = document.querySelector('.edit-form__submit-button');
 const profilePopupEl = document.querySelector('.popup-edit');
+const profilePopupCloseIconEl = document.querySelector('.popup__close-icon-edit');
 
 const cardAddBtnEl = document.querySelector('.profile__add-button');
 const cardAddBtnSubmitEl = document.querySelector('.add-form__submit-button');
 const cardAddPopupEl = document.querySelector('.popup-add');
+const cardAddPopupCloseIconEl = document.querySelector('.popup__close-icon-add');
 
 // Открытие модальных окон
-profileBtnEl.addEventListener('click', () => {
-  profilePopupEl.classList.add('popup_opened');
-});
+function closePopup(popup) {
+  return function (event) {
+    popup.classList.remove('popup_opened');
+  }
+}
 
-profileBtnSubmitEl.addEventListener('click', () => {
-  profilePopupEl.classList.remove('popup_opened');
-});
+function openPopup(popup) {
+  return function (event) {
+    popup.classList.add('popup_opened');
+  }
+}
 
-cardAddBtnEl.addEventListener('click', () => {
-  cardAddPopupEl.classList.add('popup_opened');
-});
+profileBtnEl.addEventListener('click', openPopup(profilePopupEl));
 
-cardAddBtnSubmitEl.addEventListener('click', () => {
-  cardAddPopupEl.classList.remove('popup_opened');
-});
+cardAddBtnEl.addEventListener('click', openPopup(cardAddPopupEl));
 
 // Заполнение полей формы редактирования профиля значениями, которые отображаются на странице
-let profileNameEl = document.querySelector('.profile__name');
-let profileProfessionEl = document.querySelector('.profile__profession');
+const profileNameEl = document.querySelector('.profile__name');
+const profileProfessionEl = document.querySelector('.profile__profession');
 
-const inputName = document.getElementById('name');
-const inputProfession = document.getElementById('profession');
+const inputName = document.querySelector('#name');
+const inputProfession = document.querySelector('#profession');
 
-inputName.value = (inputName !== "") ? profileNameEl.innerHTML : "";
-inputProfession.value = (inputProfession !== "") ? profileProfessionEl.innerHTML : "";
+inputName.value = profileNameEl.textContent;
+inputProfession.value = profileProfessionEl.textContent;
 
 // Редактирование имени и информации о пользователе
 const profileFormEl = document.querySelector('.edit-form');
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
-function formSubmitHandler(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
 
   profileNameEl.textContent = inputName.value;
   profileProfessionEl.textContent = inputProfession.value;
 }
-profileFormEl.addEventListener('submit', formSubmitHandler);
+profileFormEl.addEventListener('submit', handleProfileFormSubmit, closePopup(profilePopupEl));
 
 // Новый массив карточек
 const initialCards = [{
@@ -94,18 +96,17 @@ cardsArr.forEach(
   });
 
 // Добавление новых карточек через форму
-const inputCardName = document.getElementById('card-name');
-const inputCardImg = document.getElementById('card-image');
+const inputCardName = document.querySelector('#card-name');
+const inputCardImg = document.querySelector('#card-image');
 
 const cardAddFormEl = document.querySelector('.add-form');
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
-function AddFormSubmitHandler(evt) {
+function handleAddFormSubmit(evt) {
   evt.preventDefault();
 
   createNewCardFromTemplate(cardTemplate, inputCardName.value, inputCardImg.value);
 }
-
-cardAddFormEl.addEventListener('submit', AddFormSubmitHandler);
+cardAddFormEl.addEventListener('submit', handleAddFormSubmit, closePopup(cardAddPopupEl));
 
 // Лайк
 const likeElements = document.querySelectorAll('.place__like');
@@ -137,7 +138,7 @@ const imgPopupCaptionEl = cardImgPopupEl.querySelector('.popup__img-caption');
 const cardElements = document.querySelectorAll('.place');
 
 for (let i = 0; i <= cardElements.length; i++) {
-  let cardElement = cardElements[i];
+  const cardElement = cardElements[i];
   if (cardElement) {
     let cardImg = cardElement.querySelector('.place__image');
 
@@ -147,9 +148,8 @@ for (let i = 0; i <= cardElements.length; i++) {
 
       imgPopupEl.src = cardImg.src;
       imgPopupCaptionEl.textContent = cardName.textContent;
-
-      cardImgPopupEl.classList.add('popup_opened');
     });
+    cardImg.addEventListener('click', openPopup(cardImgPopupEl));
   }
 }
 
@@ -165,9 +165,6 @@ function toggleTwoClasses(el, classOpened, classClosed, timeOfAnimation) {
     }, timeOfAnimation);
   }
 }
-
-const profilePopupCloseIconEl = document.querySelector('.popup__close-icon-edit');
-const cardAddPopupCloseIconEl = document.querySelector('.popup__close-icon-add');
 
 document.addEventListener("DOMContentLoaded", () => {
   profilePopupCloseIconEl.addEventListener("click", () => {
