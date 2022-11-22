@@ -42,11 +42,11 @@ const profileFormEl = document.querySelector('.edit-form');
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-
+  closePopup(profilePopupEl);
   profileNameEl.textContent = inputName.value;
   profileProfessionEl.textContent = inputProfession.value;
 }
-profileFormEl.addEventListener('submit', handleProfileFormSubmit, closePopup(profilePopupEl));
+profileFormEl.addEventListener('submit', handleProfileFormSubmit);
 
 // Новый массив карточек
 const initialCards = [{
@@ -131,7 +131,8 @@ const cardAddFormEl = document.querySelector('.add-form');
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
+  closePopup(cardAddPopupEl);
   const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value);
   cardsContainerEl.prepend(cardElement);
 }
-cardAddFormEl.addEventListener('submit', handleAddFormSubmit, closePopup(cardAddPopupEl));
+cardAddFormEl.addEventListener('submit', handleAddFormSubmit);
