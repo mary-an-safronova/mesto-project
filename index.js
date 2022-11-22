@@ -98,7 +98,7 @@ function createCard(template, name, link) {
   deleteBtnElement.addEventListener('click', () => {
     deleteBtnElement.closest('.place').remove();
   });
-  // Открытие попапов изображений карточек
+  // Открытие попапов изображений карточек (в т.ч. новых)
   const cardImgPopupEl = document.querySelector('.popup-img');
   const imgPopupEl = cardImgPopupEl.querySelector('.popup__image');
   const imgPopupCaptionEl = cardImgPopupEl.querySelector('.popup__img-caption');
@@ -135,31 +135,3 @@ function handleAddFormSubmit(evt) {
   cardsContainerEl.prepend(cardElement);
 }
 cardAddFormEl.addEventListener('submit', handleAddFormSubmit, closePopup(cardAddPopupEl));
-
-// Плавное открытие и закрытие попапов
-
-// function toggleTwoClasses(el, classOpened, classClosed, timeOfAnimation) {
-//   if (!el.classList.contains(classOpened)) {
-//     el.classList.add(classOpened);
-//     el.classList.remove(classClosed);
-//   } else {
-//     el.classList.add(classClosed);
-//     window.setTimeout(function () {
-//       el.classList.remove(classOpened);
-//     }, timeOfAnimation);
-//   }
-// }
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   profilePopupCloseIconEl.addEventListener("click", () => {
-//     toggleTwoClasses(profilePopupEl, "popup_opened", "popup_closed", 500);
-//   });
-
-//   cardAddPopupCloseIconEl.addEventListener("click", () => {
-//     toggleTwoClasses(cardAddPopupEl, "popup_opened", "popup_closed", 500);
-//   });
-
-//   imgPopupCloseIconEl.addEventListener("click", () => {
-//     toggleTwoClasses(cardImgPopupEl, "popup_opened", "popup_closed", 500);
-//   });
-// });
