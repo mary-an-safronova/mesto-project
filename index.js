@@ -18,6 +18,8 @@ const cardImgPopupEl = document.querySelector('.popup-img');
 const imgPopupEl = cardImgPopupEl.querySelector('.popup__image');
 const imgPopupCaptionEl = cardImgPopupEl.querySelector('.popup__img-caption');
 
+const overlayElements = document.querySelectorAll('.popup__background');
+
 // Открытие и закрытие модальных окон
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
@@ -26,6 +28,11 @@ function closePopup(popup) {
 popupCloseIconElements.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
+});
+
+overlayElements.forEach((overlayElement) => {
+  const popup = overlayElement.closest('.popup');
+  overlayElement.addEventListener('click', () => closePopup(popup));
 });
 
 function openPopup(popup) {
