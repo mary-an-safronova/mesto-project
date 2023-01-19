@@ -25,14 +25,26 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
+// Закрытие модального окна при клике на крестик
 popupCloseIconElements.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
 });
 
+// Закрытие модального окна при клике на оверлей
 overlayElements.forEach((overlayElement) => {
   const popup = overlayElement.closest('.popup');
   overlayElement.addEventListener('click', () => closePopup(popup));
+});
+
+// Закрытие модального окна при клике на escape
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Escape') {
+    const popups = document.querySelectorAll('.popup');
+    popups.forEach((popup) => {
+      closePopup(popup);
+    });
+  }
 });
 
 function openPopup(popup) {
