@@ -22,9 +22,27 @@ const imgPopupCaptionEl = cardImgPopupEl.querySelector('.popup__img-caption');
 
 const overlayElements = document.querySelectorAll('.popup__background');
 
+// Очистка полей и ошибок при закрытии модального окна
+function cleanForm() {
+  const forms = document.querySelectorAll('.form');
+  const errorElements = document.querySelectorAll('.form__input-error');
+  const inputElements = document.querySelectorAll('.form__textfield');
+
+  forms.forEach((form) => {
+    errorElements.forEach((errorElement) => {
+      inputElements.forEach((inputElement) => {
+        form.reset();
+        errorElement.textContent = '';
+        inputElement.classList.remove('form__textfield_type_error');
+      });
+    })
+  })
+}
+
 // Открытие и закрытие модальных окон
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  cleanForm();
 }
 
 // Закрытие модального окна при клике на крестик
@@ -39,16 +57,20 @@ overlayElements.forEach((overlayElement) => {
   overlayElement.addEventListener('click', () => closePopup(popup));
 });
 
-// Закрытие модального окна при клике на escape
-document.addEventListener('keydown', (e) => {
-  if (e.code === 'Escape') {
+// Закрытие модального окна при клике на escape, удаление слушателя при закрытии окна
+function pressEscape (event) {
+  if (event.code === 'Escape') {
     const popups = document.querySelectorAll('.popup');
     popups.forEach((popup) => {
-      closePopup(popup);
+        closePopup(popup);
     });
   }
-});
+  event.target.removeEventListener('keydown', pressEscape);
+}
 
+document.addEventListener('keydown', pressEscape);
+
+// Функция открытия модального окна
 function openPopup(popup) {
     popup.classList.add('popup_opened');
 }
