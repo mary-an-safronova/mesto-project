@@ -40,21 +40,27 @@ function cleanForm() {
 }
 
 // Открытие и закрытие модальных окон
+// Функция закрытия модального окна
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  cleanForm();
 }
 
 // Закрытие модального окна при клике на крестик
 popupCloseIconElements.forEach((button) => {
   const popup = button.closest('.popup');
-  button.addEventListener('click', () => closePopup(popup));
+  button.addEventListener('click', () => {
+    closePopup(popup);
+    cleanForm();
+  });
 });
 
 // Закрытие модального окна при клике на оверлей
 overlayElements.forEach((overlayElement) => {
   const popup = overlayElement.closest('.popup');
-  overlayElement.addEventListener('click', () => closePopup(popup));
+  overlayElement.addEventListener('click', () => {
+    closePopup(popup);
+    cleanForm();
+  });
 });
 
 // Закрытие модального окна при клике на escape, удаление слушателя при закрытии окна
@@ -63,6 +69,7 @@ function pressEscape (event) {
     const popups = document.querySelectorAll('.popup');
     popups.forEach((popup) => {
         closePopup(popup);
+        cleanForm();
     });
   }
   event.target.removeEventListener('keydown', pressEscape);
@@ -84,6 +91,7 @@ profileBtnEl.addEventListener('click', () => {
 
 cardAddBtnEl.addEventListener('click', () => {
   openPopup(cardAddPopupEl);
+  cleanForm();
 });
 
 // Редактирование имени и информации о пользователе
@@ -254,3 +262,13 @@ function handleAddFormSubmit(evt) {
   cardsContainerEl.prepend(cardElement);
 }
 cardAddFormEl.addEventListener('submit', handleAddFormSubmit);
+
+// Добавление новой карточки при клике на клавишу Enter
+function createCardWithEnter(event) {
+  if (event.code === 'Enter' && enableValidation() === true) {
+    handleAddFormSubmit();
+    cardAddFormEl.submit();
+  }
+}
+
+cardAddFormEl.addEventListener('input', createCardWithEnter);
