@@ -6,4 +6,15 @@
   line-height: 15px;
   color: #FF0000;
   position: fixed;
+  flex-wrap: wrap;
+  max-width: 358px;
+  width: 100%;
+}
+
+@media screen and (max-width: 425px) {
+  .form__input-error_active {
+    max-width: 74.31vw;
+    width: 100%;
+    position: relative;
+  }
 }
