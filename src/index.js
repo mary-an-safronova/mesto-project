@@ -1,3 +1,5 @@
+import './styles/index.css';
+
 const profileBtnEl = document.querySelector('.profile__edit-button');
 const profileBtnSubmitEl = document.querySelector('.edit-form__submit-button');
 const profilePopupEl = document.querySelector('.popup-edit');
