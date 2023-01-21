@@ -1,0 +1,26 @@
+.form__textfield {
+  color: #000000;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1em;
+  padding: 0;
+  opacity: 1;
+  padding-bottom: 13px;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.form__textfield:focus {
+  outline: none;
+}
+
+.form__textfield:-webkit-autofill,
+.form__textfield:-webkit-autofill:hover,
+.form__textfield:-webkit-autofill:focus {
+	border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 0px 1000px #FFF inset;
+}

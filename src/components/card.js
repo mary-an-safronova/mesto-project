@@ -1,57 +1,26 @@
-const profileBtnEl = document.querySelector('.profile__edit-button');
-const profileBtnSubmitEl = document.querySelector('.edit-form__submit-button');
-const profilePopupEl = document.querySelector('.popup-edit');
-const profileNameEl = document.querySelector('.profile__name');
-const profileProfessionEl = document.querySelector('.profile__profession');
-const profileFormEl = document.querySelector('.edit-form');
+// Функции для работы с карточками проекта
+import { openPopup, closePopup } from "./utils";
+import { cleanForm } from "./modal";
+import { enableValidation } from "./validate";
 
-const cardAddBtnEl = document.querySelector('.profile__add-button');
-const cardAddBtnSubmitEl = document.querySelector('.add-form__submit-button');
-const cardAddPopupEl = document.querySelector('.popup-add');
+export { openAndCleanForm, handleAddFormSubmit, createCardWithEnter };
+export { cardAddFormEl };
 
-const popupCloseIconElements = document.querySelectorAll('.popup__close-icon');
-
-const inputName = document.querySelector('#name');
-const inputProfession = document.querySelector('#profession');
-
+const inputCardName = document.querySelector('#card-name');
+const inputCardImg = document.querySelector('#card-image');
+const cardsContainerEl = document.querySelector('.grid-places');
+const cardTemplate = document.querySelector('#place-template').content;
 const cardImgPopupEl = document.querySelector('.popup-img');
 const imgPopupEl = cardImgPopupEl.querySelector('.popup__image');
 const imgPopupCaptionEl = cardImgPopupEl.querySelector('.popup__img-caption');
+const cardAddPopupEl = document.querySelector('.popup-add');
+const cardAddFormEl = document.querySelector('.add-form');
 
-// Открытие и закрытие модальных окон
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-}
-
-popupCloseIconElements.forEach((button) => {
-  const popup = button.closest('.popup');
-  button.addEventListener('click', () => closePopup(popup));
-});
-
-function openPopup(popup) {
-    popup.classList.add('popup_opened');
-}
-
-profileBtnEl.addEventListener('click', () => {
-  openPopup(profilePopupEl);
-  // Отображение информации профиля в полях формы редактирования при открытии попапа
-  inputName.value = profileNameEl.textContent;
-  inputProfession.value = profileProfessionEl.textContent;
-});
-
-cardAddBtnEl.addEventListener('click', () => {
+// Функция открытия формы добавления карточки и очистка полей
+function openAndCleanForm() {
   openPopup(cardAddPopupEl);
-});
-
-// Редактирование имени и информации о пользователе
-// Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  closePopup(profilePopupEl);
-  profileNameEl.textContent = inputName.value;
-  profileProfessionEl.textContent = inputProfession.value;
+  cleanForm();
 }
-profileFormEl.addEventListener('submit', handleProfileFormSubmit);
 
 // Новый массив карточек
 const initialCards = [{
@@ -75,9 +44,6 @@ const initialCards = [{
 }];
 
 // Добавление карточек из массива
-const cardsContainerEl = document.querySelector('.grid-places');
-const cardTemplate = document.querySelector('#place-template').content;
-
 const cardsArr = initialCards.map(function (item) {
   return {
     name: item.name,
@@ -125,15 +91,18 @@ cardsArr.forEach(
 );
 
 // Добавление новых карточек через форму
-const inputCardName = document.querySelector('#card-name');
-const inputCardImg = document.querySelector('#card-image');
-const cardAddFormEl = document.querySelector('.add-form');
-
-// Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
+// Обработчик «отправки» формы добавления карточек
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
   closePopup(cardAddPopupEl);
   const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value);
   cardsContainerEl.prepend(cardElement);
 }
-cardAddFormEl.addEventListener('submit', handleAddFormSubmit);
+
+// Добавление новой карточки при клике на клавишу Enter
+function createCardWithEnter(event) {
+  if (event.code === 'Enter' && enableValidation() === true) {
+    handleAddFormSubmit();
+    cardAddFormEl.submit();
+  }
+}
