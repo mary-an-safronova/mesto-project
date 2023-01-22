@@ -60,7 +60,6 @@ function pressEscape (event) {
         cleanForm();
     });
   }
-  event.target.removeEventListener('keydown', pressEscape);
 }
 
 // Функция отображения информации профиля в полях формы редактирования при открытии попапа
