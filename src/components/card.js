@@ -1,9 +1,8 @@
 // Функции для работы с карточками проекта
 import { openPopup, closePopup } from "./utils";
 import { cleanForm } from "./validate";
-import { enableValidation } from "./validate";
 
-export { openAndCleanForm, handleAddFormSubmit, createCardWithEnter };
+export { openAndCleanForm, handleAddFormSubmit };
 export { cardAddFormEl };
 
 const inputCardName = document.querySelector('#card-name');
@@ -97,12 +96,4 @@ function handleAddFormSubmit(evt) {
   closePopup(cardAddPopupEl);
   const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value);
   cardsContainerEl.prepend(cardElement);
-}
-
-// Добавление новой карточки при клике на клавишу Enter
-function createCardWithEnter(event) {
-  if (event.code === 'Enter' && enableValidation() === true) {
-    handleAddFormSubmit();
-    cardAddFormEl.submit();
-  }
 }
