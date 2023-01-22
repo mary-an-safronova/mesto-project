@@ -6,3 +6,9 @@
 .form__info:last-of-type {
   margin-bottom: 48px;
 }
+
+@media screen and (max-width: 425px) {
+  .form__info:last-of-type {
+    margin-bottom: 45px;
+  }
+}

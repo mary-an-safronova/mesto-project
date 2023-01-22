@@ -15,5 +15,6 @@
     width: 84.4%;
     /* 238px */
     aspect-ratio: 1 / 1.14;
+    margin: 25px auto 25px;
   }
 }
