@@ -16,12 +16,18 @@ const cardAddPopupEl = document.querySelector('.popup-add');
 const cardAddFormEl = document.querySelector('.add-form');
 
 // Добавление карточек из массива
-const cardsArr = initialCards.map(function (item) {
+initialCards.map((item) => {
   return {
     name: item.name,
     link: item.link
   };
 });
+
+initialCards.forEach(({ name, link }) => {
+  const cardElement = createCard(cardTemplate, name, link);
+  cardsContainerEl.prepend(cardElement);
+}
+);
 
 // Функция создания новых карточек
 function createCard(template, name, link) {
@@ -52,15 +58,7 @@ function createCard(template, name, link) {
   return cardElement
 }
 
-cardsArr.forEach(
-  function ({
-    name,
-    link
-  }) {
-    const cardElement = createCard(cardTemplate, name, link);
-    cardsContainerEl.prepend(cardElement);
-  }
-);
+
 
 // Добавление новых карточек через форму
 // Обработчик «отправки» формы добавления карточек
