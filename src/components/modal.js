@@ -16,13 +16,18 @@ function cleanForm() {
   const forms = document.querySelectorAll('.form');
   const errorElements = document.querySelectorAll('.form__input-error');
   const inputElements = document.querySelectorAll('.form__textfield');
+  const submitBtns = document.querySelectorAll('.form__submit-button');
 
   forms.forEach((form) => {
     errorElements.forEach((errorElement) => {
       inputElements.forEach((inputElement) => {
-        form.reset();
-        errorElement.textContent = '';
-        inputElement.classList.remove('form__textfield_type_error');
+        submitBtns.forEach((submitBtn) => {
+          form.reset();
+          errorElement.textContent = '';
+          inputElement.classList.remove('form__textfield_type_error');
+          submitBtn.disabled = true;
+          submitBtn.classList.add('form__submit-button_inactive');
+        });
       });
     })
   })
