@@ -11,6 +11,7 @@ const inputName = document.querySelector('#name');
 const profileNameEl = document.querySelector('.profile__name');
 const inputProfession = document.querySelector('#profession');
 const profileProfessionEl = document.querySelector('.profile__profession');
+const escape = 'Escape';
 
 // Закрытие модального окна при клике на крестик
 popupCloseIconElements.forEach((button) => {
@@ -32,7 +33,7 @@ overlayElements.forEach((overlayElement) => {
 
 // Закрытие модального окна при клике на escape, удаление слушателя при закрытии окна
 function pressEscape (event) {
-  if (event.code === 'Escape') {
+  if (event.code === escape) {
     const popups = document.querySelectorAll('.popup');
     popups.forEach((popup) => {
         closePopup(popup);
