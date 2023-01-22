@@ -57,7 +57,7 @@ function createCard(template, name, link) {
   cardElement.querySelector('.place__name').textContent = name;
   const cardImg = cardElement.querySelector('.place__image');
   cardImg.src = link;
-  cardImg.style.aspectRatio = '1 / 1';
+  cardImg.classList.add('place__image_size');
   cardImg.alt = name;
   // Лайк
   const likeElement = cardElement.querySelector('.place__like');
