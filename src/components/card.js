@@ -1,10 +1,9 @@
 // Функции для работы с карточками проекта
 import { openPopup, closePopup } from "./utils";
-import { cleanForm } from "./modal";
-import { enableValidation } from "./validate";
+import { initialCards } from "./constants";
 
-export { openAndCleanForm, handleAddFormSubmit, createCardWithEnter };
-export { cardAddFormEl };
+export { handleAddFormSubmit };
+export { cardAddFormEl, cardAddPopupEl };
 
 const inputCardName = document.querySelector('#card-name');
 const inputCardImg = document.querySelector('#card-image');
@@ -16,40 +15,19 @@ const imgPopupCaptionEl = cardImgPopupEl.querySelector('.popup__img-caption');
 const cardAddPopupEl = document.querySelector('.popup-add');
 const cardAddFormEl = document.querySelector('.add-form');
 
-// Функция открытия формы добавления карточки и очистка полей
-function openAndCleanForm() {
-  openPopup(cardAddPopupEl);
-  cleanForm();
-}
-
-// Новый массив карточек
-const initialCards = [{
-  name: 'Архыз',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-}, {
-  name: 'Челябинская область',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-}, {
-  name: 'Иваново',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-}, {
-  name: 'Камчатка',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-}, {
-  name: 'Холмогорский район',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-}, {
-  name: 'Байкал',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-}];
-
 // Добавление карточек из массива
-const cardsArr = initialCards.map(function (item) {
+initialCards.map((item) => {
   return {
     name: item.name,
     link: item.link
   };
 });
+
+initialCards.forEach(({ name, link }) => {
+  const cardElement = createCard(cardTemplate, name, link);
+  cardsContainerEl.prepend(cardElement);
+}
+);
 
 // Функция создания новых карточек
 function createCard(template, name, link) {
@@ -57,7 +35,7 @@ function createCard(template, name, link) {
   cardElement.querySelector('.place__name').textContent = name;
   const cardImg = cardElement.querySelector('.place__image');
   cardImg.src = link;
-  cardImg.style.aspectRatio = '1 / 1';
+  cardImg.classList.add('place__image_size');
   cardImg.alt = name;
   // Лайк
   const likeElement = cardElement.querySelector('.place__like');
@@ -80,15 +58,7 @@ function createCard(template, name, link) {
   return cardElement
 }
 
-cardsArr.forEach(
-  function ({
-    name,
-    link
-  }) {
-    const cardElement = createCard(cardTemplate, name, link);
-    cardsContainerEl.prepend(cardElement);
-  }
-);
+
 
 // Добавление новых карточек через форму
 // Обработчик «отправки» формы добавления карточек
@@ -97,12 +67,4 @@ function handleAddFormSubmit(evt) {
   closePopup(cardAddPopupEl);
   const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value);
   cardsContainerEl.prepend(cardElement);
-}
-
-// Добавление новой карточки при клике на клавишу Enter
-function createCardWithEnter(event) {
-  if (event.code === 'Enter' && enableValidation() === true) {
-    handleAddFormSubmit();
-    cardAddFormEl.submit();
-  }
 }

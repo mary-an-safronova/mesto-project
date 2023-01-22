@@ -1,7 +1,9 @@
 // Работа модальных окон
-export { cleanForm, pressEscape, showProfileInfo, handleProfileFormSubmit };
+export { openAndCleanForm, pressEscape, showProfileInfo, handleProfileFormSubmit };
 
 import { closePopup, openPopup } from "./utils";
+import { cleanForm } from "./validate";
+import { cardAddPopupEl } from "./card";
 
 const popupCloseIconElements = document.querySelectorAll('.popup__close-icon');
 const overlayElements = document.querySelectorAll('.popup__background');
@@ -10,22 +12,12 @@ const inputName = document.querySelector('#name');
 const profileNameEl = document.querySelector('.profile__name');
 const inputProfession = document.querySelector('#profession');
 const profileProfessionEl = document.querySelector('.profile__profession');
+const escape = 'Escape';
 
-// Очистка полей и ошибок при закрытии модального окна
-function cleanForm() {
-  const forms = document.querySelectorAll('.form');
-  const errorElements = document.querySelectorAll('.form__input-error');
-  const inputElements = document.querySelectorAll('.form__textfield');
-
-  forms.forEach((form) => {
-    errorElements.forEach((errorElement) => {
-      inputElements.forEach((inputElement) => {
-        form.reset();
-        errorElement.textContent = '';
-        inputElement.classList.remove('form__textfield_type_error');
-      });
-    })
-  })
+// Функция открытия формы добавления карточки и очистка полей
+function openAndCleanForm() {
+  openPopup(cardAddPopupEl);
+  cleanForm();
 }
 
 // Закрытие модального окна при клике на крестик
@@ -48,14 +40,13 @@ overlayElements.forEach((overlayElement) => {
 
 // Закрытие модального окна при клике на escape, удаление слушателя при закрытии окна
 function pressEscape (event) {
-  if (event.code === 'Escape') {
+  if (event.code === escape) {
     const popups = document.querySelectorAll('.popup');
     popups.forEach((popup) => {
         closePopup(popup);
         cleanForm();
     });
   }
-  event.target.removeEventListener('keydown', pressEscape);
 }
 
 // Функция отображения информации профиля в полях формы редактирования при открытии попапа
