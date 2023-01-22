@@ -1,8 +1,8 @@
 import './styles/index.css';
 
-import { showProfileInfo, handleProfileFormSubmit } from './components/modal';
+import { openAndCleanForm, showProfileInfo, handleProfileFormSubmit } from './components/modal';
 import { enableValidation } from './components/validate';
-import { openAndCleanForm, handleAddFormSubmit, createCardWithEnter } from './components/card';
+import { handleAddFormSubmit} from './components/card';
 import { cardAddFormEl } from './components/card';
 
 const profileBtnEl = document.querySelector('.profile__edit-button');
@@ -23,7 +23,3 @@ profileFormEl.addEventListener('submit', handleProfileFormSubmit);
 
 // Слушатель submit «отправки» формы добавления карточек
 cardAddFormEl.addEventListener('submit', handleAddFormSubmit);
-
-
-// Слушатель нажатия на клавишу Enter для добавления карточки
-cardAddFormEl.addEventListener('input', createCardWithEnter);
