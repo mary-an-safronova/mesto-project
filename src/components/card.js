@@ -1,6 +1,6 @@
 // Функции для работы с карточками проекта
 import { openPopup, closePopup } from "./utils";
-import { cleanForm } from "./modal";
+import { cleanForm } from "./validate";
 import { enableValidation } from "./validate";
 
 export { openAndCleanForm, handleAddFormSubmit, createCardWithEnter };
