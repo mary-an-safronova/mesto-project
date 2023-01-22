@@ -1,8 +1,8 @@
 import './styles/index.css';
 
-import { showProfileInfo, handleProfileFormSubmit } from './components/modal';
+import { openAndCleanForm, showProfileInfo, handleProfileFormSubmit } from './components/modal';
 import { enableValidation } from './components/validate';
-import { openAndCleanForm, handleAddFormSubmit} from './components/card';
+import { handleAddFormSubmit} from './components/card';
 import { cardAddFormEl } from './components/card';
 
 const profileBtnEl = document.querySelector('.profile__edit-button');

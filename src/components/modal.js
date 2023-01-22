@@ -1,8 +1,9 @@
 // Работа модальных окон
-export { pressEscape, showProfileInfo, handleProfileFormSubmit };
+export { openAndCleanForm, pressEscape, showProfileInfo, handleProfileFormSubmit };
 
 import { closePopup, openPopup } from "./utils";
 import { cleanForm } from "./validate";
+import { cardAddPopupEl } from "./card";
 
 const popupCloseIconElements = document.querySelectorAll('.popup__close-icon');
 const overlayElements = document.querySelectorAll('.popup__background');
@@ -12,6 +13,12 @@ const profileNameEl = document.querySelector('.profile__name');
 const inputProfession = document.querySelector('#profession');
 const profileProfessionEl = document.querySelector('.profile__profession');
 const escape = 'Escape';
+
+// Функция открытия формы добавления карточки и очистка полей
+function openAndCleanForm() {
+  openPopup(cardAddPopupEl);
+  cleanForm();
+}
 
 // Закрытие модального окна при клике на крестик
 popupCloseIconElements.forEach((button) => {

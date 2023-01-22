@@ -1,9 +1,8 @@
 // Функции для работы с карточками проекта
 import { openPopup, closePopup } from "./utils";
-import { cleanForm } from "./validate";
 
-export { openAndCleanForm, handleAddFormSubmit };
-export { cardAddFormEl };
+export { handleAddFormSubmit };
+export { cardAddFormEl, cardAddPopupEl };
 
 const inputCardName = document.querySelector('#card-name');
 const inputCardImg = document.querySelector('#card-image');
@@ -14,12 +13,6 @@ const imgPopupEl = cardImgPopupEl.querySelector('.popup__image');
 const imgPopupCaptionEl = cardImgPopupEl.querySelector('.popup__img-caption');
 const cardAddPopupEl = document.querySelector('.popup-add');
 const cardAddFormEl = document.querySelector('.add-form');
-
-// Функция открытия формы добавления карточки и очистка полей
-function openAndCleanForm() {
-  openPopup(cardAddPopupEl);
-  cleanForm();
-}
 
 // Новый массив карточек
 const initialCards = [{
