@@ -1,17 +1,13 @@
 // Функции для работы с карточками проекта
-import { openPopup, closePopup } from "./utils";
+import { openPopup } from "./utils";
 
-export { handleAddFormSubmit, createCard };
-export { cardAddFormEl, cardAddPopupEl, cardsContainerEl, cardTemplate };
+export { createCard };
+export { cardAddFormEl };
 
-const inputCardName = document.querySelector('#card-name');
-const inputCardImg = document.querySelector('#card-image');
-const cardsContainerEl = document.querySelector('.grid-places');
-const cardTemplate = document.querySelector('#place-template').content;
 const cardImgPopupEl = document.querySelector('.popup-img');
 const imgPopupEl = cardImgPopupEl.querySelector('.popup__image');
 const imgPopupCaptionEl = cardImgPopupEl.querySelector('.popup__img-caption');
-const cardAddPopupEl = document.querySelector('.popup-add');
+
 const cardAddFormEl = document.querySelector('.add-form');
 
 // Функция создания новых карточек
@@ -45,11 +41,4 @@ function createCard(template, name, link) {
 
 
 
-// Добавление новых карточек через форму
-// Обработчик «отправки» формы добавления карточек
-function handleAddFormSubmit(evt) {
-  evt.preventDefault();
-  closePopup(cardAddPopupEl);
-  const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value);
-  cardsContainerEl.prepend(cardElement);
-}
+

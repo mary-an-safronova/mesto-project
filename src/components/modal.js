@@ -1,9 +1,10 @@
 // Работа модальных окон
-export { openAndCleanForm, pressEscape, showProfileInfo, handleProfileFormSubmit };
+export { openAndCleanForm, pressEscape, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit };
+export { cardTemplate, cardsContainerEl };
 
 import { closePopup, openPopup } from "./utils";
 import { cleanForm } from "./validate";
-import { cardAddPopupEl } from "./card";
+import { createCard } from "./card";
 
 const popupCloseIconElements = document.querySelectorAll('.popup__close-icon');
 const overlayElements = document.querySelectorAll('.popup__background');
@@ -13,6 +14,11 @@ const profileNameEl = document.querySelector('.profile__name');
 const inputProfession = document.querySelector('#profession');
 const profileProfessionEl = document.querySelector('.profile__profession');
 const escape = 'Escape';
+const inputCardName = document.querySelector('#card-name');
+const inputCardImg = document.querySelector('#card-image');
+const cardAddPopupEl = document.querySelector('.popup-add');
+const cardsContainerEl = document.querySelector('.grid-places');
+const cardTemplate = document.querySelector('#place-template').content;
 
 // Функция открытия формы добавления карточки и очистка полей
 function openAndCleanForm() {
@@ -62,4 +68,13 @@ function handleProfileFormSubmit(evt) {
   closePopup(profilePopupEl);
   profileNameEl.textContent = inputName.value;
   profileProfessionEl.textContent = inputProfession.value;
+}
+
+// Добавление новых карточек через форму
+// Обработчик «отправки» формы добавления карточек
+function handleAddFormSubmit(evt) {
+  evt.preventDefault();
+  closePopup(cardAddPopupEl);
+  const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value);
+  cardsContainerEl.prepend(cardElement);
 }

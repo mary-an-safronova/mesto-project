@@ -1,8 +1,9 @@
 import './styles/index.css';
 
-import { openAndCleanForm, showProfileInfo, handleProfileFormSubmit } from './components/modal';
+import { openAndCleanForm, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit } from './components/modal';
+import { cardTemplate, cardsContainerEl } from './components/modal';
 import { enableValidation } from './components/validate';
-import { handleAddFormSubmit, cardsContainerEl, cardTemplate, createCard } from './components/card';
+import { createCard } from './components/card';
 import { cardAddFormEl } from './components/card';
 import { initialCards } from './components/constants';
 
