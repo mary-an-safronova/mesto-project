@@ -47,11 +47,9 @@ overlayElements.forEach((overlayElement) => {
 // Закрытие модального окна при клике на escape, удаление слушателя при закрытии окна
 function pressEscape (event) {
   if (event.code === escape) {
-    const popups = document.querySelectorAll('.popup');
-    popups.forEach((popup) => {
-        closePopup(popup);
-        cleanForm();
-    });
+    const popupActive = document.querySelector('.popup_opened');
+    closePopup(popupActive);
+    cleanForm();
   }
 }
 
