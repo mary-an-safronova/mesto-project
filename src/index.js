@@ -25,10 +25,20 @@ cardAddBtnEl.addEventListener('click', openAndCleanForm);
 profileBtnEl.addEventListener('click', showProfileInfo);
 
 // Валидация форм
-enableValidation();
+const validationConfig = {
+  formSelector: '.form',
+  inputSelector: '.form__textfield',
+  submitButtonSelector: '.form__submit-button',
+  inactiveButtonClass: 'form__submit-button_inactive',
+  inputErrorClass: 'form__textfield_type_error',
+  errorClass: 'form__input-error_active'
+}
+
+enableValidation(validationConfig);
 
 // Слушатель submit «отправки» формы редактирования профиля
 profileFormEl.addEventListener('submit', handleProfileFormSubmit);
 
 // Слушатель submit «отправки» формы добавления карточек
 cardAddFormEl.addEventListener('submit', handleAddFormSubmit);
+
