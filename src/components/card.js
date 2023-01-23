@@ -1,9 +1,8 @@
 // Функции для работы с карточками проекта
 import { openPopup, closePopup } from "./utils";
-import { initialCards } from "./constants";
 
-export { handleAddFormSubmit };
-export { cardAddFormEl, cardAddPopupEl };
+export { handleAddFormSubmit, createCard };
+export { cardAddFormEl, cardAddPopupEl, cardsContainerEl, cardTemplate };
 
 const inputCardName = document.querySelector('#card-name');
 const inputCardImg = document.querySelector('#card-image');
@@ -14,13 +13,6 @@ const imgPopupEl = cardImgPopupEl.querySelector('.popup__image');
 const imgPopupCaptionEl = cardImgPopupEl.querySelector('.popup__img-caption');
 const cardAddPopupEl = document.querySelector('.popup-add');
 const cardAddFormEl = document.querySelector('.add-form');
-
-// Добавление карточек из массива
-initialCards.forEach(({ name, link }) => {
-  const cardElement = createCard(cardTemplate, name, link);
-  cardsContainerEl.prepend(cardElement);
-}
-);
 
 // Функция создания новых карточек
 function createCard(template, name, link) {
