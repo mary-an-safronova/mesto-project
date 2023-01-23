@@ -16,13 +16,6 @@ const cardAddPopupEl = document.querySelector('.popup-add');
 const cardAddFormEl = document.querySelector('.add-form');
 
 // Добавление карточек из массива
-initialCards.map((item) => {
-  return {
-    name: item.name,
-    link: item.link
-  };
-});
-
 initialCards.forEach(({ name, link }) => {
   const cardElement = createCard(cardTemplate, name, link);
   cardsContainerEl.prepend(cardElement);
