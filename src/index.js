@@ -5,7 +5,7 @@ import { cardTemplate, cardsContainerEl } from './components/modal';
 import { enableValidation } from './components/validate';
 import { createCard } from './components/card';
 import { cardAddFormEl } from './components/card';
-import { initialCards } from './components/constants';
+import { initialCards, validationConfig } from './components/constants';
 
 const profileBtnEl = document.querySelector('.profile__edit-button');
 const profileFormEl = document.querySelector('.edit-form');
@@ -25,15 +25,6 @@ cardAddBtnEl.addEventListener('click', openAndCleanForm);
 profileBtnEl.addEventListener('click', showProfileInfo);
 
 // Валидация форм
-const validationConfig = {
-  formSelector: '.form',
-  inputSelector: '.form__textfield',
-  submitButtonSelector: '.form__submit-button',
-  inactiveButtonClass: 'form__submit-button_inactive',
-  inputErrorClass: 'form__textfield_type_error',
-  errorClass: 'form__input-error_active'
-}
-
 enableValidation(validationConfig);
 
 // Слушатель submit «отправки» формы редактирования профиля
