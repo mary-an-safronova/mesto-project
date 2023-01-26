@@ -2,9 +2,13 @@
 export { openAndCleanForm, pressEscape, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit };
 export { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl };
 
+// export { inputName, inputProfession };
+
 import { closePopup, openPopup } from "./utils";
 import { cleanForm } from "./validate";
 import { createCard } from "./card";
+
+import { patchUsers } from "./api";
 
 const popupCloseIconElements = document.querySelectorAll('.popup__close-icon');
 const overlayElements = document.querySelectorAll('.popup__background');
@@ -64,8 +68,20 @@ function showProfileInfo() {
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   closePopup(profilePopupEl);
-  profileNameEl.textContent = inputName.value;
-  profileProfessionEl.textContent = inputProfession.value;
+
+  patchUsers(inputName.value, inputProfession.value)
+  .then((result) => {
+    console.log(result);
+    if (result.ok) {
+      profileNameEl.textContent = inputName.value;
+      profileProfessionEl.textContent = inputProfession.value;
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+
 }
 
 // Добавление новых карточек через форму
