@@ -11,15 +11,17 @@ const imgPopupCaptionEl = cardImgPopupEl.querySelector('.popup__img-caption');
 const cardAddFormEl = document.querySelector('.add-form');
 
 // Функция создания новых карточек
-function createCard(template, name, link) {
+function createCard(template, name, link, likes) {
   const cardElement = template.querySelector('.place').cloneNode(true);
   const cardImg = cardElement.querySelector('.place__image');
   const likeElement = cardElement.querySelector('.place__like');
+  const likeCounterEl = cardElement.querySelector('.place__like-count');
   const deleteBtnElement = cardElement.querySelector('.place__delete-button');
   cardElement.querySelector('.place__name').textContent = name;
   cardImg.src = link;
   cardImg.classList.add('place__image_size');
   cardImg.alt = name;
+  likeCounterEl.textContent = likes.length;
   // Лайк
   likeElement.addEventListener('click', () => {
     likeElement.classList.toggle('place__like_active');

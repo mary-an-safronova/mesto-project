@@ -1,31 +1,30 @@
 import './styles/index.css';
 
 import { openAndCleanForm, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit } from './components/modal';
-import { cardTemplate, cardsContainerEl } from './components/modal';
+import { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl } from './components/modal';
 import { enableValidation } from './components/validate';
 import { createCard } from './components/card';
 import { cardAddFormEl } from './components/card';
 import { validationConfig } from './components/constants';
 
-import { getInitialCards } from './components/api';
+import { getInitialCards, getUsers } from './components/api';
 
-import { profileNameEl, profileProfessionEl } from './components/modal';
-import { getUsers } from './components/api';
+// import { profileNameEl, profileProfessionEl } from './components/modal';
+// import { getUsers } from './components/api';
 
 const profileBtnEl = document.querySelector('.profile__edit-button');
 const profileFormEl = document.querySelector('.edit-form');
 const cardAddBtnEl = document.querySelector('.profile__add-button');
-
 const profileAvatarEl = document.querySelector('.profile__avatar');
 
 // Отображение предзагруженных карточек с сервера
+// Отображение лайков карточек с сервера
 getInitialCards()
   .then((result) => {
-    result.forEach(({ name, link }) => {
-      const cardElement = createCard(cardTemplate, name, link);
+    result.forEach(({ name, link, likes }) => {
+      const cardElement = createCard(cardTemplate, name, link, likes);
       cardsContainerEl.prepend(cardElement);
-    }
-    );
+    });
   })
   .catch((err) => {
     console.log(err);
