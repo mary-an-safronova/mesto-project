@@ -38,7 +38,3 @@ function createCard(template, name, link) {
 
   return cardElement
 }
-
-
-
-
