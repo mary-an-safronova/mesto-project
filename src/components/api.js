@@ -1,6 +1,3 @@
-import { profileNameEl, profileProfessionEl } from "./modal";
-const profileAvatarEl = document.querySelector('.profile__avatar');
-
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-19',
   headers: {
@@ -30,14 +27,3 @@ export const getUsers = () => {
   })
     .then(getResponce);
 }
-
-getUsers()
-  .then((result) => {
-    console.log(result);
-    profileNameEl.textContent = result.name;
-    profileProfessionEl.textContent = result.about;
-    profileAvatarEl.src = result.avatar;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
