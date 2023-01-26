@@ -1,6 +1,6 @@
 // Работа модальных окон
 export { openAndCleanForm, pressEscape, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit };
-export { cardTemplate, cardsContainerEl };
+export { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl };
 
 import { closePopup, openPopup } from "./utils";
 import { cleanForm } from "./validate";

@@ -16,16 +16,16 @@
 
   <main class="content">
     <section class="profile">
-      <div class="profile__avatar"></div>
+      <img class="profile__avatar" src="" alt="Аватар">
 
       <div class="profile__container">
         <div class="profile__info">
           <div class="profile__name-container">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h1 class="profile__name"></h1>
             <button class="profile__edit-button button" type="button" form="edit-form"
               aria-label="Редактировать"></button>
           </div>
-          <p class="profile__profession">Исследователь океана</p>
+          <p class="profile__profession"></p>
         </div>
         <button class="profile__add-button button" type="button" form="add-form" aria-label="Добавить"></button>
       </div>
@@ -64,14 +64,14 @@
 
           <label for="name" class="form__info">
             <input type="text" class="form__textfield edit-form__input" id="name" name="user-name" placeholder="Имя"
-              value="Жак-Ив Кусто" minlength="2" maxlength="40" required pattern="^[\-A-Za-zа-яА-ЯёЁ\s]+$"
+              value minlength="2" maxlength="40" required pattern="^[\-A-Za-zа-яА-ЯёЁ\s]+$"
               data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы">
             <span class="form__input-error name-error"></span>
           </label>
 
           <label for="profession" class="form__info">
             <input type="text" class="form__textfield edit-form__input" id="profession" name="user-profession"
-              placeholder="О себе" value="Исследователь океана" minlength="2" maxlength="200" required
+              placeholder="О себе" value minlength="2" maxlength="200" required
               pattern="^[\-A-Za-zа-яА-ЯёЁ\s]+$"
               data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы">
             <span class="form__input-error profession-error"></span>
