@@ -15,7 +15,6 @@ const cardAddBtnEl = document.querySelector('.profile__add-button');
 
 getInitialCards()
   .then((result) => {
-    console.log(result);
     result.forEach(({ name, link }) => {
       const cardElement = createCard(cardTemplate, name, link);
       cardsContainerEl.prepend(cardElement);
