@@ -9,9 +9,14 @@ import { validationConfig } from './components/constants';
 
 import { getInitialCards } from './components/api';
 
+import { profileNameEl, profileProfessionEl } from './components/modal';
+import { getUsers } from './components/api';
+
 const profileBtnEl = document.querySelector('.profile__edit-button');
 const profileFormEl = document.querySelector('.edit-form');
 const cardAddBtnEl = document.querySelector('.profile__add-button');
+
+const profileAvatarEl = document.querySelector('.profile__avatar');
 
 getInitialCards()
   .then((result) => {
@@ -20,6 +25,17 @@ getInitialCards()
       cardsContainerEl.prepend(cardElement);
     }
     );
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+getUsers()
+  .then((result) => {
+    console.log(result);
+    profileNameEl.textContent = result.name;
+    profileProfessionEl.textContent = result.about;
+    profileAvatarEl.src = result.avatar;
   })
   .catch((err) => {
     console.log(err);
