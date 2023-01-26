@@ -14,14 +14,6 @@ const getResponce = (res => {
   return Promise.reject(`Ошибка: ${res.status}`);
 });
 
-// Запрос карточек с сервера
-export const getInitialCards = () => {
-  return fetch(`${config.baseUrl}/cards`, {
-    headers: config.headers
-  })
-    .then(getResponce);
-}
-
 // Запрос информации о пользователе с сервера
 export const getUsers = () => {
   return fetch(`${config.baseUrl}/users/me`, {
@@ -40,6 +32,14 @@ export const patchUsers = (name, about) => {
       about: about
     })
   });
+}
+
+// Запрос карточек с сервера
+export const getInitialCards = () => {
+  return fetch(`${config.baseUrl}/cards`, {
+    headers: config.headers
+  })
+    .then(getResponce);
 }
 
 // Добавление на сервер новой карточки
