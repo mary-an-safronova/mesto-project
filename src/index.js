@@ -34,7 +34,6 @@ getInitialCards()
 // Загрузка информации о пользователе с сервера
 getUsers()
   .then((result) => {
-    console.log(result);
     profileNameEl.textContent = result.name;
     profileProfessionEl.textContent = result.about;
     profileAvatarEl.src = result.avatar;

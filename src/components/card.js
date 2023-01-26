@@ -13,18 +13,18 @@ const cardAddFormEl = document.querySelector('.add-form');
 // Функция создания новых карточек
 function createCard(template, name, link) {
   const cardElement = template.querySelector('.place').cloneNode(true);
-  cardElement.querySelector('.place__name').textContent = name;
   const cardImg = cardElement.querySelector('.place__image');
+  const likeElement = cardElement.querySelector('.place__like');
+  const deleteBtnElement = cardElement.querySelector('.place__delete-button');
+  cardElement.querySelector('.place__name').textContent = name;
   cardImg.src = link;
   cardImg.classList.add('place__image_size');
   cardImg.alt = name;
   // Лайк
-  const likeElement = cardElement.querySelector('.place__like');
   likeElement.addEventListener('click', () => {
     likeElement.classList.toggle('place__like_active');
   });
   // Корзина
-  const deleteBtnElement = cardElement.querySelector('.place__delete-button');
   deleteBtnElement.addEventListener('click', () => {
     deleteBtnElement.closest('.place').remove();
   });

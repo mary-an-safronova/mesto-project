@@ -8,7 +8,7 @@ import { closePopup, openPopup } from "./utils";
 import { cleanForm } from "./validate";
 import { createCard } from "./card";
 
-import { patchUsers } from "./api";
+import { patchUsers, postCards } from "./api";
 
 const popupCloseIconElements = document.querySelectorAll('.popup__close-icon');
 const overlayElements = document.querySelectorAll('.popup__background');
@@ -71,7 +71,6 @@ function handleProfileFormSubmit(evt) {
 
   patchUsers(inputName.value, inputProfession.value)
   .then((result) => {
-    console.log(result);
     if (result.ok) {
       profileNameEl.textContent = inputName.value;
       profileProfessionEl.textContent = inputProfession.value;
@@ -80,8 +79,6 @@ function handleProfileFormSubmit(evt) {
   .catch((err) => {
     console.log(err);
   });
-
-
 }
 
 // Добавление новых карточек через форму
@@ -89,6 +86,18 @@ function handleProfileFormSubmit(evt) {
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
   closePopup(cardAddPopupEl);
-  const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value);
-  cardsContainerEl.prepend(cardElement);
+
+  postCards(inputCardName.value, inputCardImg.value)
+  .then((result) => {
+    console.log(result);
+    if (result.ok) {
+      const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value);
+      cardsContainerEl.prepend(cardElement);
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+
 }

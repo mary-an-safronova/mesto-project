@@ -1,5 +1,3 @@
-// import { inputName, inputProfession } from "./modal";
-
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-19',
   headers: {
@@ -44,3 +42,14 @@ export const patchUsers = (name, about) => {
   });
 }
 
+// Добавление на сервер новой карточки
+export const postCards = (name, link) => {
+  return fetch(`${config.baseUrl}/cards`, {
+    method: 'POST',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: name,
+      link: link
+    })
+  });
+}
