@@ -18,6 +18,7 @@ const cardAddBtnEl = document.querySelector('.profile__add-button');
 
 const profileAvatarEl = document.querySelector('.profile__avatar');
 
+// Отображение предзагруженных карточек с сервера
 getInitialCards()
   .then((result) => {
     result.forEach(({ name, link }) => {
@@ -30,6 +31,7 @@ getInitialCards()
     console.log(err);
   });
 
+// Загрузка информации о пользователе с сервера
 getUsers()
   .then((result) => {
     console.log(result);

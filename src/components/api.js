@@ -1,3 +1,5 @@
+// import { inputName, inputProfession } from "./modal";
+
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-19',
   headers: {
@@ -14,6 +16,7 @@ const getResponce = (res => {
   return Promise.reject(`Ошибка: ${res.status}`);
 });
 
+// Запрос карточек с сервера
 export const getInitialCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers
@@ -21,9 +24,23 @@ export const getInitialCards = () => {
     .then(getResponce);
 }
 
+// Запрос информации о пользователе с сервера
 export const getUsers = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers
   })
     .then(getResponce);
 }
+
+// Сохранение на сервере откорректированных данных пользователя
+export const patchUsers = (name, about) => {
+  return fetch(`${config.baseUrl}/users/me`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: name,
+      about: about
+    })
+  });
+}
+
