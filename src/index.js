@@ -9,9 +9,6 @@ import { validationConfig } from './components/constants';
 
 import { getInitialCards, getUsers } from './components/api';
 
-// import { profileNameEl, profileProfessionEl } from './components/modal';
-// import { getUsers } from './components/api';
-
 const profileBtnEl = document.querySelector('.profile__edit-button');
 const profileFormEl = document.querySelector('.edit-form');
 const cardAddBtnEl = document.querySelector('.profile__add-button');
@@ -21,8 +18,8 @@ const profileAvatarEl = document.querySelector('.profile__avatar');
 // Отображение лайков карточек с сервера
 getInitialCards()
   .then((result) => {
-    result.forEach(({ name, link, likes }) => {
-      const cardElement = createCard(cardTemplate, name, link, likes);
+    result.forEach(({ name, link, likes, owner }) => {
+      const cardElement = createCard(cardTemplate, name, link, likes, owner['_id']);
       cardsContainerEl.prepend(cardElement);
     });
   })
@@ -36,6 +33,7 @@ getUsers()
     profileNameEl.textContent = result.name;
     profileProfessionEl.textContent = result.about;
     profileAvatarEl.src = result.avatar;
+    console.log(result);
   })
   .catch((err) => {
     console.log(err);
