@@ -120,12 +120,29 @@
     </div>
   </div>
 
+  <!-- попап просмотра увеличенных карточек -->
   <div class="popup popup-img">
     <div class="popup__background"></div>
     <div class="popup__image-container">
       <button class="popup__close-icon button" type="button" aria-label="Закрыть"></button>
       <img class="popup__image" alt="">
       <p class="popup__img-caption"></p>
+    </div>
+  </div>
+
+  <!-- попап просмотра увеличенных карточек -->
+  <div class="popup popup-delete popup_opened">
+    <div class="popup__background"></div>
+    <div class="popup__container popup-delete__container">
+      <button class="popup__close-icon button" type="button" aria-label="Закрыть"></button>
+
+      <form class="delete-form form" id="delete-form" name="delete-form">
+        <fieldset class="delete-form__field form__field">
+          <legend class="form__title">Вы уверены?</legend>
+          <button type="submit" class="delete-form__submit-button form__submit-button button">Да</button>
+        </fieldset>
+      </form>
+
     </div>
   </div>
 
