@@ -2,12 +2,10 @@
 export { openAndCleanForm, pressEscape, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit };
 export { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl };
 
-// export { inputName, inputProfession };
-
 import { closePopup, openPopup } from "./utils";
 import { cleanForm } from "./validate";
 import { createCard } from "./card";
-
+import { cardElId, myUserId } from "..";
 import { patchUsers, postCards } from "./api";
 
 const popupCloseIconElements = document.querySelectorAll('.popup__close-icon');
@@ -89,15 +87,12 @@ function handleAddFormSubmit(evt) {
 
   postCards(inputCardName.value, inputCardImg.value)
   .then((result) => {
-    console.log(result);
     if (result.ok) {
-      const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, 0);
-      cardsContainerEl.prepend(cardElement);
+      const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, 0, myUserId, cardElId);
+      cardsContainerEl.append(cardElement);
     }
   })
   .catch((err) => {
     console.log(err);
   });
-
-
 }

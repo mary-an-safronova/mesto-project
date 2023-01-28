@@ -34,8 +34,8 @@
     <section class="grid-places">
 
       <template id="place-template">
-        <article class="place">
-          <button class="place__delete-button button" type="button" aria-label="Удалить"></button>
+        <article class="place" id="">
+          <button class="place__delete-button button" type="button" form="delete-form" aria-label="Удалить"></button>
           <img class="place__image" alt="">
           <div class="place__name-container">
             <h2 class="place__name"></h2>
@@ -130,8 +130,9 @@
     </div>
   </div>
 
-  <!-- попап просмотра увеличенных карточек -->
-  <div class="popup popup-delete popup_opened">
+  <!-- попап подтверждения удаления карточки -->
+  <!-- popup_opened -->
+  <div class="popup popup-delete">
     <div class="popup__background"></div>
     <div class="popup__container popup-delete__container">
       <button class="popup__close-icon button" type="button" aria-label="Закрыть"></button>

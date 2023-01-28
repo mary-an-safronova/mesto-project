@@ -51,5 +51,14 @@ export const postCards = (name, link) => {
       name: name,
       link: link
     })
+  })
+  .then(getResponce);
+}
+
+//  Удаление карточки с сервера
+export const deleteCards = (cardId) => {
+  return fetch((`${config.baseUrl}/cards/${cardId}`), {
+    method: 'DELETE',
+    headers: config.headers
   });
 }
