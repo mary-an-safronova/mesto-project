@@ -1,0 +1,6 @@
+.profile__avatar-cover_opened {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.3s ease 0s;
+}
