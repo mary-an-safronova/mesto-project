@@ -89,7 +89,7 @@ function handleAddFormSubmit(evt) {
   .then((result) => {
     if (result.ok) {
       const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, 0, myUserId, cardElId);
-      cardsContainerEl.append(cardElement);
+      cardsContainerEl.prepend(cardElement);
     }
   })
   .catch((err) => {
