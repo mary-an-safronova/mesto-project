@@ -36,7 +36,7 @@ getInitialCards()
   .then((result) => {
     result.forEach(({ name, link, likes, owner, _id }) => {
       const cardElement = createCard(cardTemplate, name, link, likes, owner['_id'], _id);
-      cardsContainerEl.prepend(cardElement);
+      cardsContainerEl.append(cardElement);
       cardElId = _id;
       someUserId = owner['_id'];
     });

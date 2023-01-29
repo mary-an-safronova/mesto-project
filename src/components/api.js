@@ -55,9 +55,25 @@ export const postCards = (name, link) => {
   .then(getResponce);
 }
 
-//  Удаление карточки с сервера
+// Удаление карточки с сервера
 export const deleteCards = (cardId) => {
   return fetch((`${config.baseUrl}/cards/${cardId}`), {
+    method: 'DELETE',
+    headers: config.headers
+  });
+}
+
+// Постановка лайка карточки
+export const putLikes = (cardId) => {
+  return fetch((`${config.baseUrl}/cards/likes/${cardId}`), {
+    method: 'PUT',
+    headers: config.headers
+  });
+}
+
+// Удаление лайка карточки
+export const deleteLikes = (cardId) => {
+  return fetch((`${config.baseUrl}/cards/likes/${cardId}`), {
     method: 'DELETE',
     headers: config.headers
   });

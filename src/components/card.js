@@ -1,7 +1,7 @@
 // Функции для работы с карточками проекта
 import { openPopup, closePopup } from "./utils";
-import { myUserId } from "..";
-import { deleteCards } from "./api";
+import { myUserId, cardElId, likeSomeUserId } from "..";
+import { deleteCards, putLikes, deleteLikes } from "./api";
 
 export { createCard };
 export { cardAddFormEl, deletePopupEl, deleteFormSubmitBtnEl };
@@ -60,7 +60,7 @@ function createCard(template, name, link, likes, id, cardId) {
   const cardElement = template.querySelector('.place').cloneNode(true);
   const cardImg = cardElement.querySelector('.place__image');
   const likeElement = cardElement.querySelector('.place__like');
-  const likeCounterEl = cardElement.querySelector('.place__like-count');
+  let likeCounterEl = cardElement.querySelector('.place__like-count');
   const deleteBtnElement = cardElement.querySelector('.place__delete-button');
   cardElement.querySelector('.place__name').textContent = name;
   cardImg.src = link;
@@ -68,10 +68,67 @@ function createCard(template, name, link, likes, id, cardId) {
   cardImg.alt = name;
   likeCounterEl.textContent = likes.length;
   cardElement.id = cardId;
+  const cardLikes = Array.from(likes);
 
   // Лайк
-  likeElement.addEventListener('click', () => {
-    likeElement.classList.toggle('place__like_active');
+  // Проверка id пользователя у лайка карточки
+  cardLikes.forEach(function (element) {
+    if (element._id === myUserId) {
+      likeElement.classList.add('place__like_active');
+    }
+  })
+
+  // Переключатель счетчика лайка
+  const toggleLikeCounter = () => {
+    if (!(likeElement.classList.contains('place__like_active'))) {
+      likeCounterEl.textContent =  likes.length + 1;
+    } else if (likeElement.classList.contains('place__like_active') && (likeCounterEl.textContent >= 1)) {
+      likeCounterEl.textContent =  (likes.length + 1) - 1;
+    }
+  }
+
+  // Добавление лайка карточки на сервер
+  const handlePutLike = () => {
+    return putLikes(cardElement.id)
+      .then((result) => {
+        if (result.ok) {
+          if (!(likeElement.classList.contains('place__like_active'))) {
+            likeCounterEl.textContent =  likes.length + 1;
+          }
+          likeElement.classList.add('place__like_active');
+          likeCounterEl.textContent = result.likes.length;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    };
+
+  // Добавление лайка карточки на сервер
+  const handleDeleteLike = () => {
+    return deleteLikes(cardElement.id)
+      .then((result) => {
+        if (result.ok) {
+          if ((likeElement.classList.contains('place__like_active')) && (likeCounterEl.textContent > 0)) {
+            likeCounterEl.textContent =  likes.length - 1;
+          }
+          likeElement.classList.remove('place__like_active');
+          likeCounterEl.textContent = result.likes.length;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    };
+
+  // Слушатель кнопки лайка карточки
+  likeElement.addEventListener('click', function () {
+    toggleLikeCounter();
+    if (likeElement.classList.contains('place__like_active')) {
+      handleDeleteLike();
+    } else {
+      handlePutLike();
+    }
   });
 
   // Корзина
