@@ -63,5 +63,7 @@ enableValidation(validationConfig);
 // Слушатель submit «отправки» формы редактирования профиля
 profileFormEl.addEventListener('submit', handleProfileFormSubmit);
 
+// Слушатель submit «отправки» формы редактирования аватара профиля
+
 // Слушатель submit «отправки» формы добавления карточек
 cardAddFormEl.addEventListener('submit', handleAddFormSubmit);

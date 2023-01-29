@@ -1,0 +1,15 @@
+.profile__avatar-cover {
+  background-image: url('../../../images/avatar-edit-pen.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 120px;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  aspect-ratio: 1 / 1;
+  margin: 0;
+  padding: 0;
+  border: none;
+  grid-area: 'avatar';
+}
