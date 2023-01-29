@@ -78,3 +78,14 @@ export const deleteLikes = (cardId) => {
     headers: config.headers
   });
 }
+
+// Обновление аватара пользователя
+export const patchUserAvatar = (avatar) => {
+  return fetch(`${config.baseUrl}/users/avatar`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      avatar: avatar
+    })
+  });
+}

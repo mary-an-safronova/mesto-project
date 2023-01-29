@@ -1,0 +1,8 @@
+.profile__avatar-wrap {
+  position: relative;
+  width: 120px;
+  aspect-ratio: 1 / 1;
+  margin-right: 30px;
+  display: grid;
+  grid-area: 'avatar';
+}

@@ -23,6 +23,8 @@
 @import url(../blocks/popup/__background/popup__background.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__avatar-cover/profile__avatar-cover.css);
+@import url(../blocks/profile/__avatar-wrap/profile__avatar-wrap.css);
 @import url(../blocks/profile/__name-container/profile__name-container.css);
 @import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/profile/__profession/profile__profession.css);

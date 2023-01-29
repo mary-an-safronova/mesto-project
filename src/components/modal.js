@@ -22,6 +22,8 @@ const cardAddPopupEl = document.querySelector('.popup-add');
 const cardsContainerEl = document.querySelector('.grid-places');
 const cardTemplate = document.querySelector('#place-template').content;
 
+const profileAvatarBtnEl = document.querySelector('.profile__avatar');
+
 // Функция открытия формы добавления карточки и очистка полей
 function openAndCleanForm() {
   openPopup(cardAddPopupEl);
@@ -96,3 +98,5 @@ function handleAddFormSubmit(evt) {
     console.log(err);
   });
 }
+
+// profileAvatarBtnEl.addEventListener('mouseover', );
