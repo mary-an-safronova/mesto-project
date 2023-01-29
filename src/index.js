@@ -15,6 +15,7 @@ const profileFormEl = document.querySelector('.edit-form');
 const cardAddBtnEl = document.querySelector('.profile__add-button');
 const profileAvatarEl = document.querySelector('.profile__avatar');
 const cardDeleteBtnElements = document.querySelectorAll('.place__delete-button');
+
 let myUserId = '';
 let cardElId = '';
 let someUserId = '';
@@ -62,8 +63,6 @@ enableValidation(validationConfig);
 
 // Слушатель submit «отправки» формы редактирования профиля
 profileFormEl.addEventListener('submit', handleProfileFormSubmit);
-
-// Слушатель submit «отправки» формы редактирования аватара профиля
 
 // Слушатель submit «отправки» формы добавления карточек
 cardAddFormEl.addEventListener('submit', handleAddFormSubmit);

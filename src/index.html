@@ -18,7 +18,7 @@
     <section class="profile">
       <div class="profile__avatar-wrap">
         <img class="profile__avatar" src="" alt="Аватар">
-        <button type="button" form="" aria-label="Изменить" class="profile__avatar-cover"></button>
+        <button class="profile__avatar-cover" type="button" form="avatar-form" aria-label="Изменить"></button>
       </div>
 
       <div class="profile__container">
@@ -144,6 +144,31 @@
         <fieldset class="delete-form__field form__field">
           <legend class="form__title">Вы уверены?</legend>
           <button type="submit" class="delete-form__submit-button form__submit-button button">Да</button>
+        </fieldset>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- попап изменения аватара пользователя -->
+  <div class="popup popup-avatar">
+    <div class="popup__background"></div>
+    <div class="popup__container popup-avatar__container">
+      <button class="popup__close-icon button" type="button" aria-label="Закрыть"></button>
+
+      <form class="avatar-form form" id="avatar-form" name="avatar-form" novalidate>
+        <fieldset class="form__field avatar-form__field">
+          <legend class="form__title">Обновить аватар</legend>
+
+          <label for="avatar-image" class="form__info">
+            <input type="text" class="form__textfield" id="avatar-image" name="avatar-image"
+              placeholder="Ссылка на картинку" required
+              pattern="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$"
+              data-error-message="Введите адрес сайта.">
+            <span class="form__input-error avatar-image-error"></span>
+          </label>
+
+          <button type="submit" class="avatar-form__submit-button form__submit-button button">Сохранить</button>
         </fieldset>
       </form>
 

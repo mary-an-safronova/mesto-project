@@ -21,8 +21,10 @@ const inputCardImg = document.querySelector('#card-image');
 const cardAddPopupEl = document.querySelector('.popup-add');
 const cardsContainerEl = document.querySelector('.grid-places');
 const cardTemplate = document.querySelector('#place-template').content;
-
-const profileAvatarBtnEl = document.querySelector('.profile__avatar');
+const profileAvatarEl = document.querySelector('.profile__avatar-wrap');
+const profileAvatarBtnEl = document.querySelector('.profile__avatar-cover');
+const avatarPopupEl = document.querySelector('.popup-avatar');
+// const avatarSubmitBtnEl = document.querySelector('.avatar-form__submit-button');
 
 // Функция открытия формы добавления карточки и очистка полей
 function openAndCleanForm() {
@@ -99,4 +101,18 @@ function handleAddFormSubmit(evt) {
   });
 }
 
-// profileAvatarBtnEl.addEventListener('mouseover', );
+// Слушатель наведения мыши на аватар
+profileAvatarEl.addEventListener('mouseover', () => {
+  profileAvatarBtnEl.classList.add('profile__avatar-cover_opened');
+});
+
+profileAvatarEl.addEventListener('mouseout', () => {
+  profileAvatarBtnEl.classList.remove('profile__avatar-cover_opened');
+});
+
+// Слушатель кнопки редактирования аватара профиля
+profileAvatarBtnEl.addEventListener('click', () => {
+  avatarPopupEl.classList.add('popup_opened');
+});
+
+// Слушатель submit «отправки» формы редактирования аватара профиля
