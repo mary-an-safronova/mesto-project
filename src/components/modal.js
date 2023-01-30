@@ -5,8 +5,8 @@ export { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl };
 import { closePopup, openPopup } from "./utils";
 import { cleanForm } from "./validate";
 import { createCard } from "./card";
-import { cardElId, myUserId } from "..";
-import { patchUsers, postCards } from "./api";
+import { cardElId, myUserId, profileAvatarEl } from "..";
+import { patchUsers, postCards, patchUserAvatar } from "./api";
 
 const popupCloseIconElements = document.querySelectorAll('.popup__close-icon');
 const overlayElements = document.querySelectorAll('.popup__background');
@@ -21,10 +21,11 @@ const inputCardImg = document.querySelector('#card-image');
 const cardAddPopupEl = document.querySelector('.popup-add');
 const cardsContainerEl = document.querySelector('.grid-places');
 const cardTemplate = document.querySelector('#place-template').content;
-const profileAvatarEl = document.querySelector('.profile__avatar-wrap');
+const profileAvatarWrapEl = document.querySelector('.profile__avatar-wrap');
 const profileAvatarBtnEl = document.querySelector('.profile__avatar-cover');
 const avatarPopupEl = document.querySelector('.popup-avatar');
-// const avatarSubmitBtnEl = document.querySelector('.avatar-form__submit-button');
+const avatarSubmitBtnEl = document.querySelector('.avatar-form__submit-button');
+const avatarImgInput = document.querySelector('#avatar-image');
 
 // Функция открытия формы добавления карточки и очистка полей
 function openAndCleanForm() {
@@ -102,11 +103,11 @@ function handleAddFormSubmit(evt) {
 }
 
 // Слушатель наведения мыши на аватар
-profileAvatarEl.addEventListener('mouseover', () => {
+profileAvatarWrapEl.addEventListener('mouseover', () => {
   profileAvatarBtnEl.classList.add('profile__avatar-cover_opened');
 });
 
-profileAvatarEl.addEventListener('mouseout', () => {
+profileAvatarWrapEl.addEventListener('mouseout', () => {
   profileAvatarBtnEl.classList.remove('profile__avatar-cover_opened');
 });
 
@@ -115,4 +116,22 @@ profileAvatarBtnEl.addEventListener('click', () => {
   avatarPopupEl.classList.add('popup_opened');
 });
 
+// Обработчик отправки формы редактирования аватара профиля
+function handleChangeAvatarFormSubmit(evt) {
+  evt.preventDefault();
+
+  patchUserAvatar(avatarImgInput.value)
+  .then((result) => {
+    if (result.ok) {
+      profileAvatarEl.src = result.avatar;
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+  closePopup(avatarPopupEl);
+}
+
 // Слушатель submit «отправки» формы редактирования аватара профиля
+avatarPopupEl.addEventListener('submit', handleChangeAvatarFormSubmit);
