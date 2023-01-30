@@ -81,11 +81,12 @@ export const deleteLikes = (cardId) => {
 
 // Обновление аватара пользователя
 export const patchUserAvatar = (avatar) => {
-  return fetch(`${config.baseUrl}/users/avatar`, {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: 'PATCH',
     headers: config.headers,
     body: JSON.stringify({
-      avatar: avatar
-    })
-  });
+      avatar,
+    }),
+  })
+  .then(getResponce)
 }

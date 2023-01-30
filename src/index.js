@@ -8,7 +8,7 @@ import { cardAddFormEl } from './components/card';
 import { validationConfig } from './components/constants';
 import { getInitialCards, getUsers } from './components/api';
 
-export { myUserId, cardElId, someUserId };
+export { myUserId, cardElId, someUserId, profileAvatarEl };
 
 const profileBtnEl = document.querySelector('.profile__edit-button');
 const profileFormEl = document.querySelector('.edit-form');

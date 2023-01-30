@@ -1,6 +1,6 @@
 // Функции для работы с карточками проекта
 import { openPopup, closePopup } from "./utils";
-import { myUserId, cardElId, likeSomeUserId } from "..";
+import { myUserId } from "..";
 import { deleteCards, putLikes, deleteLikes } from "./api";
 
 export { createCard };
