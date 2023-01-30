@@ -24,7 +24,6 @@ const cardTemplate = document.querySelector('#place-template').content;
 const profileAvatarWrapEl = document.querySelector('.profile__avatar-wrap');
 const profileAvatarBtnEl = document.querySelector('.profile__avatar-cover');
 const avatarPopupEl = document.querySelector('.popup-avatar');
-const avatarSubmitBtnEl = document.querySelector('.avatar-form__submit-button');
 const avatarImgInput = document.querySelector('#avatar-image');
 
 // Функция открытия формы добавления карточки и очистка полей
@@ -67,10 +66,23 @@ function showProfileInfo() {
   inputProfession.value = profileProfessionEl.textContent;
 }
 
+// Функция отображения загрузки информации полей формы
+function loadingPopup(isLoading, popup) {
+  const popupSubmitBtn = popup.querySelector('.form__submit-button');
+
+  if (isLoading) {
+    popupSubmitBtn.textContent = 'Сохранение...'
+    popupSubmitBtn.disabled = true;
+  } else {
+    popupSubmitBtn.textContent = 'Сохранить'
+    popupSubmitBtn.disabled = false;
+  }
+};
+
 // Обработчик «отправки» формы редактирования профиля
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  closePopup(profilePopupEl);
+  loadingPopup(true, profilePopupEl);
 
   patchUsers(inputName.value, inputProfession.value)
   .then((result) => {
@@ -81,14 +93,18 @@ function handleProfileFormSubmit(evt) {
   })
   .catch((err) => {
     console.log(err);
-  });
+  })
+  .then(closePopup(profilePopupEl))
+  .finally(() => {
+      loadingPopup(false, profilePopupEl)
+  })
 }
 
 // Добавление новых карточек через форму
 // Обработчик «отправки» формы добавления карточек
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
-  closePopup(cardAddPopupEl);
+  loadingPopup(true, cardAddPopupEl);
 
   postCards(inputCardName.value, inputCardImg.value)
   .then((result) => {
@@ -99,7 +115,11 @@ function handleAddFormSubmit(evt) {
   })
   .catch((err) => {
     console.log(err);
-  });
+  })
+  .then(closePopup(cardAddPopupEl))
+  .finally(() => {
+      loadingPopup(false, cardAddPopupEl)
+  })
 }
 
 // Слушатель наведения мыши на аватар
@@ -119,6 +139,7 @@ profileAvatarBtnEl.addEventListener('click', () => {
 // Обработчик отправки формы редактирования аватара профиля
 function handleChangeAvatarFormSubmit(evt) {
   evt.preventDefault();
+  loadingPopup(true, avatarPopupEl);
 
   patchUserAvatar(avatarImgInput.value)
   .then((result) => {
@@ -128,9 +149,11 @@ function handleChangeAvatarFormSubmit(evt) {
   })
   .catch((err) => {
     console.log(err);
-  });
-
-  closePopup(avatarPopupEl);
+  })
+  .then(closePopup(avatarPopupEl))
+  .finally(() => {
+      loadingPopup(false, avatarPopupEl)
+  })
 }
 
 // Слушатель submit «отправки» формы редактирования аватара профиля

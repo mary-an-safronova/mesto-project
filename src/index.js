@@ -42,8 +42,9 @@ getInitialCards()
       someUserId = owner['_id'];
     });
     cardDeleteBtnElements.forEach((cardDeleteBtnEl) => {
-      let studentId = cardDeleteBtnEl.closest('.place').owner['_id'];
-      if (studentId !== myUserId) {
+      let someUserId = cardDeleteBtnEl.closest('.place').owner['_id'];
+      console.log(someUserId);
+      if (someUserId !== myUserId) {
         cardDeleteBtnEl.classList.add('place__delete-button_hidden');
       }
     });
