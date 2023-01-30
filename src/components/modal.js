@@ -96,7 +96,8 @@ function handleProfileFormSubmit(evt) {
   })
   .then(closePopup(profilePopupEl))
   .finally(() => {
-      loadingPopup(false, profilePopupEl)
+      loadingPopup(false, profilePopupEl);
+      location.reload(true/false);
   })
 }
 
@@ -118,7 +119,8 @@ function handleAddFormSubmit(evt) {
   })
   .then(closePopup(cardAddPopupEl))
   .finally(() => {
-      loadingPopup(false, cardAddPopupEl)
+      loadingPopup(false, cardAddPopupEl);
+      location.reload(true/false);
   })
 }
 
@@ -152,7 +154,8 @@ function handleChangeAvatarFormSubmit(evt) {
   })
   .then(closePopup(avatarPopupEl))
   .finally(() => {
-      loadingPopup(false, avatarPopupEl)
+      loadingPopup(false, avatarPopupEl);
+      location.reload(true/false);
   })
 }
 
