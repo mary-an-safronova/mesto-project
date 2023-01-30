@@ -16,16 +16,19 @@
 
   <main class="content">
     <section class="profile">
-      <div class="profile__avatar"></div>
+      <div class="profile__avatar-wrap">
+        <img class="profile__avatar" src="" alt="Аватар">
+        <button class="profile__avatar-cover" type="button" form="avatar-form" aria-label="Изменить"></button>
+      </div>
 
       <div class="profile__container">
         <div class="profile__info">
           <div class="profile__name-container">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h1 class="profile__name"></h1>
             <button class="profile__edit-button button" type="button" form="edit-form"
               aria-label="Редактировать"></button>
           </div>
-          <p class="profile__profession">Исследователь океана</p>
+          <p class="profile__profession"></p>
         </div>
         <button class="profile__add-button button" type="button" form="add-form" aria-label="Добавить"></button>
       </div>
@@ -34,12 +37,16 @@
     <section class="grid-places">
 
       <template id="place-template">
-        <article class="place">
-          <button class="place__delete-button button" type="button" aria-label="Удалить"></button>
+        <article class="place" id="">
+          <button class="place__delete-button button" type="button" form="delete-form" aria-label="Удалить"></button>
           <img class="place__image" alt="">
           <div class="place__name-container">
             <h2 class="place__name"></h2>
-            <button class="place__like button" type="button" aria-label="Нравится"></button>
+            <div class="place__like-container">
+              <button class="place__like button" type="button" aria-label="Нравится"></button>
+              <p class="place__like-count"></p>
+            </div>
+
           </div>
         </article>
       </template>
@@ -64,14 +71,14 @@
 
           <label for="name" class="form__info">
             <input type="text" class="form__textfield edit-form__input" id="name" name="user-name" placeholder="Имя"
-              value="Жак-Ив Кусто" minlength="2" maxlength="40" required pattern="^[\-A-Za-zа-яА-ЯёЁ\s]+$"
+              value minlength="2" maxlength="40" required pattern="^[\-A-Za-zа-яА-ЯёЁ\s]+$"
               data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы">
             <span class="form__input-error name-error"></span>
           </label>
 
           <label for="profession" class="form__info">
             <input type="text" class="form__textfield edit-form__input" id="profession" name="user-profession"
-              placeholder="О себе" value="Исследователь океана" minlength="2" maxlength="200" required
+              placeholder="О себе" value minlength="2" maxlength="200" required
               pattern="^[\-A-Za-zа-яА-ЯёЁ\s]+$"
               data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы">
             <span class="form__input-error profession-error"></span>
@@ -116,12 +123,55 @@
     </div>
   </div>
 
+  <!-- попап просмотра увеличенных карточек -->
   <div class="popup popup-img">
     <div class="popup__background"></div>
     <div class="popup__image-container">
       <button class="popup__close-icon button" type="button" aria-label="Закрыть"></button>
       <img class="popup__image" alt="">
       <p class="popup__img-caption"></p>
+    </div>
+  </div>
+
+  <!-- попап подтверждения удаления карточки -->
+  <!-- popup_opened -->
+  <div class="popup popup-delete">
+    <div class="popup__background"></div>
+    <div class="popup__container popup-delete__container">
+      <button class="popup__close-icon button" type="button" aria-label="Закрыть"></button>
+
+      <form class="delete-form form" id="delete-form" name="delete-form">
+        <fieldset class="delete-form__field form__field">
+          <legend class="form__title">Вы уверены?</legend>
+          <button type="submit" class="delete-form__submit-button form__submit-button button">Да</button>
+        </fieldset>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- попап изменения аватара пользователя -->
+  <div class="popup popup-avatar">
+    <div class="popup__background"></div>
+    <div class="popup__container popup-avatar__container">
+      <button class="popup__close-icon button" type="button" aria-label="Закрыть"></button>
+
+      <form class="avatar-form form" id="avatar-form" name="avatar-form" novalidate>
+        <fieldset class="form__field avatar-form__field">
+          <legend class="form__title">Обновить аватар</legend>
+
+          <label for="avatar-image" class="form__info">
+            <input type="text" class="avatar-form__textfield form__textfield" type="url" id="avatar-image" name="avatar-image" value
+              placeholder="Ссылка на картинку" required
+              pattern="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$"
+              data-error-message="Введите адрес сайта.">
+            <span class="form__input-error avatar-image-error"></span>
+          </label>
+
+          <button type="submit" class="avatar-form__submit-button form__submit-button button">Сохранить</button>
+        </fieldset>
+      </form>
+
     </div>
   </div>
 
