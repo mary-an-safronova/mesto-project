@@ -55,6 +55,49 @@ const checkOwnerId = (button, id) => {
   }
 }
 
+// Переключатель счетчика лайка
+const toggleLikeCounter = (like, counter, likes) => {
+  if (!(like.classList.contains('place__like_active'))) {
+    counter.textContent =  likes.length + 1;
+  } else if (like.classList.contains('place__like_active') && (counter.textContent >= 1)) {
+    counter.textContent =  (likes.length + 1) - 1;
+  }
+}
+
+// Добавление лайка карточки на сервер
+const handlePutLike = (like, counter, likes, card) => {
+  return putLikes(card.id)
+    .then((result) => {
+      if (result.ok) {
+        if (!(like.classList.contains('place__like_active'))) {
+          counter.textContent =  likes.length + 1;
+        }
+        like.classList.add('place__like_active');
+        counter.textContent = result.likes.length;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
+
+// Добавление лайка карточки на сервер
+const handleDeleteLike = (like, counter, likes, card) => {
+  return deleteLikes(card.id)
+    .then((result) => {
+      if (result.ok) {
+        if ((like.classList.contains('place__like_active')) && (counter.textContent > 0)) {
+          counter.textContent =  likes.length - 1;
+        }
+        like.classList.remove('place__like_active');
+        counter.textContent = result.likes.length;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
+
 // Функция создания новых карточек
 function createCard(template, name, link, likes, id, cardId) {
   const cardElement = template.querySelector('.place').cloneNode(true);
@@ -78,56 +121,13 @@ function createCard(template, name, link, likes, id, cardId) {
     }
   })
 
-  // Переключатель счетчика лайка
-  const toggleLikeCounter = () => {
-    if (!(likeElement.classList.contains('place__like_active'))) {
-      likeCounterEl.textContent =  likes.length + 1;
-    } else if (likeElement.classList.contains('place__like_active') && (likeCounterEl.textContent >= 1)) {
-      likeCounterEl.textContent =  (likes.length + 1) - 1;
-    }
-  }
-
-  // Добавление лайка карточки на сервер
-  const handlePutLike = () => {
-    return putLikes(cardElement.id)
-      .then((result) => {
-        if (result.ok) {
-          if (!(likeElement.classList.contains('place__like_active'))) {
-            likeCounterEl.textContent =  likes.length + 1;
-          }
-          likeElement.classList.add('place__like_active');
-          likeCounterEl.textContent = result.likes.length;
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    };
-
-  // Добавление лайка карточки на сервер
-  const handleDeleteLike = () => {
-    return deleteLikes(cardElement.id)
-      .then((result) => {
-        if (result.ok) {
-          if ((likeElement.classList.contains('place__like_active')) && (likeCounterEl.textContent > 0)) {
-            likeCounterEl.textContent =  likes.length - 1;
-          }
-          likeElement.classList.remove('place__like_active');
-          likeCounterEl.textContent = result.likes.length;
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    };
-
   // Слушатель кнопки лайка карточки
   likeElement.addEventListener('click', function () {
-    toggleLikeCounter();
+    toggleLikeCounter(likeElement, likeCounterEl, likes);
     if (likeElement.classList.contains('place__like_active')) {
-      handleDeleteLike();
+      handleDeleteLike(likeElement, likeCounterEl, likes, cardElement);
     } else {
-      handlePutLike();
+      handlePutLike(likeElement, likeCounterEl, likes, cardElement);
     }
   });
 
