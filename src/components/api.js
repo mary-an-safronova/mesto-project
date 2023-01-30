@@ -19,7 +19,7 @@ export const getUsers = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers
   })
-    .then(getResponce);
+    .then(getResponce)
 }
 
 // Сохранение на сервере откорректированных данных пользователя
@@ -31,7 +31,8 @@ export const patchUsers = (name, about) => {
       name: name,
       about: about
     })
-  });
+  })
+  .then(getResponce)
 }
 
 // Запрос карточек с сервера
@@ -39,7 +40,7 @@ export const getInitialCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers
   })
-    .then(getResponce);
+    .then(getResponce)
 }
 
 // Добавление на сервер новой карточки
@@ -52,7 +53,7 @@ export const postCards = (name, link) => {
       link: link
     })
   })
-  .then(getResponce);
+  .then(getResponce)
 }
 
 // Удаление карточки с сервера
@@ -60,7 +61,8 @@ export const deleteCards = (cardId) => {
   return fetch((`${config.baseUrl}/cards/${cardId}`), {
     method: 'DELETE',
     headers: config.headers
-  });
+  })
+  .then(getResponce)
 }
 
 // Постановка лайка карточки
@@ -68,7 +70,8 @@ export const putLikes = (cardId) => {
   return fetch((`${config.baseUrl}/cards/likes/${cardId}`), {
     method: 'PUT',
     headers: config.headers
-  });
+  })
+  .then(getResponce)
 }
 
 // Удаление лайка карточки
@@ -76,7 +79,8 @@ export const deleteLikes = (cardId) => {
   return fetch((`${config.baseUrl}/cards/likes/${cardId}`), {
     method: 'DELETE',
     headers: config.headers
-  });
+  })
+  .then(getResponce)
 }
 
 // Обновление аватара пользователя

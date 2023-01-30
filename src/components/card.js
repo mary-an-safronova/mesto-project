@@ -19,18 +19,17 @@ const removeClosestCard = (button) => {
 
   deleteCards(card.id)
   .then((result) => {
-    if (result.ok) {
-      card.remove();
-      closePopup(deletePopupEl);
-    }
+    result = card.remove();
   })
   .catch((err) => {
     console.log(err);
-  });
-
-  deleteFormSubmitBtnEl.removeEventListener('click', () => {
-    removeClosestCard(button)
-  });
+  })
+  .then(closePopup(deletePopupEl))
+  .finally(() => {
+    deleteFormSubmitBtnEl.removeEventListener('click', () => {
+      removeClosestCard(button)
+    });
+  })
 }
 
 // Функция открытия попапа подтверждения удаления карточки
@@ -68,30 +67,26 @@ const toggleLikeCounter = (like, counter, likes) => {
 const handlePutLike = (like, counter, likes, card) => {
   return putLikes(card.id)
     .then((result) => {
-      if (result.ok) {
-        if (!(like.classList.contains('place__like_active'))) {
-          counter.textContent =  likes.length + 1;
-        }
-        like.classList.add('place__like_active');
-        counter.textContent = result.likes.length;
+      if (!(like.classList.contains('place__like_active'))) {
+        counter.textContent =  likes.length + 1;
       }
+      like.classList.add('place__like_active');
+      counter.textContent = result.likes.length;
     })
     .catch((err) => {
       console.log(err);
     });
   };
 
-// Добавление лайка карточки на сервер
+// Удаление лайка карточки на сервер
 const handleDeleteLike = (like, counter, likes, card) => {
   return deleteLikes(card.id)
     .then((result) => {
-      if (result.ok) {
-        if ((like.classList.contains('place__like_active')) && (counter.textContent > 0)) {
-          counter.textContent =  likes.length - 1;
-        }
-        like.classList.remove('place__like_active');
-        counter.textContent = result.likes.length;
+      if ((like.classList.contains('place__like_active')) && (counter.textContent > 0)) {
+        counter.textContent =  likes.length - 1;
       }
+      like.classList.remove('place__like_active');
+      counter.textContent = result.likes.length;
     })
     .catch((err) => {
       console.log(err);
