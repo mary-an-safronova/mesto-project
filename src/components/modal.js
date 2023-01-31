@@ -97,7 +97,8 @@ function handleProfileFormSubmit(evt) {
   .then(closePopup(profilePopupEl))
   .finally(() => {
       loadingPopup(false, profilePopupEl);
-      location.reload(true/false);
+      profileNameEl.textContent = inputName.value;
+      profileProfessionEl.textContent = inputProfession.value;
   })
 }
 
@@ -120,7 +121,8 @@ function handleAddFormSubmit(evt) {
   .then(closePopup(cardAddPopupEl))
   .finally(() => {
       loadingPopup(false, cardAddPopupEl);
-      location.reload(true/false);
+      const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, 0, myUserId, cardElId);
+      cardsContainerEl.prepend(cardElement);
   })
 }
 
@@ -155,7 +157,7 @@ function handleChangeAvatarFormSubmit(evt) {
   .then(closePopup(avatarPopupEl))
   .finally(() => {
       loadingPopup(false, avatarPopupEl);
-      location.reload(true/false);
+      profileAvatarEl.src = avatarImgInput.value;
   })
 }
 
