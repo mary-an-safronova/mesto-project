@@ -1,26 +1,23 @@
 // Функциональность валидации форм
+import { validationConfig } from "./constants";
+
 export { enableValidation, cleanForm, enableSubmitButton };
 
-// Очистка полей и ошибок при закрытии модального окна
-function cleanForm() {
-  const forms = document.querySelectorAll('.form');
-  const errorElements = document.querySelectorAll('.form__input-error');
-  const inputElements = document.querySelectorAll('.form__textfield');
-  const submitBtns = document.querySelectorAll('.form__submit-button');
+function disableSubmitButton(button) {
+  button.disabled = true;
+  button.classList.add('form__submit-button_inactive');
+}
 
-  forms.forEach((form) => {
-    errorElements.forEach((errorElement) => {
-      inputElements.forEach((inputElement) => {
-        submitBtns.forEach((submitBtn) => {
-          form.reset();
-          errorElement.textContent = '';
-          inputElement.classList.remove('form__textfield_type_error');
-          submitBtn.disabled = true;
-          submitBtn.classList.add('form__submit-button_inactive');
-        });
-      });
-    })
-  })
+// Очистка полей и ошибок формы
+function cleanForm(popup) {
+  const form = popup.querySelector('.form');
+  const submitBtn = form.querySelector('.form__submit-button');
+  const input = form.querySelector('.form__textfield');
+
+  form.reset();
+
+  hideInputError(form, input, validationConfig);
+  disableSubmitButton(submitBtn);
 }
 
 // Добавление класса с ошибкой
