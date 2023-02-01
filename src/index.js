@@ -14,7 +14,6 @@ const profileBtnEl = document.querySelector('.profile__edit-button');
 const profileFormEl = document.querySelector('.edit-form');
 const cardAddBtnEl = document.querySelector('.profile__add-button');
 const profileAvatarEl = document.querySelector('.profile__avatar');
-// const cardDeleteBtnElements = document.querySelectorAll('.place__delete-button');
 
 let myUserId = '';
 let cardElId = '';
@@ -30,10 +29,10 @@ Promise.all([getUserInfo(), getInitialCards()])
     profileAvatarEl.src = userInfo.avatar;
 
     cards.forEach(({ name, link, likes, owner, _id }) => {
-      const cardElement = createCard(cardTemplate, name, link, likes, owner['_id'], _id);
+      const cardElement = createCard(cardTemplate, name, link, likes, owner._id, _id, userInfo._id);
       cardsContainerEl.append(cardElement);
       cardElId = _id;
-      someUserId = owner['_id'];
+      someUserId = owner._id;
     });
   })
   .catch((err) => {

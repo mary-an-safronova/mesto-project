@@ -5,7 +5,7 @@ export { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl };
 import { closePopup, openPopup } from "./utils";
 import { cleanForm } from "./validate";
 import { createCard } from "./card";
-import { cardElId, myUserId, profileAvatarEl } from "..";
+import { cardElId, myUserId, profileAvatarEl, someUserId } from "..";
 import { patchUsers, postCards, patchUserAvatar } from "./api";
 
 const popupCloseIconElements = document.querySelectorAll('.popup__close-icon');
@@ -21,6 +21,8 @@ const inputCardImg = document.querySelector('#card-image');
 const cardAddPopupEl = document.querySelector('.popup-add');
 const cardsContainerEl = document.querySelector('.grid-places');
 const cardTemplate = document.querySelector('#place-template').content;
+let cardCount = cardTemplate.querySelector('.place__like-count');
+cardCount = '';
 const profileAvatarWrapEl = document.querySelector('.profile__avatar-wrap');
 const profileAvatarBtnEl = document.querySelector('.profile__avatar-cover');
 const avatarPopupEl = document.querySelector('.popup-avatar');
@@ -111,7 +113,7 @@ function handleAddFormSubmit(evt) {
   postCards(inputCardName.value, inputCardImg.value)
   .then((result) => {
     if (result.ok) {
-      const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, 0, myUserId, cardElId);
+      const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, cardCount, someUserId, cardElId, myUserId);
       cardsContainerEl.prepend(cardElement);
     }
   })
@@ -121,7 +123,7 @@ function handleAddFormSubmit(evt) {
   .then(closePopup(cardAddPopupEl))
   .finally(() => {
       loadingPopup(false, cardAddPopupEl);
-      const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, 0, myUserId, cardElId);
+      const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, cardCount, someUserId, cardElId, myUserId);
       cardsContainerEl.prepend(cardElement);
   })
 }

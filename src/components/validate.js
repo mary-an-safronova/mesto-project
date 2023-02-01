@@ -1,5 +1,5 @@
 // Функциональность валидации форм
-export { enableValidation, cleanForm };
+export { enableValidation, cleanForm, enableSubmitButton };
 
 // Очистка полей и ошибок при закрытии модального окна
 function cleanForm() {
@@ -94,3 +94,7 @@ const enableValidation = (config) => {
     setEventListeners(formElement, config);
   });
 };
+
+const enableSubmitButton = (submitButton) => {
+  submitButton.classList.remove('form__submit-button_inactive');
+}
