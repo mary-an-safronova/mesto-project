@@ -64,7 +64,7 @@ function showProfileInfo() {
 }
 
 // Функция отображения загрузки информации полей формы
-function loadingPopup(isLoading, popup) {
+function renderLoading(isLoading, popup) {
   const popupSubmitBtn = popup.querySelector('.form__submit-button');
 
   if (isLoading) {
@@ -79,7 +79,7 @@ function loadingPopup(isLoading, popup) {
 // Обработчик «отправки» формы редактирования профиля
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  loadingPopup(true, profilePopupEl);
+  renderLoading(true, profilePopupEl);
 
   patchUsers(inputName.value, inputProfession.value)
   .then((result) => {
@@ -93,7 +93,7 @@ function handleProfileFormSubmit(evt) {
   })
   .then(closePopup(profilePopupEl))
   .finally(() => {
-      loadingPopup(false, profilePopupEl);
+    renderLoading(false, profilePopupEl);
       profileNameEl.textContent = inputName.value;
       profileProfessionEl.textContent = inputProfession.value;
   })
@@ -103,7 +103,7 @@ function handleProfileFormSubmit(evt) {
 // Обработчик «отправки» формы добавления карточек
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
-  loadingPopup(true, cardAddPopupEl);
+  renderLoading(true, cardAddPopupEl);
 
   postCards(inputCardName.value, inputCardImg.value)
   .then((result) => {
@@ -117,7 +117,7 @@ function handleAddFormSubmit(evt) {
   })
   .then(closePopup(cardAddPopupEl))
   .finally(() => {
-      loadingPopup(false, cardAddPopupEl);
+    renderLoading(false, cardAddPopupEl);
       const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, cardCount, someUserId, cardElId, myUserId);
       cardsContainerEl.prepend(cardElement);
   })
@@ -126,7 +126,7 @@ function handleAddFormSubmit(evt) {
 // Обработчик отправки формы редактирования аватара профиля
 function handleChangeAvatarFormSubmit(evt) {
   evt.preventDefault();
-  loadingPopup(true, avatarPopupEl);
+  renderLoading(true, avatarPopupEl);
 
   patchUserAvatar(avatarImgInput.value)
   .then((result) => {
@@ -139,7 +139,7 @@ function handleChangeAvatarFormSubmit(evt) {
   })
   .then(closePopup(avatarPopupEl))
   .finally(() => {
-      loadingPopup(false, avatarPopupEl);
+    renderLoading(false, avatarPopupEl);
       profileAvatarEl.src = avatarImgInput.value;
   })
 }
