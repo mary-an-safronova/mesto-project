@@ -1,7 +1,7 @@
 import './styles/index.css';
 
-import { openAndCleanForm, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit } from './components/modal';
-import { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl } from './components/modal';
+import { openAndCleanForm, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit } from './components/modal';
+import { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, cardAddPopupEl, avatarPopupEl } from './components/modal';
 import { enableValidation } from './components/validate';
 import { createCard } from './components/card';
 import { cardAddFormEl } from './components/card';
@@ -14,6 +14,8 @@ const profileBtnEl = document.querySelector('.profile__edit-button');
 const profileFormEl = document.querySelector('.edit-form');
 const cardAddBtnEl = document.querySelector('.profile__add-button');
 const profileAvatarEl = document.querySelector('.profile__avatar');
+const profileAvatarWrapEl = document.querySelector('.profile__avatar-wrap');
+const profileAvatarBtnEl = document.querySelector('.profile__avatar-cover');
 
 let myUserId = '';
 let cardElId = '';
@@ -40,10 +42,26 @@ Promise.all([getUserInfo(), getInitialCards()])
   });
 
 // Добавления слушателя клика на кнопку добавления карточки
-cardAddBtnEl.addEventListener('click', openAndCleanForm);
+cardAddBtnEl.addEventListener('click', () => {
+  openAndCleanForm(cardAddPopupEl);
+});
 
 // Добавления слушателя клика на кнопку редактирования профиля
 profileBtnEl.addEventListener('click', showProfileInfo);
+
+// Слушатель наведения мыши на аватар
+profileAvatarWrapEl.addEventListener('mouseover', () => {
+  profileAvatarBtnEl.classList.add('profile__avatar-cover_opened');
+});
+
+profileAvatarWrapEl.addEventListener('mouseout', () => {
+  profileAvatarBtnEl.classList.remove('profile__avatar-cover_opened');
+});
+
+// Слушатель кнопки редактирования аватара профиля
+profileAvatarBtnEl.addEventListener('click', () => {
+  openAndCleanForm(avatarPopupEl);
+});
 
 // Валидация форм
 enableValidation(validationConfig);
@@ -53,3 +71,6 @@ profileFormEl.addEventListener('submit', handleProfileFormSubmit);
 
 // Слушатель submit «отправки» формы добавления карточек
 cardAddFormEl.addEventListener('submit', handleAddFormSubmit);
+
+// Слушатель submit «отправки» формы редактирования аватара профиля
+avatarPopupEl.addEventListener('submit', handleChangeAvatarFormSubmit);

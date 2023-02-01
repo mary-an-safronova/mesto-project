@@ -19,12 +19,13 @@ const removeClosestCard = (button) => {
 
   deleteCards(card.id)
   .then((result) => {
-    return result = card.remove();
+    card.remove();
+    console.log(result);
   })
+  .then(closePopup(deletePopupEl))
   .catch((err) => {
     console.log(err);
   })
-  .then(closePopup(deletePopupEl))
   .finally(() => {
     deleteFormSubmitBtnEl.removeEventListener('click', () => {
       removeClosestCard(button)
