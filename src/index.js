@@ -6,7 +6,7 @@ import { enableValidation } from './components/validate';
 import { createCard } from './components/card';
 import { cardAddFormEl } from './components/card';
 import { validationConfig } from './components/constants';
-import { getInitialCards, getUsers } from './components/api';
+import { getInitialCards, getUserInfo } from './components/api';
 
 export { myUserId, cardElId, someUserId, profileAvatarEl };
 
@@ -14,39 +14,26 @@ const profileBtnEl = document.querySelector('.profile__edit-button');
 const profileFormEl = document.querySelector('.edit-form');
 const cardAddBtnEl = document.querySelector('.profile__add-button');
 const profileAvatarEl = document.querySelector('.profile__avatar');
-const cardDeleteBtnElements = document.querySelectorAll('.place__delete-button');
+// const cardDeleteBtnElements = document.querySelectorAll('.place__delete-button');
 
 let myUserId = '';
 let cardElId = '';
 let someUserId = '';
 
 // Загрузка информации о пользователе с сервера
-getUsers()
-  .then((result) => {
-    myUserId = result._id;
-    profileNameEl.textContent = result.name;
-    profileProfessionEl.textContent = result.about;
-    profileAvatarEl.src = result.avatar;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
 // Отображение предзагруженных карточек с сервера
-getInitialCards()
-  .then((result) => {
-    result.forEach(({ name, link, likes, owner, _id }) => {
+Promise.all([getUserInfo(), getInitialCards()])
+  .then(([userInfo, cards]) => {
+    myUserId = userInfo._id;
+    profileNameEl.textContent = userInfo.name;
+    profileProfessionEl.textContent = userInfo.about;
+    profileAvatarEl.src = userInfo.avatar;
+
+    cards.forEach(({ name, link, likes, owner, _id }) => {
       const cardElement = createCard(cardTemplate, name, link, likes, owner['_id'], _id);
       cardsContainerEl.append(cardElement);
       cardElId = _id;
       someUserId = owner['_id'];
-    });
-    cardDeleteBtnElements.forEach((cardDeleteBtnEl) => {
-      let someUserId = cardDeleteBtnEl.closest('.place').owner['_id'];
-      console.log(someUserId);
-      if (someUserId !== myUserId) {
-        cardDeleteBtnEl.classList.add('place__delete-button_hidden');
-      }
     });
   })
   .catch((err) => {
