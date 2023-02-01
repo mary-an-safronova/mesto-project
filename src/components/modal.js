@@ -88,10 +88,10 @@ function handleProfileFormSubmit(evt) {
       profileProfessionEl.textContent = inputProfession.value;
     }
   })
+  .then(closePopup(profilePopupEl))
   .catch((err) => {
     console.log(err);
   })
-  .then(closePopup(profilePopupEl))
   .finally(() => {
     renderLoading(false, profilePopupEl);
       profileNameEl.textContent = inputName.value;
@@ -112,10 +112,10 @@ function handleAddFormSubmit(evt) {
       cardsContainerEl.prepend(cardElement);
     }
   })
+  .then(closePopup(cardAddPopupEl))
   .catch((err) => {
     console.log(err);
   })
-  .then(closePopup(cardAddPopupEl))
   .finally(() => {
     renderLoading(false, cardAddPopupEl);
       const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, cardCount, someUserId, cardElId, myUserId);
@@ -134,10 +134,10 @@ function handleChangeAvatarFormSubmit(evt) {
       profileAvatarEl.src = result.avatar;
     }
   })
+  .then(closePopup(avatarPopupEl))
   .catch((err) => {
     console.log(err);
   })
-  .then(closePopup(avatarPopupEl))
   .finally(() => {
     renderLoading(false, avatarPopupEl);
       profileAvatarEl.src = avatarImgInput.value;
