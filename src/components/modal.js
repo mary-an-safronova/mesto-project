@@ -29,7 +29,7 @@ const avatarImgInput = document.querySelector('#avatar-image');
 // Функция открытия формы добавления карточки и очистка полей
 function openAndCleanForm(popup) {
   openPopup(popup);
-  cleanForm();
+  cleanForm(popup);
 }
 
 // Закрытие модального окна при клике на крестик
