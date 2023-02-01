@@ -76,6 +76,11 @@ function renderLoading(isLoading, popup) {
   }
 };
 
+const setUserInfo = () => {
+  profileNameEl.textContent = inputName.value;
+  profileProfessionEl.textContent = inputProfession.value;
+};
+
 // Обработчик «отправки» формы редактирования профиля
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
@@ -83,8 +88,7 @@ function handleProfileFormSubmit(evt) {
 
   patchUsers(inputName.value, inputProfession.value)
   .then((result) => {
-    profileNameEl.textContent = inputName.value;
-    profileProfessionEl.textContent = inputProfession.value;
+    setUserInfo();
     console.log(result);
   })
   .then(closePopup(profilePopupEl))
