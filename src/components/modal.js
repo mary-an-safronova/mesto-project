@@ -1,6 +1,6 @@
 // Работа модальных окон
-export { openAndCleanForm, pressEscape, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit };
-export { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl };
+export { openAndCleanForm, pressEscape, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit };
+export { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, cardAddPopupEl, avatarPopupEl };
 
 import { closePopup, openPopup } from "./utils";
 import { cleanForm } from "./validate";
@@ -23,14 +23,12 @@ const cardsContainerEl = document.querySelector('.grid-places');
 const cardTemplate = document.querySelector('#place-template').content;
 let cardCount = cardTemplate.querySelector('.place__like-count');
 cardCount = '';
-const profileAvatarWrapEl = document.querySelector('.profile__avatar-wrap');
-const profileAvatarBtnEl = document.querySelector('.profile__avatar-cover');
 const avatarPopupEl = document.querySelector('.popup-avatar');
 const avatarImgInput = document.querySelector('#avatar-image');
 
 // Функция открытия формы добавления карточки и очистка полей
-function openAndCleanForm() {
-  openPopup(cardAddPopupEl);
+function openAndCleanForm(popup) {
+  openPopup(popup);
   cleanForm();
 }
 
@@ -39,7 +37,6 @@ popupCloseIconElements.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => {
     closePopup(popup);
-    cleanForm();
   });
 });
 
@@ -48,7 +45,6 @@ overlayElements.forEach((overlayElement) => {
   const popup = overlayElement.closest('.popup');
   overlayElement.addEventListener('click', () => {
     closePopup(popup);
-    cleanForm();
   });
 });
 
@@ -57,7 +53,6 @@ function pressEscape (event) {
   if (event.code === escape) {
     const popupActive = document.querySelector('.popup_opened');
     closePopup(popupActive);
-    cleanForm();
   }
 }
 
@@ -128,20 +123,6 @@ function handleAddFormSubmit(evt) {
   })
 }
 
-// Слушатель наведения мыши на аватар
-profileAvatarWrapEl.addEventListener('mouseover', () => {
-  profileAvatarBtnEl.classList.add('profile__avatar-cover_opened');
-});
-
-profileAvatarWrapEl.addEventListener('mouseout', () => {
-  profileAvatarBtnEl.classList.remove('profile__avatar-cover_opened');
-});
-
-// Слушатель кнопки редактирования аватара профиля
-profileAvatarBtnEl.addEventListener('click', () => {
-  avatarPopupEl.classList.add('popup_opened');
-});
-
 // Обработчик отправки формы редактирования аватара профиля
 function handleChangeAvatarFormSubmit(evt) {
   evt.preventDefault();
@@ -162,6 +143,3 @@ function handleChangeAvatarFormSubmit(evt) {
       profileAvatarEl.src = avatarImgInput.value;
   })
 }
-
-// Слушатель submit «отправки» формы редактирования аватара профиля
-avatarPopupEl.addEventListener('submit', handleChangeAvatarFormSubmit);
