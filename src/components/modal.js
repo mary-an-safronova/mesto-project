@@ -83,10 +83,9 @@ function handleProfileFormSubmit(evt) {
 
   patchUsers(inputName.value, inputProfession.value)
   .then((result) => {
-    if (result.ok) {
-      profileNameEl.textContent = inputName.value;
-      profileProfessionEl.textContent = inputProfession.value;
-    }
+    profileNameEl.textContent = inputName.value;
+    profileProfessionEl.textContent = inputProfession.value;
+    console.log(result);
   })
   .then(closePopup(profilePopupEl))
   .catch((err) => {
@@ -94,8 +93,6 @@ function handleProfileFormSubmit(evt) {
   })
   .finally(() => {
     renderLoading(false, profilePopupEl);
-      profileNameEl.textContent = inputName.value;
-      profileProfessionEl.textContent = inputProfession.value;
   })
 }
 
@@ -107,10 +104,10 @@ function handleAddFormSubmit(evt) {
 
   postCards(inputCardName.value, inputCardImg.value)
   .then((result) => {
-    if (result.ok) {
-      const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, cardCount, someUserId, cardElId, myUserId);
-      cardsContainerEl.prepend(cardElement);
-    }
+    const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, cardCount, someUserId, cardElId, myUserId);
+    cardsContainerEl.prepend(cardElement);
+    console.log(result);
+
   })
   .then(closePopup(cardAddPopupEl))
   .catch((err) => {
@@ -118,8 +115,6 @@ function handleAddFormSubmit(evt) {
   })
   .finally(() => {
     renderLoading(false, cardAddPopupEl);
-      const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, cardCount, someUserId, cardElId, myUserId);
-      cardsContainerEl.prepend(cardElement);
   })
 }
 
@@ -130,9 +125,8 @@ function handleChangeAvatarFormSubmit(evt) {
 
   patchUserAvatar(avatarImgInput.value)
   .then((result) => {
-    if (result.ok) {
-      profileAvatarEl.src = result.avatar;
-    }
+    profileAvatarEl.src = result.avatar;
+    console.log(result);
   })
   .then(closePopup(avatarPopupEl))
   .catch((err) => {
@@ -140,6 +134,5 @@ function handleChangeAvatarFormSubmit(evt) {
   })
   .finally(() => {
     renderLoading(false, avatarPopupEl);
-      profileAvatarEl.src = avatarImgInput.value;
   })
 }
