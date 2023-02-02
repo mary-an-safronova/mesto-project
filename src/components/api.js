@@ -15,7 +15,7 @@ const getResponce = (res => {
 });
 
 // Запрос информации о пользователе с сервера
-export const getUsers = () => {
+export const getUserInfo = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers
   })

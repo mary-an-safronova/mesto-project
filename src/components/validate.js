@@ -1,26 +1,23 @@
 // Функциональность валидации форм
-export { enableValidation, cleanForm };
+import { validationConfig } from "./constants";
 
-// Очистка полей и ошибок при закрытии модального окна
-function cleanForm() {
-  const forms = document.querySelectorAll('.form');
-  const errorElements = document.querySelectorAll('.form__input-error');
-  const inputElements = document.querySelectorAll('.form__textfield');
-  const submitBtns = document.querySelectorAll('.form__submit-button');
+export { enableValidation, cleanForm, enableSubmitButton };
 
-  forms.forEach((form) => {
-    errorElements.forEach((errorElement) => {
-      inputElements.forEach((inputElement) => {
-        submitBtns.forEach((submitBtn) => {
-          form.reset();
-          errorElement.textContent = '';
-          inputElement.classList.remove('form__textfield_type_error');
-          submitBtn.disabled = true;
-          submitBtn.classList.add('form__submit-button_inactive');
-        });
-      });
-    })
-  })
+function disableSubmitButton(button) {
+  button.disabled = true;
+  button.classList.add('form__submit-button_inactive');
+}
+
+// Очистка полей и ошибок формы
+function cleanForm(popup) {
+  const form = popup.querySelector('.form');
+  const submitBtn = form.querySelector('.form__submit-button');
+  const input = form.querySelector('.form__textfield');
+
+  form.reset();
+
+  hideInputError(form, input, validationConfig);
+  disableSubmitButton(submitBtn);
 }
 
 // Добавление класса с ошибкой
@@ -94,3 +91,7 @@ const enableValidation = (config) => {
     setEventListeners(formElement, config);
   });
 };
+
+const enableSubmitButton = (submitButton) => {
+  submitButton.classList.remove('form__submit-button_inactive');
+}

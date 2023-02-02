@@ -1,12 +1,12 @@
 import './styles/index.css';
 
-import { openAndCleanForm, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit } from './components/modal';
-import { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl } from './components/modal';
+import { openAndCleanForm, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit } from './components/modal';
+import { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, cardAddPopupEl, avatarPopupEl } from './components/modal';
 import { enableValidation } from './components/validate';
 import { createCard } from './components/card';
 import { cardAddFormEl } from './components/card';
 import { validationConfig } from './components/constants';
-import { getInitialCards, getUsers } from './components/api';
+import { getInitialCards, getUserInfo } from './components/api';
 
 export { myUserId, cardElId, someUserId, profileAvatarEl };
 
@@ -14,39 +14,27 @@ const profileBtnEl = document.querySelector('.profile__edit-button');
 const profileFormEl = document.querySelector('.edit-form');
 const cardAddBtnEl = document.querySelector('.profile__add-button');
 const profileAvatarEl = document.querySelector('.profile__avatar');
-const cardDeleteBtnElements = document.querySelectorAll('.place__delete-button');
+const profileAvatarWrapEl = document.querySelector('.profile__avatar-wrap');
+const profileAvatarBtnEl = document.querySelector('.profile__avatar-cover');
 
 let myUserId = '';
 let cardElId = '';
 let someUserId = '';
 
 // Загрузка информации о пользователе с сервера
-getUsers()
-  .then((result) => {
-    myUserId = result._id;
-    profileNameEl.textContent = result.name;
-    profileProfessionEl.textContent = result.about;
-    profileAvatarEl.src = result.avatar;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
 // Отображение предзагруженных карточек с сервера
-getInitialCards()
-  .then((result) => {
-    result.forEach(({ name, link, likes, owner, _id }) => {
-      const cardElement = createCard(cardTemplate, name, link, likes, owner['_id'], _id);
+Promise.all([getUserInfo(), getInitialCards()])
+  .then(([userInfo, cards]) => {
+    myUserId = userInfo._id;
+    profileNameEl.textContent = userInfo.name;
+    profileProfessionEl.textContent = userInfo.about;
+    profileAvatarEl.src = userInfo.avatar;
+
+    cards.forEach(({ name, link, likes, owner, _id }) => {
+      const cardElement = createCard(cardTemplate, name, link, likes, owner._id, _id, userInfo._id);
       cardsContainerEl.append(cardElement);
       cardElId = _id;
-      someUserId = owner['_id'];
-    });
-    cardDeleteBtnElements.forEach((cardDeleteBtnEl) => {
-      let someUserId = cardDeleteBtnEl.closest('.place').owner['_id'];
-      console.log(someUserId);
-      if (someUserId !== myUserId) {
-        cardDeleteBtnEl.classList.add('place__delete-button_hidden');
-      }
+      someUserId = owner._id;
     });
   })
   .catch((err) => {
@@ -54,10 +42,26 @@ getInitialCards()
   });
 
 // Добавления слушателя клика на кнопку добавления карточки
-cardAddBtnEl.addEventListener('click', openAndCleanForm);
+cardAddBtnEl.addEventListener('click', () => {
+  openAndCleanForm(cardAddPopupEl);
+});
 
 // Добавления слушателя клика на кнопку редактирования профиля
 profileBtnEl.addEventListener('click', showProfileInfo);
+
+// Слушатель наведения мыши на аватар
+profileAvatarWrapEl.addEventListener('mouseover', () => {
+  profileAvatarBtnEl.classList.add('profile__avatar-cover_opened');
+});
+
+profileAvatarWrapEl.addEventListener('mouseout', () => {
+  profileAvatarBtnEl.classList.remove('profile__avatar-cover_opened');
+});
+
+// Слушатель кнопки редактирования аватара профиля
+profileAvatarBtnEl.addEventListener('click', () => {
+  openAndCleanForm(avatarPopupEl);
+});
 
 // Валидация форм
 enableValidation(validationConfig);
@@ -67,3 +71,6 @@ profileFormEl.addEventListener('submit', handleProfileFormSubmit);
 
 // Слушатель submit «отправки» формы добавления карточек
 cardAddFormEl.addEventListener('submit', handleAddFormSubmit);
+
+// Слушатель submit «отправки» формы редактирования аватара профиля
+avatarPopupEl.addEventListener('submit', handleChangeAvatarFormSubmit);
