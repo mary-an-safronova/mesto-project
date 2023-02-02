@@ -15,7 +15,7 @@ const deleteFormSubmitBtnEl = document.querySelector('.delete-form__submit-butto
 
 // Функция удаления ближайшей к корзине карточки
 const removeClosestCard = (button) => {
-  let card = button.closest('.place');
+  const card = button.closest('.place');
 
   deleteCards(card.id)
   .then((result) => {
@@ -44,8 +44,8 @@ const openDeletePopup = (button) => {
 }
 
 // Добавление лайка карточки на сервер
-const handlePutLike = (like, counter, card) => {
-  card = like.closest('.place');
+const handlePutLike = (like, counter) => {
+  const card = like.closest('.place');
 
   return putLikes(card.id)
     .then((result) => {
@@ -65,14 +65,13 @@ const handlePutLike = (like, counter, card) => {
   };
 
 // Удаление лайка карточки с сервера
-const handleDeleteLike = (like, counter, card) => {
-  card = like.closest('.place');
+const handleDeleteLike = (like, counter) => {
+  const card = like.closest('.place');
 
   return deleteLikes(card.id)
     .then((result) => {
       like.classList.remove('place__like_active');
       counter.textContent = result.likes.length;
-      console.log(counter);
     })
     .catch((err) => {
       console.log(err);
@@ -89,7 +88,7 @@ function createCard(template, name, link, likes, id, cardId, myId) {
   const cardElement = template.querySelector('.place').cloneNode(true);
   const cardImg = cardElement.querySelector('.place__image');
   const likeElement = cardElement.querySelector('.place__like');
-  let likeCounterEl = cardElement.querySelector('.place__like-count');
+  const likeCounterEl = cardElement.querySelector('.place__like-count');
   const deleteBtnElement = cardElement.querySelector('.place__delete-button');
   cardElement.querySelector('.place__name').textContent = name;
   cardImg.src = link;
@@ -129,9 +128,9 @@ function createCard(template, name, link, likes, id, cardId, myId) {
   // Слушатель кнопки лайка карточки
   likeElement.addEventListener('click', () => {
     if (likeElement.classList.contains('place__like_active')) {
-      handleDeleteLike(likeElement, likeCounterEl, cardElement);
+      handleDeleteLike(likeElement, likeCounterEl);
     } else {
-      handlePutLike(likeElement, likeCounterEl, cardElement);
+      handlePutLike(likeElement, likeCounterEl);
     }
   });
 
