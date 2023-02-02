@@ -45,26 +45,43 @@ const openDeletePopup = (button) => {
 
 // Добавление лайка карточки на сервер
 const handlePutLike = (like, counter, card) => {
+  card = like.closest('.place');
+
   return putLikes(card.id)
     .then((result) => {
       like.classList.add('place__like_active');
       counter.textContent = result.likes.length;
+
+      console.log(result.likes.length);
     })
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(() => {
+      like.removeEventListener('click', () => {
+        removeClosestCard(button)
+      });
+    })
   };
 
 // Удаление лайка карточки с сервера
 const handleDeleteLike = (like, counter, card) => {
+  card = like.closest('.place');
+
   return deleteLikes(card.id)
     .then((result) => {
       like.classList.remove('place__like_active');
       counter.textContent = result.likes.length;
+      console.log(counter);
     })
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(() => {
+      like.removeEventListener('click', () => {
+        removeClosestCard(button)
+      });
+    })
   };
 
 // Функция создания новых карточек

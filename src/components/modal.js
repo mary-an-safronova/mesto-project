@@ -5,7 +5,7 @@ export { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, car
 import { closePopup, openPopup } from "./utils";
 import { cleanForm } from "./validate";
 import { createCard } from "./card";
-import { cardElId, myUserId, profileAvatarEl, someUserId } from "..";
+import { myUserId, profileAvatarEl } from "..";
 import { patchUsers, postCards, patchUserAvatar } from "./api";
 
 const popupCloseIconElements = document.querySelectorAll('.popup__close-icon');
@@ -108,10 +108,11 @@ function handleAddFormSubmit(evt) {
 
   postCards(inputCardName.value, inputCardImg.value)
   .then((result) => {
+    let cardElId = result._id;
+    let someUserId = result.owner._id;
     const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, cardCount, someUserId, cardElId, myUserId);
     cardsContainerEl.prepend(cardElement);
-    console.log(result);
-
+    console.log(cardElId);
   })
   .then(closePopup(cardAddPopupEl))
   .catch((err) => {
