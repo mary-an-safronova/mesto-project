@@ -6,7 +6,7 @@ import { enableValidation } from './components/validate';
 import { createCard } from './components/card';
 import { cardAddFormEl } from './components/card';
 import { validationConfig } from './components/constants';
-import { getInitialCards, getUserInfo } from './components/api';
+import { api } from './components/api';
 
 export { myUserId, cardElId, someUserId, profileAvatarEl };
 
@@ -23,7 +23,7 @@ let someUserId = '';
 
 // Загрузка информации о пользователе с сервера
 // Отображение предзагруженных карточек с сервера
-Promise.all([getUserInfo(), getInitialCards()])
+Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userInfo, cards]) => {
     myUserId = userInfo._id;
     profileNameEl.textContent = userInfo.name;

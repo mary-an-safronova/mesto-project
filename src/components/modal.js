@@ -6,7 +6,7 @@ import { closePopup, openPopup } from "./utils";
 import { cleanForm } from "./validate";
 import { createCard } from "./card";
 import { myUserId, profileAvatarEl } from "..";
-import { patchUsers, postCards, patchUserAvatar } from "./api";
+import { api } from "./api";
 
 const popupCloseIconElements = document.querySelectorAll('.popup__close-icon');
 const overlayElements = document.querySelectorAll('.popup__background');
@@ -86,7 +86,7 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   renderLoading(true, profilePopupEl);
 
-  patchUsers(inputName.value, inputProfession.value)
+  api.patchUsers(inputName.value, inputProfession.value)
   .then((result) => {
     setUserInfo();
     console.log(result);
@@ -106,7 +106,7 @@ function handleAddFormSubmit(evt) {
   evt.preventDefault();
   renderLoading(true, cardAddPopupEl);
 
-  postCards(inputCardName.value, inputCardImg.value)
+  api.postCards(inputCardName.value, inputCardImg.value)
   .then((result) => {
     let cardElId = result._id;
     let someUserId = result.owner._id;
@@ -128,7 +128,7 @@ function handleChangeAvatarFormSubmit(evt) {
   evt.preventDefault();
   renderLoading(true, avatarPopupEl);
 
-  patchUserAvatar(avatarImgInput.value)
+  api.patchUserAvatar(avatarImgInput.value)
   .then((result) => {
     profileAvatarEl.src = result.avatar;
     console.log(result);
