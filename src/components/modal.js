@@ -1,12 +1,13 @@
 // Работа модальных окон
-export { openAndCleanForm, pressEscape, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit };
+export { pressEscape, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit };
 export { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, cardAddPopupEl, avatarPopupEl };
 
 import { closePopup, openPopup } from "./utils";
-import { cleanForm } from "./validate";
+// import { cleanForm } from "./validate";
 import { createCard } from "./card";
 import { myUserId, profileAvatarEl } from "..";
 import { api } from "./api";
+import FormValidator from "./validate";
 
 const popupCloseIconElements = document.querySelectorAll('.popup__close-icon');
 const overlayElements = document.querySelectorAll('.popup__background');
@@ -26,11 +27,12 @@ cardCount = '';
 const avatarPopupEl = document.querySelector('.popup-avatar');
 const avatarImgInput = document.querySelector('#avatar-image');
 
-// Функция открытия формы добавления карточки и очистка полей
-function openAndCleanForm(popup) {
-  openPopup(popup);
-  cleanForm(popup);
-}
+// // Функция открытия формы добавления карточки и очистка полей
+// function openAndCleanForm(popup) {
+//   openPopup(popup);
+//   const formValidator = new FormValidator();
+//   FormValidator.cleanForm(popup);
+// }
 
 // Закрытие модального окна при клике на крестик
 popupCloseIconElements.forEach((button) => {

@@ -1,7 +1,7 @@
 // Функции для работы с карточками проекта
 import { openPopup, closePopup } from "./utils";
-import { enableSubmitButton } from "./validate";
 import { api } from "./api";
+import { cardAddValidator } from "..";
 
 export { createCard };
 export { cardAddFormEl, deletePopupEl, deleteFormSubmitBtnEl };
@@ -36,7 +36,7 @@ const removeClosestCard = (button) => {
 // Функция открытия попапа подтверждения удаления карточки
 const openDeletePopup = (button) => {
   openPopup(deletePopupEl);
-  enableSubmitButton(deleteFormSubmitBtnEl);
+  cardAddValidator.enableSubmitButton(deleteFormSubmitBtnEl);
   deleteFormSubmitBtnEl.addEventListener('click', () => {
     removeClosestCard(button)
   });
