@@ -1,7 +1,7 @@
 // Функции для работы с карточками проекта
 import { openPopup, closePopup } from "./utils";
-import { deleteCards, putLikes, deleteLikes } from "./api";
 import { enableSubmitButton } from "./validate";
+import { api } from "./api";
 
 export { createCard };
 export { cardAddFormEl, deletePopupEl, deleteFormSubmitBtnEl };
@@ -17,7 +17,7 @@ const deleteFormSubmitBtnEl = document.querySelector('.delete-form__submit-butto
 const removeClosestCard = (button) => {
   const card = button.closest('.place');
 
-  deleteCards(card.id)
+  api.deleteCards(card.id)
   .then((result) => {
     card.remove();
     console.log(result);
@@ -47,7 +47,7 @@ const openDeletePopup = (button) => {
 const handlePutLike = (like, counter) => {
   const card = like.closest('.place');
 
-  return putLikes(card.id)
+  return api.putLikes(card.id)
     .then((result) => {
       like.classList.add('place__like_active');
       counter.textContent = result.likes.length;
@@ -68,7 +68,7 @@ const handlePutLike = (like, counter) => {
 const handleDeleteLike = (like, counter) => {
   const card = like.closest('.place');
 
-  return deleteLikes(card.id)
+  return api.deleteLikes(card.id)
     .then((result) => {
       like.classList.remove('place__like_active');
       counter.textContent = result.likes.length;
