@@ -4,7 +4,7 @@
 // export { enableValidation, cleanForm, enableSubmitButton };
 
 export default class FormValidator {
-  constructor({config}, form) {
+  constructor({ config, form }) {
     this.config = config;
     this.form = form;
   }
@@ -20,10 +20,10 @@ export default class FormValidator {
     const submitBtn = form.querySelector(this.config.submitButtonSelector);
     const inputs = form.querySelectorAll(this.config.inputSelector);
     inputs.forEach((input) => {
-      hideInputError(form, input);
+      this.hideInputError(form, input);
     })
     form.reset();
-    disableSubmitButton(submitBtn);
+    this.disableSubmitButton(submitBtn);
   }
 
   // Добавление класса с ошибкой
@@ -51,9 +51,9 @@ export default class FormValidator {
     }
 
     if (!inputElement.validity.valid) {
-      showInputError(formElement, inputElement, inputElement.validationMessage);
+      this.showInputError(formElement, inputElement, inputElement.validationMessage);
     } else {
-      hideInputError(formElement, inputElement);
+      this.hideInputError(formElement, inputElement);
     }
   };
 
@@ -65,7 +65,7 @@ export default class FormValidator {
 
   // Изменение переключения кнопки submit при проверке на валидность
   toggleButtonState(inputList, buttonElement) {
-    if (hasInvalidInput(inputList)) {
+    if (this.hasInvalidInput(inputList)) {
       buttonElement.disabled = true;
       buttonElement.classList.add(this.config.inactiveButtonClass);
     } else {
@@ -79,12 +79,12 @@ export default class FormValidator {
     const inputList = Array.from(formElement.querySelectorAll(this.config.inputSelector));
     const buttonElement = formElement.querySelector(this.config.submitButtonSelector);
 
-    toggleButtonState(inputList, buttonElement);
+    this.toggleButtonState(inputList, buttonElement);
 
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
-        isValid(formElement, inputElement);
-        toggleButtonState(inputList, buttonElement);
+        this.isValid(formElement, inputElement);
+        this.toggleButtonState(inputList, buttonElement);
       });
     });
   };
@@ -92,9 +92,8 @@ export default class FormValidator {
   // Добавление обработчиков всем формам
   enableValidation () {
     const formList = Array.from(document.querySelectorAll(this.config.formSelector));
-
     formList.forEach((formElement) => {
-      setEventListeners(formElement);
+      this.setEventListeners(formElement);
     });
   };
 

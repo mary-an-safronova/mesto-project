@@ -44,9 +44,9 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   });
 
 // Добавления слушателя клика на кнопку добавления карточки
-cardAddBtnEl.addEventListener('click', () => {
-  openAndCleanForm(cardAddPopupEl);
-});
+// cardAddBtnEl.addEventListener('click', () => {
+//   openAndCleanForm(cardAddPopupEl);
+// });
 
 // Добавления слушателя клика на кнопку редактирования профиля
 profileBtnEl.addEventListener('click', showProfileInfo);
@@ -69,24 +69,21 @@ profileAvatarBtnEl.addEventListener('click', () => {
 
 // Валидация форм
 // enableValidation(validationConfig);
-const profileValidator = new FormValidator({
-  config: validationConfig,
-  form: profileFormEl
-});
+const profileValidator = new FormValidator(
+  { config: validationConfig, form: profileFormEl },
+);
 
 profileValidator.enableValidation();
 
-export const cardAddValidator = new FormValidator({
-  config: validationConfig,
-  form: cardAddFormEl
-});
+export const cardAddValidator = new FormValidator(
+  { config: validationConfig, form: cardAddFormEl },
+);
 
 cardAddValidator.enableValidation();
 
-const avatarValidator = new FormValidator({
-  config: validationConfig,
-  form: avatarPopupEl
-});
+const avatarValidator = new FormValidator(
+  { config: validationConfig, form: avatarPopupEl },
+);
 
 avatarValidator.enableValidation();
 

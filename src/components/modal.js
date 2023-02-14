@@ -7,7 +7,7 @@ import { closePopup, openPopup } from "./utils";
 import { createCard } from "./card";
 import { myUserId, profileAvatarEl } from "..";
 import { api } from "./api";
-import FormValidator from "./validate";
+//import FormValidator from "./validate";
 
 const popupCloseIconElements = document.querySelectorAll('.popup__close-icon');
 const overlayElements = document.querySelectorAll('.popup__background');
