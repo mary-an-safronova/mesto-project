@@ -1,12 +1,14 @@
 import './styles/index.css';
 
-import { openAndCleanForm, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit } from './components/modal';
+import { showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit } from './components/modal';
 import { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, cardAddPopupEl, avatarPopupEl } from './components/modal';
 import { enableValidation } from './components/validate';
 import { createCard } from './components/card';
 import { cardAddFormEl } from './components/card';
 import { validationConfig } from './components/constants';
+import FormValidator from './components/validate';
 import { api } from './components/api';
+import { openPopup } from './components/utils';
 
 export { myUserId, cardElId, someUserId, profileAvatarEl };
 
@@ -42,9 +44,9 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   });
 
 // Добавления слушателя клика на кнопку добавления карточки
-cardAddBtnEl.addEventListener('click', () => {
-  openAndCleanForm(cardAddPopupEl);
-});
+// cardAddBtnEl.addEventListener('click', () => {
+//   openAndCleanForm(cardAddPopupEl);
+// });
 
 // Добавления слушателя клика на кнопку редактирования профиля
 profileBtnEl.addEventListener('click', showProfileInfo);
@@ -60,11 +62,30 @@ profileAvatarWrapEl.addEventListener('mouseout', () => {
 
 // Слушатель кнопки редактирования аватара профиля
 profileAvatarBtnEl.addEventListener('click', () => {
-  openAndCleanForm(avatarPopupEl);
+  //openAndCleanForm(avatarPopupEl);
+  openPopup(avatarPopupEl);
+  profileValidator.cleanForm(avatarPopupEl);
 });
 
 // Валидация форм
-enableValidation(validationConfig);
+// enableValidation(validationConfig);
+const profileValidator = new FormValidator(
+  { config: validationConfig, form: profileFormEl },
+);
+
+profileValidator.enableValidation();
+
+export const cardAddValidator = new FormValidator(
+  { config: validationConfig, form: cardAddFormEl },
+);
+
+cardAddValidator.enableValidation();
+
+const avatarValidator = new FormValidator(
+  { config: validationConfig, form: avatarPopupEl },
+);
+
+avatarValidator.enableValidation();
 
 // Слушатель submit «отправки» формы редактирования профиля
 profileFormEl.addEventListener('submit', handleProfileFormSubmit);
