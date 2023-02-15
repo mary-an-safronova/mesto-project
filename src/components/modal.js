@@ -1,22 +1,19 @@
 // Работа модальных окон
-export { pressEscape, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit };
+export { showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit };
 export { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, cardAddPopupEl, avatarPopupEl };
 
-import { closePopup, openPopup } from "./utils";
-// import { cleanForm } from "./validate";
 import { createCard } from "./card";
 import { myUserId, profileAvatarEl } from "..";
 import { api } from "./api";
 //import FormValidator from "./validate";
+import Popup from "./Popup";
+import { popupAvatar } from "..";
 
-const popupCloseIconElements = document.querySelectorAll('.popup__close-icon');
-const overlayElements = document.querySelectorAll('.popup__background');
 const profilePopupEl = document.querySelector('.popup-edit');
 const inputName = document.querySelector('#name');
 const profileNameEl = document.querySelector('.profile__name');
 const inputProfession = document.querySelector('#profession');
 const profileProfessionEl = document.querySelector('.profile__profession');
-const escape = 'Escape';
 const inputCardName = document.querySelector('#card-name');
 const inputCardImg = document.querySelector('#card-image');
 const cardAddPopupEl = document.querySelector('.popup-add');
@@ -26,41 +23,12 @@ let cardCount = cardTemplate.querySelector('.place__like-count');
 cardCount = '';
 const avatarPopupEl = document.querySelector('.popup-avatar');
 const avatarImgInput = document.querySelector('#avatar-image');
-
-// // Функция открытия формы добавления карточки и очистка полей
-// function openAndCleanForm(popup) {
-//   openPopup(popup);
-//   const formValidator = new FormValidator();
-//   FormValidator.cleanForm(popup);
-// }
-
-// Закрытие модального окна при клике на крестик
-popupCloseIconElements.forEach((button) => {
-  const popup = button.closest('.popup');
-  button.addEventListener('click', () => {
-    closePopup(popup);
-  });
-});
-
-// Закрытие модального окна при клике на оверлей
-overlayElements.forEach((overlayElement) => {
-  const popup = overlayElement.closest('.popup');
-  overlayElement.addEventListener('click', () => {
-    closePopup(popup);
-  });
-});
-
-// Закрытие модального окна при клике на escape, удаление слушателя при закрытии окна
-function pressEscape (event) {
-  if (event.code === escape) {
-    const popupActive = document.querySelector('.popup_opened');
-    closePopup(popupActive);
-  }
-}
+const popupProfile = new Popup(profilePopupEl);
+export const popupCardAdd = new Popup(cardAddPopupEl);
 
 // Функция отображения информации профиля в полях формы редактирования при открытии попапа
 function showProfileInfo() {
-  openPopup(profilePopupEl);
+  popupProfile.open();
   inputName.value = profileNameEl.textContent;
   inputProfession.value = profileProfessionEl.textContent;
 }
@@ -93,7 +61,7 @@ function handleProfileFormSubmit(evt) {
     setUserInfo();
     console.log(result);
   })
-  .then(closePopup(profilePopupEl))
+  .then(popupProfile.close())
   .catch((err) => {
     console.log(err);
   })
@@ -116,7 +84,7 @@ function handleAddFormSubmit(evt) {
     cardsContainerEl.prepend(cardElement);
     console.log(cardElId);
   })
-  .then(closePopup(cardAddPopupEl))
+  .then(popupCardAdd.close())
   .catch((err) => {
     console.log(err);
   })
@@ -135,7 +103,7 @@ function handleChangeAvatarFormSubmit(evt) {
     profileAvatarEl.src = result.avatar;
     console.log(result);
   })
-  .then(closePopup(avatarPopupEl))
+  .then(popupAvatar.close())
   .catch((err) => {
     console.log(err);
   })
