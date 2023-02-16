@@ -2,13 +2,12 @@
 import { api } from "./api";
 import { cardAddValidator } from "..";
 import Popup from "./Popup";
+import PopupWithImage from "./PopupWithImage";
 
 export { createCard };
 export { cardAddFormEl, deletePopupEl, deleteFormSubmitBtnEl };
 
 const cardImgPopupEl = document.querySelector('.popup-img');
-const imgPopupEl = cardImgPopupEl.querySelector('.popup__image');
-const imgPopupCaptionEl = cardImgPopupEl.querySelector('.popup__img-caption');
 const cardAddFormEl = document.querySelector('.add-form');
 const deletePopupEl = document.querySelector('.popup-delete');
 const deleteFormSubmitBtnEl = document.querySelector('.delete-form__submit-button');
@@ -137,11 +136,8 @@ function createCard(template, name, link, likes, id, cardId, myId) {
 
   // Открытие попапов изображений карточек (в т.ч. новых)
   const openCardImage = () => {
-    const popupImg = new Popup(cardImgPopupEl);
-    popupImg.open();
-    imgPopupEl.src = link;
-    imgPopupCaptionEl.textContent = name;
-    imgPopupEl.alt = name;
+    const popupImg = new PopupWithImage(cardImgPopupEl);
+    popupImg.open(link, name);
     cardImg.removeEventListener('click', openCardImage);
   }
 
