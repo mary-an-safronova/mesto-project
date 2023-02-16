@@ -1,6 +1,6 @@
 // Работа модальных окон
 export { showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit };
-export { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, cardAddPopupEl, avatarPopupEl };
+export { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, cardAddPopupEl, avatarPopupEl, profilePopupEl };
 
 import { createCard } from "./card";
 import { myUserId, profileAvatarEl } from "..";
@@ -8,6 +8,7 @@ import { api } from "./api";
 //import FormValidator from "./validate";
 import Popup from "./Popup";
 import { popupAvatar } from "..";
+import { profileValidator, profileFormEl, popupWithFormProfile, popupCardAdd } from "..";
 
 const profilePopupEl = document.querySelector('.popup-edit');
 const inputName = document.querySelector('#name');
@@ -24,27 +25,30 @@ cardCount = '';
 const avatarPopupEl = document.querySelector('.popup-avatar');
 const avatarImgInput = document.querySelector('#avatar-image');
 const popupProfile = new Popup(profilePopupEl);
-export const popupCardAdd = new Popup(cardAddPopupEl);
 
 // Функция отображения информации профиля в полях формы редактирования при открытии попапа
 function showProfileInfo() {
   popupProfile.open();
+  const inputs = profileFormEl.querySelectorAll('.form__textfield');
+    inputs.forEach((input) => {
+      profileValidator.hideInputError(profileFormEl, input);
+    })
   inputName.value = profileNameEl.textContent;
   inputProfession.value = profileProfessionEl.textContent;
 }
 
-// Функция отображения загрузки информации полей формы
-function renderLoading(isLoading, popup) {
-  const popupSubmitBtn = popup.querySelector('.form__submit-button');
+// // Функция отображения загрузки информации полей формы
+// function renderLoading(isLoading, popup) {
+//   const popupSubmitBtn = popup.querySelector('.form__submit-button');
 
-  if (isLoading) {
-    popupSubmitBtn.textContent = 'Сохранение...'
-    popupSubmitBtn.disabled = true;
-  } else {
-    popupSubmitBtn.textContent = 'Сохранить'
-    popupSubmitBtn.disabled = false;
-  }
-};
+//   if (isLoading) {
+//     popupSubmitBtn.textContent = 'Сохранение...'
+//     popupSubmitBtn.disabled = true;
+//   } else {
+//     popupSubmitBtn.textContent = 'Сохранить'
+//     popupSubmitBtn.disabled = false;
+//   }
+// };
 
 const setUserInfo = () => {
   profileNameEl.textContent = inputName.value;
@@ -52,9 +56,10 @@ const setUserInfo = () => {
 };
 
 // Обработчик «отправки» формы редактирования профиля
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  renderLoading(true, profilePopupEl);
+function handleProfileFormSubmit() {
+  // evt.preventDefault();
+  // renderLoading(true, profilePopupEl);
+  popupWithFormProfile.renderLoading(true);
 
   api.patchUsers(inputName.value, inputProfession.value)
   .then((result) => {
@@ -66,15 +71,16 @@ function handleProfileFormSubmit(evt) {
     console.log(err);
   })
   .finally(() => {
-    renderLoading(false, profilePopupEl);
+    popupWithFormProfile.renderLoading(false);
   })
 }
 
 // Добавление новых карточек через форму
 // Обработчик «отправки» формы добавления карточек
-function handleAddFormSubmit(evt) {
-  evt.preventDefault();
-  renderLoading(true, cardAddPopupEl);
+function handleAddFormSubmit() {
+  // evt.preventDefault();
+  // renderLoading(true, cardAddPopupEl);
+  popupCardAdd.renderLoading(true);
 
   api.postCards(inputCardName.value, inputCardImg.value)
   .then((result) => {
@@ -89,14 +95,15 @@ function handleAddFormSubmit(evt) {
     console.log(err);
   })
   .finally(() => {
-    renderLoading(false, cardAddPopupEl);
+    popupCardAdd.renderLoading(false);
   })
 }
 
 // Обработчик отправки формы редактирования аватара профиля
-function handleChangeAvatarFormSubmit(evt) {
-  evt.preventDefault();
-  renderLoading(true, avatarPopupEl);
+function handleChangeAvatarFormSubmit() {
+  // evt.preventDefault();
+  // renderLoading(true, avatarPopupEl);
+  popupAvatar.renderLoading(true);
 
   api.patchUserAvatar(avatarImgInput.value)
   .then((result) => {
@@ -108,6 +115,7 @@ function handleChangeAvatarFormSubmit(evt) {
     console.log(err);
   })
   .finally(() => {
-    renderLoading(false, avatarPopupEl);
+    // renderLoading(false, avatarPopupEl);
+    popupAvatar.renderLoading(false);
   })
 }

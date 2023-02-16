@@ -1,17 +1,17 @@
 import './styles/index.css';
 
 import { showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit } from './components/modal';
-import { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, cardAddPopupEl, avatarPopupEl } from './components/modal';
+import { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, cardAddPopupEl, avatarPopupEl, profilePopupEl } from './components/modal';
 import { enableValidation } from './components/validate';
 import { createCard } from './components/card';
 import { cardAddFormEl } from './components/card';
 import { validationConfig } from './components/constants';
 import FormValidator from './components/validate';
 import { api } from './components/api';
-import Popup from './components/Popup';
-import { popupCardAdd } from './components/modal';
+import PopupWithForm from './components/PopupWithForm';
 
 export { myUserId, cardElId, someUserId, profileAvatarEl };
+export { profileValidator, profileFormEl, popupAvatar, popupWithFormProfile, popupCardAdd };
 
 const profileBtnEl = document.querySelector('.profile__edit-button');
 const profileFormEl = document.querySelector('.edit-form');
@@ -19,7 +19,6 @@ const cardAddBtnEl = document.querySelector('.profile__add-button');
 const profileAvatarEl = document.querySelector('.profile__avatar');
 const profileAvatarWrapEl = document.querySelector('.profile__avatar-wrap');
 const profileAvatarBtnEl = document.querySelector('.profile__avatar-cover');
-export const popupAvatar = new Popup(avatarPopupEl);
 
 let myUserId = '';
 let cardElId = '';
@@ -45,12 +44,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     console.log(err);
   });
 
-// Добавления слушателя клика на кнопку добавления карточки
-cardAddBtnEl.addEventListener('click', () => {
-  popupCardAdd.open();
-  cardAddValidator.cleanForm(cardAddPopupEl);
-});
-
 // Добавления слушателя клика на кнопку редактирования профиля
 profileBtnEl.addEventListener('click', showProfileInfo);
 
@@ -61,13 +54,6 @@ profileAvatarWrapEl.addEventListener('mouseover', () => {
 
 profileAvatarWrapEl.addEventListener('mouseout', () => {
   profileAvatarBtnEl.classList.remove('profile__avatar-cover_opened');
-});
-
-// Слушатель кнопки редактирования аватара профиля
-profileAvatarBtnEl.addEventListener('click', () => {
-  //openAndCleanForm(avatarPopupEl);
-  popupAvatar.open();
-  profileValidator.cleanForm(avatarPopupEl);
 });
 
 // Валидация форм
@@ -90,11 +76,39 @@ const avatarValidator = new FormValidator(
 
 avatarValidator.enableValidation();
 
-// Слушатель submit «отправки» формы редактирования профиля
-profileFormEl.addEventListener('submit', handleProfileFormSubmit);
-
-// Слушатель submit «отправки» формы добавления карточек
-cardAddFormEl.addEventListener('submit', handleAddFormSubmit);
+const popupAvatar = new PopupWithForm(avatarPopupEl, {
+  handleFormSubmit: handleChangeAvatarFormSubmit(),
+});
 
 // Слушатель submit «отправки» формы редактирования аватара профиля
-avatarPopupEl.addEventListener('submit', handleChangeAvatarFormSubmit);
+// avatarPopupEl.addEventListener('submit', handleChangeAvatarFormSubmit);
+popupAvatar.setEventListeners();
+
+const popupWithFormProfile = new PopupWithForm( profilePopupEl, {
+  handleFormSubmit: handleProfileFormSubmit(),
+});
+
+// Слушатель submit «отправки» формы редактирования профиля
+// profileFormEl.addEventListener('submit', handleProfileFormSubmit);
+popupWithFormProfile.setEventListeners();
+
+const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
+  handleFormSubmit: handleAddFormSubmit()
+});
+
+// Слушатель submit «отправки» формы добавления карточек
+// cardAddFormEl.addEventListener('submit', handleAddFormSubmit);
+popupCardAdd.setEventListeners();
+
+// Слушатель кнопки редактирования аватара профиля
+profileAvatarBtnEl.addEventListener('click', () => {
+  //openAndCleanForm(avatarPopupEl);
+  popupAvatar.open();
+  profileValidator.cleanForm(avatarPopupEl);
+});
+
+// Добавления слушателя клика на кнопку добавления карточки
+cardAddBtnEl.addEventListener('click', () => {
+  popupCardAdd.open();
+  cardAddValidator.cleanForm(cardAddPopupEl);
+});
