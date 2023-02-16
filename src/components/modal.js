@@ -2,7 +2,9 @@
 export { showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit };
 export { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, cardAddPopupEl, avatarPopupEl, profilePopupEl };
 
-import { createCard } from "./card";
+import { closePopup, openPopup } from "./utils";
+import { cleanForm } from "./validate";
+import Card from "./card";
 import { myUserId, profileAvatarEl } from "..";
 import { api } from "./api";
 //import FormValidator from "./validate";
@@ -86,9 +88,8 @@ function handleAddFormSubmit() {
   .then((result) => {
     let cardElId = result._id;
     let someUserId = result.owner._id;
-    const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, cardCount, someUserId, cardElId, myUserId);
+    const cardElement = new Card(cardTemplate, inputCardName.value, inputCardImg.value, cardCount, someUserId, cardElId, myUserId).getElement();
     cardsContainerEl.prepend(cardElement);
-    console.log(cardElId);
   })
   .then(popupCardAdd.close())
   .catch((err) => {

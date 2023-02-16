@@ -3,12 +3,18 @@ import './styles/index.css';
 import { showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit } from './components/modal';
 import { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, cardAddPopupEl, avatarPopupEl, profilePopupEl } from './components/modal';
 import { enableValidation } from './components/validate';
-import { createCard } from './components/card';
-import { cardAddFormEl } from './components/card';
+
+import Card, { cardAddFormEl } from './components/card';
 import { validationConfig } from './components/constants';
 import FormValidator from './components/validate';
 import { api } from './components/api';
+<<<<<<< HEAD
 import PopupWithForm from './components/PopupWithForm';
+=======
+
+import Popup from './components/Popup';
+import { popupCardAdd } from './components/modal';
+>>>>>>> feat/mesto-update
 
 export { myUserId, cardElId, someUserId, profileAvatarEl };
 export { profileValidator, profileFormEl, popupAvatar, popupWithFormProfile, popupCardAdd };
@@ -34,7 +40,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     profileAvatarEl.src = userInfo.avatar;
 
     cards.forEach(({ name, link, likes, owner, _id }) => {
-      const cardElement = createCard(cardTemplate, name, link, likes, owner._id, _id, userInfo._id);
+      const cardElement = new Card(cardTemplate, name, link, likes, owner._id, _id, userInfo._id).getElement();
       cardsContainerEl.append(cardElement);
       cardElId = _id;
       someUserId = owner._id;
