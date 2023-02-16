@@ -4,7 +4,7 @@ export { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, car
 
 import { closePopup, openPopup } from "./utils";
 import { cleanForm } from "./validate";
-import { createCard } from "./card";
+import Card from "./card";
 import { myUserId, profileAvatarEl } from "..";
 import { api } from "./api";
 
@@ -110,9 +110,8 @@ function handleAddFormSubmit(evt) {
   .then((result) => {
     let cardElId = result._id;
     let someUserId = result.owner._id;
-    const cardElement = createCard(cardTemplate, inputCardName.value, inputCardImg.value, cardCount, someUserId, cardElId, myUserId);
+    const cardElement = new Card(cardTemplate, inputCardName.value, inputCardImg.value, cardCount, someUserId, cardElId, myUserId).getElement();
     cardsContainerEl.prepend(cardElement);
-    console.log(cardElId);
   })
   .then(closePopup(cardAddPopupEl))
   .catch((err) => {

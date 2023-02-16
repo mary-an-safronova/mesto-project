@@ -3,11 +3,10 @@ import './styles/index.css';
 import { openAndCleanForm, showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit } from './components/modal';
 import { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, cardAddPopupEl, avatarPopupEl } from './components/modal';
 import { enableValidation } from './components/validate';
-import { createCard } from './components/card';
-import { cardAddFormEl } from './components/card';
+
+import Card, { cardAddFormEl } from './components/card';
 import { validationConfig } from './components/constants';
 import { api } from './components/api';
-
 export { myUserId, cardElId, someUserId, profileAvatarEl };
 
 const profileBtnEl = document.querySelector('.profile__edit-button');
@@ -31,7 +30,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     profileAvatarEl.src = userInfo.avatar;
 
     cards.forEach(({ name, link, likes, owner, _id }) => {
-      const cardElement = createCard(cardTemplate, name, link, likes, owner._id, _id, userInfo._id);
+      const cardElement = new Card(cardTemplate, name, link, likes, owner._id, _id, userInfo._id).getElement();
       cardsContainerEl.append(cardElement);
       cardElId = _id;
       someUserId = owner._id;
