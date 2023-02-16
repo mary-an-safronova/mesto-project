@@ -11,6 +11,7 @@ import { api } from './components/api';
 
 import Popup from './components/Popup';
 import { popupCardAdd } from './components/modal';
+import UserInfo from "./components/UserInfo";
 
 export { myUserId, cardElId, someUserId, profileAvatarEl };
 
@@ -26,14 +27,21 @@ let myUserId = '';
 let cardElId = '';
 let someUserId = '';
 
+const user = new UserInfo({
+  nameSelector: profileNameEl,
+  professionSelector: profileProfessionEl,
+  avatarSelector: profileAvatarEl
+});
+
 // Загрузка информации о пользователе с сервера
 // Отображение предзагруженных карточек с сервера
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userInfo, cards]) => {
     myUserId = userInfo._id;
-    profileNameEl.textContent = userInfo.name;
-    profileProfessionEl.textContent = userInfo.about;
-    profileAvatarEl.src = userInfo.avatar;
+    user.setUserInfo(userInfo);
+    // profileNameEl.textContent = userInfo.name;
+    // profileProfessionEl.textContent = userInfo.about;
+    // profileAvatarEl.src = userInfo.avatar;
 
     cards.forEach(({ name, link, likes, owner, _id }) => {
       const cardElement = new Card(cardTemplate, name, link, likes, owner._id, _id, userInfo._id).getElement();
