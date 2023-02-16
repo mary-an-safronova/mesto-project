@@ -140,15 +140,9 @@ export default class Card {
 
   // Открытие попапов изображений карточек (в т.ч. новых)
   _openCardElementPopup() {
-    openPopup(cardImgPopupEl);
-    imgPopupEl.src = this.link;
-    imgPopupCaptionEl.textContent = this.name;
-    imgPopupEl.alt = this.name;
-
-  const openCardImage = () => {
     const popupImg = new PopupWithImage(cardImgPopupEl);
-    popupImg.open(link, name);
-    cardImg.removeEventListener('click', openCardImage);
+    popupImg.open(this.link, this.name);
+    cardImg.removeEventListener('click', this._openCardElementPopup.bind(this));
   }
 
 // Обработчик удаления карточки, Слушатель submit удаления карточек
