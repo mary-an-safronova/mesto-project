@@ -8,7 +8,8 @@ import { cardAddFormEl } from './components/card';
 import { validationConfig } from './components/constants';
 import FormValidator from './components/validate';
 import { api } from './components/api';
-import { openPopup } from './components/utils';
+import Popup from './components/Popup';
+import { popupCardAdd } from './components/modal';
 
 export { myUserId, cardElId, someUserId, profileAvatarEl };
 
@@ -18,6 +19,7 @@ const cardAddBtnEl = document.querySelector('.profile__add-button');
 const profileAvatarEl = document.querySelector('.profile__avatar');
 const profileAvatarWrapEl = document.querySelector('.profile__avatar-wrap');
 const profileAvatarBtnEl = document.querySelector('.profile__avatar-cover');
+export const popupAvatar = new Popup(avatarPopupEl);
 
 let myUserId = '';
 let cardElId = '';
@@ -44,9 +46,10 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   });
 
 // Добавления слушателя клика на кнопку добавления карточки
-// cardAddBtnEl.addEventListener('click', () => {
-//   openAndCleanForm(cardAddPopupEl);
-// });
+cardAddBtnEl.addEventListener('click', () => {
+  popupCardAdd.open();
+  cardAddValidator.cleanForm(cardAddPopupEl);
+});
 
 // Добавления слушателя клика на кнопку редактирования профиля
 profileBtnEl.addEventListener('click', showProfileInfo);
@@ -63,7 +66,7 @@ profileAvatarWrapEl.addEventListener('mouseout', () => {
 // Слушатель кнопки редактирования аватара профиля
 profileAvatarBtnEl.addEventListener('click', () => {
   //openAndCleanForm(avatarPopupEl);
-  openPopup(avatarPopupEl);
+  popupAvatar.open();
   profileValidator.cleanForm(avatarPopupEl);
 });
 

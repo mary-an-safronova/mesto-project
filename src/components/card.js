@@ -1,7 +1,7 @@
 // Функции для работы с карточками проекта
-import { openPopup, closePopup } from "./utils";
 import { api } from "./api";
 import { cardAddValidator } from "..";
+import Popup from "./Popup";
 
 export { createCard };
 export { cardAddFormEl, deletePopupEl, deleteFormSubmitBtnEl };
@@ -12,6 +12,7 @@ const imgPopupCaptionEl = cardImgPopupEl.querySelector('.popup__img-caption');
 const cardAddFormEl = document.querySelector('.add-form');
 const deletePopupEl = document.querySelector('.popup-delete');
 const deleteFormSubmitBtnEl = document.querySelector('.delete-form__submit-button');
+const popupDelete = new Popup(deletePopupEl);
 
 // Функция удаления ближайшей к корзине карточки
 const removeClosestCard = (button) => {
@@ -22,7 +23,7 @@ const removeClosestCard = (button) => {
     card.remove();
     console.log(result);
   })
-  .then(closePopup(deletePopupEl))
+  .then(popupDelete.close())
   .catch((err) => {
     console.log(err);
   })
@@ -35,7 +36,7 @@ const removeClosestCard = (button) => {
 
 // Функция открытия попапа подтверждения удаления карточки
 const openDeletePopup = (button) => {
-  openPopup(deletePopupEl);
+  popupDelete.open();
   cardAddValidator.enableSubmitButton(deleteFormSubmitBtnEl);
   deleteFormSubmitBtnEl.addEventListener('click', () => {
     removeClosestCard(button)
@@ -136,7 +137,8 @@ function createCard(template, name, link, likes, id, cardId, myId) {
 
   // Открытие попапов изображений карточек (в т.ч. новых)
   const openCardImage = () => {
-    openPopup(cardImgPopupEl);
+    const popupImg = new Popup(cardImgPopupEl);
+    popupImg.open();
     imgPopupEl.src = link;
     imgPopupCaptionEl.textContent = name;
     imgPopupEl.alt = name;
