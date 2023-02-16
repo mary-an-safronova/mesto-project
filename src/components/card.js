@@ -39,7 +39,7 @@ export default class Card {
 
     cardImg.addEventListener('click', this._openCardElementPopup.bind(this));
     likeElement.addEventListener('click', this._handleLike.bind(this, likeElement, likeCounterEl));
-    deleteBtnElement.addEventListener('click', this._openDeletePopup.bind(this, deletePopupEl, cardElement));
+    deleteBtnElement.addEventListener('click', this._openDeletePopup.bind(this, cardElement));
     this._checkOwnerId(deleteBtnElement);
     this._checkLikeOwnerId(cardLikes, likeElement);
 
@@ -53,7 +53,7 @@ export default class Card {
         cardElement.remove();
         console.log(result);
       })
-      .then(closePopup(deletePopupEl))
+      .then(popupDelete.close())
       .catch((err) => {
         console.log(err);
       })
@@ -63,8 +63,8 @@ export default class Card {
   }
 
   // Функция открытия попапа подтверждения удаления карточки
-  _openDeletePopup(deletePopupEl, cardElement) {
-    openPopup(deletePopupEl);
+  _openDeletePopup(cardElement) {
+    popupDelete.open();
     this.setEventListeners();
     const deleteCard = () => {
       this._removeCard.call(this, cardElement, deleteCard);

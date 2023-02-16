@@ -1,19 +1,21 @@
 import './styles/index.css';
 
-import { showProfileInfo, handleProfileFormSubmit, handleAddFormSubmit, handleChangeAvatarFormSubmit } from './components/modal';
-import { cardTemplate, cardsContainerEl, profileNameEl, profileProfessionEl, cardAddPopupEl, avatarPopupEl } from './components/modal';
-import { enableValidation } from './components/validate';
+import { showProfileInfo } from './components/modal';
+import { cardTemplate, cardsContainerEl, cardAddPopupEl, avatarPopupEl, profilePopupEl } from './components/modal';
 
 import Card, { cardAddFormEl } from './components/card';
 import { validationConfig } from './components/constants';
 import FormValidator from './components/validate';
 import { api } from './components/api';
-
+import PopupWithForm from './components/PopupWithForm';
 import Popup from './components/Popup';
+
 import { popupCardAdd } from './components/modal';
 import UserInfo from "./components/UserInfo";
 
 export { myUserId, cardElId, someUserId, profileAvatarEl };
+export { profileValidator, profileFormEl, popupWithFormProfile, popupCardAdd };
+export { inputName, inputProfession, profileNameEl, profileProfessionEl };
 
 const profileBtnEl = document.querySelector('.profile__edit-button');
 const profileFormEl = document.querySelector('.edit-form');
@@ -21,7 +23,14 @@ const cardAddBtnEl = document.querySelector('.profile__add-button');
 const profileAvatarEl = document.querySelector('.profile__avatar');
 const profileAvatarWrapEl = document.querySelector('.profile__avatar-wrap');
 const profileAvatarBtnEl = document.querySelector('.profile__avatar-cover');
-export const popupAvatar = new Popup(avatarPopupEl);
+
+const inputName = document.querySelector('#name');
+const profileNameEl = document.querySelector('.profile__name');
+const inputProfession = document.querySelector('#profession');
+const profileProfessionEl = document.querySelector('.profile__profession');
+let cardCount = cardTemplate.querySelector('.place__like-count');
+cardCount = '';
+export const popupProfile = new Popup(profilePopupEl);
 
 let myUserId = '';
 let cardElId = '';
@@ -54,12 +63,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     console.log(err);
   });
 
-// Добавления слушателя клика на кнопку добавления карточки
-cardAddBtnEl.addEventListener('click', () => {
-  popupCardAdd.open();
-  cardAddValidator.cleanForm(cardAddPopupEl);
-});
-
 // Добавления слушателя клика на кнопку редактирования профиля
 profileBtnEl.addEventListener('click', showProfileInfo);
 
@@ -72,15 +75,7 @@ profileAvatarWrapEl.addEventListener('mouseout', () => {
   profileAvatarBtnEl.classList.remove('profile__avatar-cover_opened');
 });
 
-// Слушатель кнопки редактирования аватара профиля
-profileAvatarBtnEl.addEventListener('click', () => {
-  //openAndCleanForm(avatarPopupEl);
-  popupAvatar.open();
-  profileValidator.cleanForm(avatarPopupEl);
-});
-
 // Валидация форм
-// enableValidation(validationConfig);
 const profileValidator = new FormValidator(
   { config: validationConfig, form: profileFormEl },
 );
@@ -99,11 +94,89 @@ const avatarValidator = new FormValidator(
 
 avatarValidator.enableValidation();
 
-// Слушатель submit «отправки» формы редактирования профиля
-profileFormEl.addEventListener('submit', handleProfileFormSubmit);
+// Обработчик отправки формы редактирования аватара профиля
+const popupWithFormAvatar = new PopupWithForm(avatarPopupEl, {
+  handleFormSubmit: (data) => {
+    popupWithFormAvatar.renderLoading(true);
 
-// Слушатель submit «отправки» формы добавления карточек
-cardAddFormEl.addEventListener('submit', handleAddFormSubmit);
+    api.patchUserAvatar(data['avatar-image'])
+    .then((result) => {
+      profileAvatarEl.src = result.avatar;
+    })
+    .then(popupWithFormAvatar.close())
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      popupWithFormAvatar.renderLoading(false);
+    })
+  },
+});
 
 // Слушатель submit «отправки» формы редактирования аватара профиля
-avatarPopupEl.addEventListener('submit', handleChangeAvatarFormSubmit);
+popupWithFormAvatar.setEventListeners();
+
+const setUserInfo = () => {
+  profileNameEl.textContent = inputName.value;
+  profileProfessionEl.textContent = inputProfession.value;
+};
+
+// Обработчик «отправки» формы редактирования профиля
+const popupWithFormProfile = new PopupWithForm( profilePopupEl, {
+  handleFormSubmit: (data) => {
+    popupWithFormProfile.renderLoading(true);
+
+    api.patchUsers(data['user-name'], data['user-profession'])
+    .then((result) => {
+      setUserInfo();
+      console.log(result);
+    })
+    .then(popupProfile.close())
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      popupWithFormProfile.renderLoading(false);
+    })
+  },
+});
+
+// Слушатель submit «отправки» формы редактирования профиля
+popupWithFormProfile.setEventListeners();
+
+// Обработчик «отправки» формы добавления карточек
+const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
+  handleFormSubmit: (data) => {
+    popupCardAdd.renderLoading(true);
+
+    api.postCards(data['card-name'], data['card-image'])
+    .then((result) => {
+      let cardElId = result._id;
+      let someUserId = result.owner._id;
+      const cardElement = new Card(cardTemplate, data['card-name'], data['card-image'], cardCount, someUserId, cardElId, myUserId).getElement();
+      cardsContainerEl.prepend(cardElement);
+    })
+    .then(popupCardAdd.close())
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      popupCardAdd.renderLoading(false);
+    })
+  }
+});
+
+// Слушатель submit «отправки» формы добавления карточек
+popupCardAdd.setEventListeners();
+
+// Слушатель кнопки редактирования аватара профиля
+profileAvatarBtnEl.addEventListener('click', () => {
+  popupWithFormAvatar.open();
+  profileValidator.cleanForm(avatarPopupEl);
+});
+
+// Добавления слушателя клика на кнопку добавления карточки
+cardAddBtnEl.addEventListener('click', () => {
+  popupCardAdd.open();
+  cardAddValidator.cleanForm(cardAddPopupEl);
+});
