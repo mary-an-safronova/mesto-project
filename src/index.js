@@ -112,9 +112,6 @@ const popupWithFormAvatar = new PopupWithForm(avatarPopupEl, {
   },
 });
 
-// Слушатель submit «отправки» формы редактирования аватара профиля
-popupWithFormAvatar.setEventListeners();
-
 const setUserInfo = () => {
   profileNameEl.textContent = inputName.value;
   profileProfessionEl.textContent = inputProfession.value;
@@ -128,10 +125,9 @@ const popupWithFormProfile = new PopupWithForm( profilePopupEl, {
     api.patchUsers(data['user-name'], data['user-profession'])
     .then((result) => {
       setUserInfo();
-      popupProfile.close()
+      popupProfile.close();
       console.log(result);
     })
-    // .then(popupProfile.close())
     .catch((err) => {
       console.log(err);
     })
@@ -147,7 +143,6 @@ popupWithFormProfile.setEventListeners();
 // Обработчик «отправки» формы добавления карточек
 const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
   handleFormSubmit: (data) => {
-    console.log(data);
     popupCardAdd.renderLoading(true);
 
     api.postCards(data['card-name'], data['card-image'])
@@ -158,7 +153,6 @@ const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
       cardsContainerEl.prepend(cardElement);
       popupCardAdd.close()
     })
-    // .then(popupCardAdd.close())
     .catch((err) => {
       console.log(err);
     })
@@ -167,9 +161,6 @@ const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
     })
   }
 });
-
-// Слушатель submit «отправки» формы добавления карточек
-popupCardAdd.setEventListeners();
 
 // Слушатель кнопки редактирования аватара профиля
 profileAvatarBtnEl.addEventListener('click', () => {
