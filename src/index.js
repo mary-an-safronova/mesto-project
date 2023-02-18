@@ -10,7 +10,6 @@ import { api } from './components/api';
 import PopupWithForm from './components/PopupWithForm';
 import Popup from './components/Popup';
 
-import { popupCardAdd } from './components/modal';
 import UserInfo from "./components/UserInfo";
 
 export { myUserId, cardElId, someUserId, profileAvatarEl };
@@ -99,11 +98,11 @@ const popupWithFormAvatar = new PopupWithForm(avatarPopupEl, {
   handleFormSubmit: (data) => {
     popupWithFormAvatar.renderLoading(true);
 
-    api.patchUserAvatar(data['avatar-image'])
+    return api.patchUserAvatar(data['avatar-image'])
     .then((result) => {
       profileAvatarEl.src = result.avatar;
+      popupWithFormAvatar.close()
     })
-    .then(popupWithFormAvatar.close())
     .catch((err) => {
       console.log(err);
     })
@@ -129,9 +128,10 @@ const popupWithFormProfile = new PopupWithForm( profilePopupEl, {
     api.patchUsers(data['user-name'], data['user-profession'])
     .then((result) => {
       setUserInfo();
+      popupProfile.close()
       console.log(result);
     })
-    .then(popupProfile.close())
+    // .then(popupProfile.close())
     .catch((err) => {
       console.log(err);
     })
@@ -147,6 +147,7 @@ popupWithFormProfile.setEventListeners();
 // Обработчик «отправки» формы добавления карточек
 const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
   handleFormSubmit: (data) => {
+    console.log(data);
     popupCardAdd.renderLoading(true);
 
     api.postCards(data['card-name'], data['card-image'])
@@ -155,8 +156,9 @@ const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
       let someUserId = result.owner._id;
       const cardElement = new Card(cardTemplate, data['card-name'], data['card-image'], cardCount, someUserId, cardElId, myUserId).getElement();
       cardsContainerEl.prepend(cardElement);
+      popupCardAdd.close()
     })
-    .then(popupCardAdd.close())
+    // .then(popupCardAdd.close())
     .catch((err) => {
       console.log(err);
     })
