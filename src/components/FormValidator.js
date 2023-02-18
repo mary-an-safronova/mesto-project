@@ -1,8 +1,4 @@
 // Функциональность валидации форм
-// import { validationConfig } from "./constants";
-
-// export { enableValidation, cleanForm, enableSubmitButton };
-
 export default class FormValidator {
   constructor({ config, form }) {
     this.config = config;
@@ -95,9 +91,5 @@ export default class FormValidator {
     formList.forEach((formElement) => {
       this.setEventListeners(formElement);
     });
-  };
-
-  // enableSubmitButton(submitButton) {
-  //   submitButton.classList.remove(this.config.inactiveButtonClass);
-  // }
+  }
 }

@@ -91,11 +91,3 @@ export default class Api {
     .then(this._getResponce)
   }
 }
-
-export const api = new Api({
-  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-19',
-  headers: {
-    authorization: 'f92b5f7d-6bec-4339-b0cf-17fe28ece879',
-    'Content-Type': 'application/json'
-  }
-});
