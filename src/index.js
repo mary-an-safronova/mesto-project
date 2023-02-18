@@ -10,7 +10,6 @@ import { api } from './components/api';
 import PopupWithForm from './components/PopupWithForm';
 import Popup from './components/Popup';
 
-import { popupCardAdd } from './components/modal';
 import UserInfo from "./components/UserInfo";
 import Section from './components/Section';
 
@@ -102,11 +101,11 @@ const popupWithFormAvatar = new PopupWithForm(avatarPopupEl, {
   handleFormSubmit: (data) => {
     popupWithFormAvatar.renderLoading(true);
 
-    api.patchUserAvatar(data['avatar-image'])
+    return api.patchUserAvatar(data['avatar-image'])
     .then((result) => {
       profileAvatarEl.src = result.avatar;
+      popupWithFormAvatar.close()
     })
-    .then(popupWithFormAvatar.close())
     .catch((err) => {
       console.log(err);
     })
@@ -115,9 +114,6 @@ const popupWithFormAvatar = new PopupWithForm(avatarPopupEl, {
     })
   },
 });
-
-// Слушатель submit «отправки» формы редактирования аватара профиля
-popupWithFormAvatar.setEventListeners();
 
 const setUserInfo = () => {
   profileNameEl.textContent = inputName.value;
@@ -132,9 +128,9 @@ const popupWithFormProfile = new PopupWithForm( profilePopupEl, {
     api.patchUsers(data['user-name'], data['user-profession'])
     .then((result) => {
       setUserInfo();
+      popupProfile.close();
       console.log(result);
     })
-    .then(popupProfile.close())
     .catch((err) => {
       console.log(err);
     })
@@ -158,8 +154,8 @@ const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
       let someUserId = result.owner._id;
       const cardElement = new Card(cardTemplate, data['card-name'], data['card-image'], cardCount, someUserId, cardElId, myUserId).getElement();
       sectionCards.addItem(cardElement);
+      popupCardAdd.close()
     })
-    .then(popupCardAdd.close())
     .catch((err) => {
       console.log(err);
     })
@@ -168,9 +164,6 @@ const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
     })
   }
 });
-
-// Слушатель submit «отправки» формы добавления карточек
-popupCardAdd.setEventListeners();
 
 // Слушатель кнопки редактирования аватара профиля
 profileAvatarBtnEl.addEventListener('click', () => {
