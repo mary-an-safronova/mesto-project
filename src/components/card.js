@@ -142,7 +142,6 @@ export default class Card {
   _openCardElementPopup() {
     const popupImg = new PopupWithImage(cardImgPopupEl);
     popupImg.open(this.link, this.name);
-    cardImg.removeEventListener('click', this._openCardElementPopup.bind(this));
   }
 
 // Обработчик удаления карточки, Слушатель submit удаления карточек
