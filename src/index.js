@@ -1,7 +1,5 @@
 import './styles/index.css';
 
-import { showProfileInfo } from './components/modal';
-
 import Card from './components/Card';
 import FormValidator from './components/FormValidator';
 import PopupWithForm from './components/PopupWithForm';
@@ -15,9 +13,7 @@ import {
   profileFormEl,
   cardAddBtnEl,
   profilePopupEl,
-  inputName,
   profileNameEl,
-  inputProfession,
   profileProfessionEl,
   profileAvatarEl,
   profileAvatarWrapEl,
@@ -41,7 +37,7 @@ export const api = new Api({
 
 cardCount = '';
 
-const user = new UserInfo({
+export const user = new UserInfo({
   nameSelector: profileNameEl,
   professionSelector: profileProfessionEl,
   avatarSelector: profileAvatarEl
@@ -69,6 +65,16 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   .catch((err) => {
     console.log(err);
   });
+
+// Функция отображения информации профиля в полях формы редактирования при открытии попапа
+function showProfileInfo() {
+  popupProfile.open();
+  const inputs = profileFormEl.querySelectorAll('.form__textfield');
+    inputs.forEach((input) => {
+      profileValidator.hideInputError(profileFormEl, input);
+    });
+  user.getUserInfo();
+}
 
 // Добавления слушателя клика на кнопку редактирования профиля
 profileBtnEl.addEventListener('click', showProfileInfo);
@@ -108,7 +114,7 @@ const popupWithFormAvatar = new PopupWithForm(avatarPopupEl, {
 
     return api.patchUserAvatar(data['avatar-image'])
     .then((result) => {
-      profileAvatarEl.src = result.avatar;
+      user.setUserInfo(result);
       popupWithFormAvatar.close()
     })
     .catch((err) => {
@@ -120,11 +126,6 @@ const popupWithFormAvatar = new PopupWithForm(avatarPopupEl, {
   },
 });
 
-const setUserInfo = () => {
-  profileNameEl.textContent = inputName.value;
-  profileProfessionEl.textContent = inputProfession.value;
-};
-
 // Обработчик «отправки» формы редактирования профиля
 export const popupWithFormProfile = new PopupWithForm( profilePopupEl, {
   handleFormSubmit: (data) => {
@@ -132,7 +133,7 @@ export const popupWithFormProfile = new PopupWithForm( profilePopupEl, {
 
     api.patchUsers(data['user-name'], data['user-profession'])
     .then((result) => {
-      setUserInfo();
+      user.setUserInfo(result);
       popupProfile.close();
       console.log(result);
     })
