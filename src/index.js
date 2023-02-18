@@ -11,6 +11,7 @@ import PopupWithForm from './components/PopupWithForm';
 import Popup from './components/Popup';
 
 import UserInfo from "./components/UserInfo";
+import Section from './components/Section';
 
 export { myUserId, cardElId, someUserId, profileAvatarEl };
 export { profileValidator, profileFormEl, popupWithFormProfile, popupCardAdd };
@@ -41,22 +42,24 @@ const user = new UserInfo({
   avatarSelector: profileAvatarEl
 });
 
+let sectionCards;
+
 // Загрузка информации о пользователе с сервера
 // Отображение предзагруженных карточек с сервера
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userInfo, cards]) => {
     myUserId = userInfo._id;
     user.setUserInfo(userInfo);
-    // profileNameEl.textContent = userInfo.name;
-    // profileProfessionEl.textContent = userInfo.about;
-    // profileAvatarEl.src = userInfo.avatar;
-
-    cards.forEach(({ name, link, likes, owner, _id }) => {
-      const cardElement = new Card(cardTemplate, name, link, likes, owner._id, _id, userInfo._id).getElement();
-      cardsContainerEl.append(cardElement);
-      cardElId = _id;
-      someUserId = owner._id;
-    });
+    //Создание секции
+    sectionCards = new Section(
+      {
+        items : cards,
+        renderer: ({ name, link, likes, owner, _id }) => {
+          return new Card(cardTemplate, name, link, likes, owner._id, _id, userInfo._id).getElement();
+        },
+      },
+      cardsContainerEl
+    );
   })
   .catch((err) => {
     console.log(err);
@@ -150,7 +153,7 @@ const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
       let cardElId = result._id;
       let someUserId = result.owner._id;
       const cardElement = new Card(cardTemplate, data['card-name'], data['card-image'], cardCount, someUserId, cardElId, myUserId).getElement();
-      cardsContainerEl.prepend(cardElement);
+      sectionCards.addItem(cardElement);
       popupCardAdd.close()
     })
     .catch((err) => {
