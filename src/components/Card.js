@@ -1,16 +1,10 @@
 // Функции для работы с карточками проекта
-import { api } from "./api";
-import { cardAddValidator } from "..";
-import Popup from "./Popup";
+import { api } from "..";
 import PopupWithImage from "./PopupWithImage";
-
-export { cardAddFormEl, deletePopupEl, Card};
-
-const cardImgPopupEl = document.querySelector('.popup-img');
-const cardAddFormEl = document.querySelector('.add-form');
-const deletePopupEl = document.querySelector('.popup-delete');
-const deleteFormSubmitBtnEl = document.querySelector('.delete-form__submit-button');
-const popupDelete = new Popup(deletePopupEl);
+import { cardImgPopupEl,
+  deletePopupEl,
+  deleteFormSubmitBtnEl,
+  popupDelete } from "./constants"
 
 export default class Card {
   constructor(template, name, link, likes, id, cardId, myId) {

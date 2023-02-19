@@ -1,40 +1,45 @@
 import './styles/index.css';
 
 import { showProfileInfo } from './components/modal';
-import { cardTemplate, cardsContainerEl, cardAddPopupEl, avatarPopupEl, profilePopupEl } from './components/modal';
 
-import Card, { cardAddFormEl } from './components/card';
-import { validationConfig } from './components/constants';
-import FormValidator from './components/validate';
-import { api } from './components/api';
+import Card from './components/Card';
+import FormValidator from './components/FormValidator';
 import PopupWithForm from './components/PopupWithForm';
-import Popup from './components/Popup';
-
 import UserInfo from "./components/UserInfo";
 import Section from './components/Section';
+import Api from './components/Api';
 
-export { myUserId, cardElId, someUserId, profileAvatarEl };
-export { profileValidator, profileFormEl, popupWithFormProfile, popupCardAdd };
-export { inputName, inputProfession, profileNameEl, profileProfessionEl };
+import {
+  validationConfig,
+  profileBtnEl,
+  profileFormEl,
+  cardAddBtnEl,
+  profilePopupEl,
+  inputName,
+  profileNameEl,
+  inputProfession,
+  profileProfessionEl,
+  profileAvatarEl,
+  profileAvatarWrapEl,
+  profileAvatarBtnEl,
+  avatarPopupEl,
+  cardAddPopupEl,
+  cardsContainerEl,
+  cardTemplate,
+  cardAddFormEl,
+  popupProfile,
+  cardCount,
+  myUserId } from './components/constants';
 
-const profileBtnEl = document.querySelector('.profile__edit-button');
-const profileFormEl = document.querySelector('.edit-form');
-const cardAddBtnEl = document.querySelector('.profile__add-button');
-const profileAvatarEl = document.querySelector('.profile__avatar');
-const profileAvatarWrapEl = document.querySelector('.profile__avatar-wrap');
-const profileAvatarBtnEl = document.querySelector('.profile__avatar-cover');
+export const api = new Api({
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-19',
+  headers: {
+    authorization: 'f92b5f7d-6bec-4339-b0cf-17fe28ece879',
+    'Content-Type': 'application/json'
+  }
+});
 
-const inputName = document.querySelector('#name');
-const profileNameEl = document.querySelector('.profile__name');
-const inputProfession = document.querySelector('#profession');
-const profileProfessionEl = document.querySelector('.profile__profession');
-let cardCount = cardTemplate.querySelector('.place__like-count');
 cardCount = '';
-export const popupProfile = new Popup(profilePopupEl);
-
-let myUserId = '';
-let cardElId = '';
-let someUserId = '';
 
 const user = new UserInfo({
   nameSelector: profileNameEl,
@@ -78,7 +83,7 @@ profileAvatarWrapEl.addEventListener('mouseout', () => {
 });
 
 // Валидация форм
-const profileValidator = new FormValidator(
+export const profileValidator = new FormValidator(
   { config: validationConfig, form: profileFormEl },
 );
 
@@ -121,7 +126,7 @@ const setUserInfo = () => {
 };
 
 // Обработчик «отправки» формы редактирования профиля
-const popupWithFormProfile = new PopupWithForm( profilePopupEl, {
+export const popupWithFormProfile = new PopupWithForm( profilePopupEl, {
   handleFormSubmit: (data) => {
     popupWithFormProfile.renderLoading(true);
 
@@ -144,7 +149,7 @@ const popupWithFormProfile = new PopupWithForm( profilePopupEl, {
 popupWithFormProfile.setEventListeners();
 
 // Обработчик «отправки» формы добавления карточек
-const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
+export const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
   handleFormSubmit: (data) => {
     popupCardAdd.renderLoading(true);
 
