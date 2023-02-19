@@ -123,8 +123,11 @@ const popupWithFormAvatar = new PopupWithForm(avatarPopupEl, {
     .finally(() => {
       popupWithFormAvatar.renderLoading(false);
     })
-  },
+  }
 });
+
+// Слушатель submit отправки формы редактирования аватара профиля
+popupWithFormAvatar.setEventListeners();
 
 // Обработчик «отправки» формы редактирования профиля
 export const popupWithFormProfile = new PopupWithForm( profilePopupEl, {
@@ -149,7 +152,7 @@ export const popupWithFormProfile = new PopupWithForm( profilePopupEl, {
 // Слушатель submit «отправки» формы редактирования профиля
 popupWithFormProfile.setEventListeners();
 
-// Обработчик «отправки» формы добавления карточек
+// Обработчик отправки формы добавления карточек
 export const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
   handleFormSubmit: (data) => {
     popupCardAdd.renderLoading(true);
@@ -170,6 +173,9 @@ export const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
     })
   }
 });
+
+// Слушатель submit отправки формы добавления карточек
+popupCardAdd.setEventListeners();
 
 // Слушатель кнопки редактирования аватара профиля
 profileAvatarBtnEl.addEventListener('click', () => {
