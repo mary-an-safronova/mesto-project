@@ -6,11 +6,6 @@ export default class UserInfo {
   }
 
   getUserInfo() {
-    // this._profile = {};
-    // this._profile['name'] = this._name.textContent;
-    // this._profile['about'] = this._name.textContent;
-    // return this._profile;
-
     const inputName = document.querySelector('#name');
     const inputProfession = document.querySelector('#profession');
     inputName.value = this._name.textContent;
