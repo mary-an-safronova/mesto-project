@@ -5,6 +5,8 @@ export default class Popup {
     this._handleEscClose = this._handleEscClose.bind(this);
     this.overlayElement = this.popup.querySelector('.popup__background');
     this.popupCloseIconElement = this.popup.querySelector('.popup__close-icon');
+    this.form = this.popup.querySelector('.form');
+    this.button = this.form.querySelector('.form__submit-button');
   }
 
   // Открытие модального окна
@@ -40,6 +42,17 @@ export default class Popup {
       this.close();
     }
   }
+
+  // Отображение загрузки информации полей формы
+  renderLoading(isLoading) {
+    if (isLoading) {
+      this.button.textContent = 'Сохранение...'
+      this.button.disabled = true;
+    } else {
+      this.button.textContent = 'Сохранить'
+      this.button.disabled = false;
+    }
+  };
 
   // Добавление слушателей
   setEventListeners() {

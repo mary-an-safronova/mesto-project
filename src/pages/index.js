@@ -23,7 +23,6 @@ import {
   cardsContainerEl,
   cardTemplate,
   cardAddFormEl,
-  popupProfile
 } from '../utils/constants';
 
 export const api = new Api({
@@ -70,7 +69,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 
 // Функция отображения информации профиля в полях формы редактирования при открытии попапа
 function showProfileInfo() {
-  popupProfile.open();
+  popupWithFormProfile.open();
   const inputs = profileFormEl.querySelectorAll('.form__textfield');
     inputs.forEach((input) => {
       profileValidator.hideInputError(profileFormEl, input);
@@ -139,7 +138,7 @@ export const popupWithFormProfile = new PopupWithForm( profilePopupEl, {
     api.patchUsers(data['user-name'], data['user-profession'])
     .then((result) => {
       user.setUserInfo(result);
-      popupProfile.close();
+      popupWithFormProfile.close();
       console.log(result);
     })
     .catch((err) => {

@@ -1,4 +1,4 @@
-import Popup from "../components/Popup";
+import PopupWithConfirm from "../components/PopupWithConfirm";
 
 export { validationConfig };
 
@@ -33,5 +33,4 @@ export const cardAddFormEl = document.querySelector('.add-form');
 export const deletePopupEl = document.querySelector('.popup-delete');
 export const deleteFormSubmitBtnEl = document.querySelector('.delete-form__submit-button');
 
-export const popupDelete = new Popup(deletePopupEl);
-export const popupProfile = new Popup(profilePopupEl);
+export const popupDelete = new PopupWithConfirm(deletePopupEl);
