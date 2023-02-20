@@ -13,7 +13,7 @@ const validationConfig = {
 }
 
 export const profileBtnEl = document.querySelector('.profile__edit-button');
-export const profileFormEl = document.querySelector('.edit-form');
+export const profileFormEl = document.forms['edit-form'];
 export const cardAddBtnEl = document.querySelector('.profile__add-button');
 export const profilePopupEl = document.querySelector('.popup-edit');
 
@@ -29,7 +29,7 @@ export const cardAddPopupEl = document.querySelector('.popup-add');
 export const cardsContainerEl = document.querySelector('.grid-places');
 export const cardTemplate = document.querySelector('#place-template').content;
 export const cardImgPopupEl = document.querySelector('.popup-img');
-export const cardAddFormEl = document.querySelector('.add-form');
+export const cardAddFormEl = document.forms['add-form'];
 export const deletePopupEl = document.querySelector('.popup-delete');
 export const deleteFormSubmitBtnEl = document.querySelector('.delete-form__submit-button');
 
