@@ -5,12 +5,13 @@ export default class Popup {
     this._handleEscClose = this._handleEscClose.bind(this);
     this.overlayElement = this.popup.querySelector('.popup__background');
     this.popupCloseIconElement = this.popup.querySelector('.popup__close-icon');
+    this.form = this.popup.querySelector('.form');
+    this.button = this.popup.querySelector('.form__submit-button');
   }
 
   // Открытие модального окна
   open() {
     this.popup.classList.add('popup_opened');
-    this.setEventListeners();
   }
 
   // Закрытие модального окна
@@ -20,9 +21,9 @@ export default class Popup {
   }
 
   // Закрытие модального окна при клике на escape
-  _handleEscClose(event) {
+  _handleEscClose(evt) {
     const escape = 'Escape';
-    if (event.code === escape) {
+    if (evt.code === escape) {
       this.close();
     }
   }
@@ -41,9 +42,22 @@ export default class Popup {
     }
   }
 
+  // Отображение загрузки информации полей формы
+  renderLoading(isLoading) {
+    if (isLoading) {
+      this.button.textContent = 'Сохранение...'
+      this.button.disabled = true;
+    } else {
+      this.button.textContent = 'Сохранить'
+      this.button.disabled = false;
+    }
+  };
+
   // Добавление слушателей
   setEventListeners() {
-    document.addEventListener('keydown', this._handleEscClose);
+    document.addEventListener('keydown', (evt) => {
+      this._handleEscClose(evt)
+    });
 
     this.overlayElement.addEventListener('click', (evt) => {
       this._handleOverlayClose(evt);

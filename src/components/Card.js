@@ -1,10 +1,8 @@
 // Функции для работы с карточками проекта
-import { api } from "../pages/index";
+import { api, popupDelete } from "../pages/index";
 import PopupWithImage from "./PopupWithImage";
 import { cardImgPopupEl,
-  deletePopupEl,
-  deleteFormSubmitBtnEl,
-  popupDelete } from "../utils/constants"
+  deleteFormSubmitBtnEl } from "../utils/constants"
 
 export default class Card {
   constructor(template, name, link, likes, id, cardId, myId) {
@@ -59,7 +57,7 @@ export default class Card {
   // Функция открытия попапа подтверждения удаления карточки
   _openDeletePopup(cardElement) {
     popupDelete.open();
-    this.setEventListeners();
+    popupDelete.setEventListeners();
     const deleteCard = () => {
       this._removeCard.call(this, cardElement, deleteCard);
     }
@@ -136,12 +134,6 @@ export default class Card {
   _openCardElementPopup() {
     const popupImg = new PopupWithImage(cardImgPopupEl);
     popupImg.open(this.link, this.name);
-  }
-
-// Обработчик удаления карточки, Слушатель submit удаления карточек
-  setEventListeners() {
-    deletePopupEl.addEventListener('submit', function (evt) {
-      evt.preventDefault();
-    })
+    popupImg.setEventListeners();
   }
 }

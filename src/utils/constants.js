@@ -1,5 +1,3 @@
-import Popup from "../components/Popup";
-
 export { validationConfig };
 
 // Валидация форм
@@ -32,6 +30,3 @@ export const cardImgPopupEl = document.querySelector('.popup-img');
 export const cardAddFormEl = document.querySelector('.add-form');
 export const deletePopupEl = document.querySelector('.popup-delete');
 export const deleteFormSubmitBtnEl = document.querySelector('.delete-form__submit-button');
-
-export const popupDelete = new Popup(deletePopupEl);
-export const popupProfile = new Popup(profilePopupEl);
