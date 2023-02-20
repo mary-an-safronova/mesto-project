@@ -1,11 +1,11 @@
-import './styles/index.css';
+import './index.css';
 
-import Card from './components/Card';
-import FormValidator from './components/FormValidator';
-import PopupWithForm from './components/PopupWithForm';
-import UserInfo from "./components/UserInfo";
-import Section from './components/Section';
-import Api from './components/Api';
+import Card from '../components/Card';
+import FormValidator from '../components/FormValidator';
+import PopupWithForm from '../components/PopupWithForm';
+import UserInfo from "../components/UserInfo";
+import Section from '../components/Section';
+import Api from '../components/Api';
 
 import {
   validationConfig,
@@ -23,9 +23,8 @@ import {
   cardsContainerEl,
   cardTemplate,
   cardAddFormEl,
-  popupProfile,
-  cardCount,
-  myUserId } from './components/constants';
+  popupProfile
+} from '../utils/constants';
 
 export const api = new Api({
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-19',
@@ -34,6 +33,9 @@ export const api = new Api({
     'Content-Type': 'application/json'
   }
 });
+
+let myUserId = '';
+let cardCount = cardTemplate.querySelector('.place__like-count');
 
 cardCount = '';
 
