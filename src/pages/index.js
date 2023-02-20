@@ -71,14 +71,16 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     console.log(err);
   });
 
-// Функция отображения информации профиля в полях формы редактирования при открытии попапа
+  // Функция отображения информации профиля в полях формы редактирования при открытии попапа
 function showProfileInfo() {
   popupWithFormProfile.open();
   const inputs = profileFormEl.querySelectorAll('.form__textfield');
     inputs.forEach((input) => {
       profileValidator.hideInputError(profileFormEl, input);
     });
-  user.getUserInfo();
+  const userInformation = user.getUserInfo();
+  const data = { 'user-name': userInformation['name'], 'user-profession': userInformation['about'] };
+  popupWithFormProfile.setInputValues(data);
 }
 
 // Добавления слушателя клика на кнопку редактирования профиля
