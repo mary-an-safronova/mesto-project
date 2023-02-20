@@ -1,5 +1,3 @@
-import PopupWithConfirm from "../components/PopupWithConfirm";
-
 export { validationConfig };
 
 // Валидация форм
@@ -32,5 +30,3 @@ export const cardImgPopupEl = document.querySelector('.popup-img');
 export const cardAddFormEl = document.querySelector('.add-form');
 export const deletePopupEl = document.querySelector('.popup-delete');
 export const deleteFormSubmitBtnEl = document.querySelector('.delete-form__submit-button');
-
-export const popupDelete = new PopupWithConfirm(deletePopupEl);

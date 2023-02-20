@@ -1,9 +1,8 @@
 // Функции для работы с карточками проекта
-import { api } from "../pages/index";
+import { api, popupDelete } from "../pages/index";
 import PopupWithImage from "./PopupWithImage";
 import { cardImgPopupEl,
-  deleteFormSubmitBtnEl,
-  popupDelete } from "../utils/constants"
+  deleteFormSubmitBtnEl } from "../utils/constants"
 
 export default class Card {
   constructor(template, name, link, likes, id, cardId, myId) {
