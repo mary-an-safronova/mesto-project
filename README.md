@@ -40,6 +40,23 @@ ___________________________
   * Редактирование аватара профиля
 * Установлен и настроен Webpack
 * Реализовано взаимодействие с сервером
+* ООП
+___________________________
+
+**Над проектом работали**
+
+Шахова Маргарита
+mg.shakhova@yandex.ru
+https://github.com/margaritaShakhovaa
+
+Ковалева Галина
+galkina.galina.alexandrovna@yandex.ru
+https://github.com/Kovaleva-Galina
+
+Сафронова Мария
+mary.an.safronova@yandex.ru
+https://github.com/mary-an-safronova
+
 ___________________________
 
 [Ссылка на проект](https://mary-an-safronova.github.io/mesto-project/)
