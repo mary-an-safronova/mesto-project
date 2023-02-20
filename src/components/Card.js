@@ -45,7 +45,7 @@ export default class Card {
         cardElement.remove();
         console.log(result);
       })
-      .then(popupDelete.close())
+      .then(() => popupDelete.close())
       .catch((err) => {
         console.log(err);
       })
