@@ -3,8 +3,8 @@ export default class Popup {
     this.popup = popup;
 
     this._handleEscClose = this._handleEscClose.bind(this);
-    this.overlayElement = this.popup.querySelector('.popup__background');
-    this.popupCloseIconElement = this.popup.querySelector('.popup__close-icon');
+    this._overlayElement = this.popup.querySelector('.popup__background');
+    this._popupCloseIconElement = this.popup.querySelector('.popup__close-icon');
     this.form = this.popup.querySelector('.form');
     this.button = this.popup.querySelector('.form__submit-button');
   }
@@ -59,11 +59,11 @@ export default class Popup {
       this._handleEscClose(evt)
     });
 
-    this.overlayElement.addEventListener('click', (evt) => {
+    this._overlayElement.addEventListener('click', (evt) => {
       this._handleOverlayClose(evt);
     });
 
-    this.popupCloseIconElement.addEventListener('click', (evt) => {
+    this._popupCloseIconElement.addEventListener('click', (evt) => {
       this._handleIconClose(evt);
     });
   }
@@ -72,11 +72,11 @@ export default class Popup {
   _removeEventListeners() {
     document.removeEventListener('keydown', this._handleEscClose);
 
-    this.overlayElement.removeEventListener('click', (evt) => {
+    this._overlayElement.removeEventListener('click', (evt) => {
       this._handleOverlayClose(evt);
     });
 
-    this.popupCloseIconElement.removeEventListener('click', (evt) => {
+    this._popupCloseIconElement.removeEventListener('click', (evt) => {
       this._handleIconClose(evt);
     });
   }
