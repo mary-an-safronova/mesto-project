@@ -6,7 +6,8 @@ export default class Popup {
     this._overlayElement = this.popup.querySelector('.popup__background');
     this._popupCloseIconElement = this.popup.querySelector('.popup__close-icon');
     this.form = this.popup.querySelector('.form');
-    this.button = this.popup.querySelector('.form__submit-button');
+    this._button = this.popup.querySelector('.form__submit-button');
+    this._buttonText = this._button.textContent;
   }
 
   // Открытие модального окна
@@ -44,15 +45,13 @@ export default class Popup {
   }
 
   // Отображение загрузки информации полей формы
-  renderLoading(isLoading) {
+  renderLoading(isLoading, loadingText='Сохранение...') {
     if (isLoading) {
-      this.button.textContent = 'Сохранение...'
-      this.button.disabled = true;
+      this._button.textContent = loadingText;
     } else {
-      this.button.textContent = 'Сохранить'
-      this.button.disabled = false;
+      this._button.textContent = this._buttonText;
     }
-  };
+  }
 
   // Добавление слушателей
   setEventListeners() {
