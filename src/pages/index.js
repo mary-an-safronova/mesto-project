@@ -71,13 +71,10 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     console.log(err);
   });
 
-  // Функция отображения информации профиля в полях формы редактирования при открытии попапа
+// Функция отображения информации профиля в полях формы редактирования при открытии попапа
 function showProfileInfo() {
   popupWithFormProfile.open();
-  const inputs = profileFormEl.querySelectorAll('.form__textfield');
-    inputs.forEach((input) => {
-      profileValidator.hideInputError(profileFormEl, input);
-    });
+  profileValidator.resetFormValidation();
   const userInformation = user.getUserInfo();
   const data = { 'user-name': userInformation['name'], 'user-profession': userInformation['about'] };
   popupWithFormProfile.setInputValues(data);
@@ -187,11 +184,11 @@ popupCardAdd.setEventListeners();
 // Слушатель кнопки редактирования аватара профиля
 profileAvatarBtnEl.addEventListener('click', () => {
   popupWithFormAvatar.open();
-  profileValidator.cleanForm(avatarPopupEl);
+  avatarValidator.cleanForm();
 });
 
 // Добавления слушателя клика на кнопку добавления карточки
 cardAddBtnEl.addEventListener('click', () => {
   popupCardAdd.open();
-  cardAddValidator.cleanForm(cardAddPopupEl);
+  cardAddValidator.cleanForm();
 });

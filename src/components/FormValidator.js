@@ -3,23 +3,27 @@ export default class FormValidator {
   constructor({ config, form }) {
     this.config = config;
     this.form = form;
+
+    this._inputList = this.form.querySelectorAll(this.config.inputSelector);
+    this.submitBtn = this.form.querySelector(this.config.submitButtonSelector);
   }
 
-  _disableSubmitButton(button) {
-    button.disabled = true;
-    button.classList.add(this.config.inactiveButtonClass);
+  _disableSubmitButton() {
+    this.submitBtn.disabled = true;
+    this.submitBtn.classList.add(this.config.inactiveButtonClass);
+  }
+
+  resetFormValidation() {
+    this._inputList.forEach(input => {
+      this.hideInputError(this.form, input);
+    });
+    this._disableSubmitButton();
   }
 
   // Очистка полей и ошибок формы
-  cleanForm(popup) {
-    const form = popup.querySelector(this.config.formSelector);
-    const submitBtn = form.querySelector(this.config.submitButtonSelector);
-    const inputs = form.querySelectorAll(this.config.inputSelector);
-    inputs.forEach((input) => {
-      this.hideInputError(form, input);
-    })
-    form.reset();
-    this._disableSubmitButton(submitBtn);
+  cleanForm() {
+    this.resetFormValidation();
+    this.form.reset();
   }
 
   // Добавление класса с ошибкой
