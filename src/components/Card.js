@@ -1,11 +1,6 @@
-// Функции для работы с карточками проекта
-import { api, popupDelete } from "../pages/index";
-import PopupWithImage from "./PopupWithImage";
-import { cardImgPopupEl,
-  deleteFormSubmitBtnEl } from "../utils/constants"
-
 export default class Card {
-  constructor(template, name, link, likes, id, cardId, myId) {
+  constructor(settings) {
+    const { template, name, link, likes, id, cardId, myId, api, cardImgPopupEl, deletePopupEl, deleteFormSubmitBtnEl, openPopupImg, openPopupDelete} = settings;
     this.template = template;
     this.name = name;
     this.link = link;
@@ -13,6 +8,13 @@ export default class Card {
     this.ownerId = id;
     this.cardId = cardId;
     this.myId = myId;
+    this.api = api;
+    this.cardImgPopupEl = cardImgPopupEl;
+    this.deletePopupEl = deletePopupEl;
+    this.deleteFormSubmitBtnEl = deleteFormSubmitBtnEl;
+    //this._cardElement = this.getElement();
+    this.openPopupImg = openPopupImg;
+    this.openPopupDelete = openPopupDelete;
   }
 
   getElement() {
@@ -29,42 +31,18 @@ export default class Card {
     cardElement.id = this.cardId;
     const cardLikes = Array.from(this.likes);
 
-    cardImg.addEventListener('click', this._openCardElementPopup.bind(this));
+    cardImg.addEventListener('click', this.openPopupImg.bind(this, this.link, this.name));
     likeElement.addEventListener('click', this._handleLike.bind(this, likeElement, likeCounterEl));
-    deleteBtnElement.addEventListener('click', this._openDeletePopup.bind(this, cardElement));
+    deleteBtnElement.addEventListener('click', this.openPopupDelete.bind(this, cardElement, this.cardId));
+    //this._setEventListeners();
+
     this._checkOwnerId(deleteBtnElement);
     this._checkLikeOwnerId(cardLikes, likeElement);
 
     return cardElement;
   }
-  // Функция удаления ближайшей к корзине карточки
-  _removeCard(cardElement, deleteCard) {
-    console.log(cardElement, this.cardId)
-    api.deleteCards(this.cardId)
-      .then((result) => {
-        cardElement.remove();
-        console.log(result);
-      })
-      .then(() => popupDelete.close())
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        deleteFormSubmitBtnEl.removeEventListener('click', deleteCard);
-      })
-  }
 
-  // Функция открытия попапа подтверждения удаления карточки
-  _openDeletePopup(cardElement) {
-    popupDelete.open();
-    popupDelete.setEventListeners();
-    const deleteCard = () => {
-      this._removeCard.call(this, cardElement, deleteCard);
-    }
-    deleteFormSubmitBtnEl.addEventListener('click', deleteCard);
-  }
-
-  _handleLike(likeElement, likeCounterEl) {
+    _handleLike(likeElement, likeCounterEl) {
       if (likeElement.classList.contains('place__like_active')) {
         this._handleDeleteLike(likeElement, likeCounterEl);
       } else {
@@ -76,7 +54,7 @@ export default class Card {
   _handlePutLike(like, counter) {
     const card = like.closest('.place');
 
-    return api.putLikes(card.id)
+    return this.api.putLikes(card.id)
       .then((result) => {
         like.classList.add('place__like_active');
         counter.textContent = result.likes.length;
@@ -95,7 +73,7 @@ export default class Card {
   _handleDeleteLike(like, counter) {
     const card = like.closest('.place');
 
-    return api.deleteLikes(card.id)
+    return this.api.deleteLikes(card.id)
       .then((result) => {
         like.classList.remove('place__like_active');
         counter.textContent = result.likes.length;
@@ -130,10 +108,18 @@ export default class Card {
     })
   }
 
-  // Открытие попапов изображений карточек (в т.ч. новых)
-  _openCardElementPopup() {
-    const popupImg = new PopupWithImage(cardImgPopupEl);
-    popupImg.open(this.link, this.name);
-    popupImg.setEventListeners();
-  }
+// // Обработчики добавлены в один метод
+//   _setEventListeners(cardImg, likeElement, likeCounterEl, deleteBtnElement, cardElement) {
+//     cardImg.addEventListener('click', this._openCardElementPopup.bind(this));
+//     likeElement.addEventListener('click', this._handleLike.bind(this, likeElement, likeCounterEl));
+//     deleteBtnElement.addEventListener('click', this._openDeletePopup.bind(this, cardElement));
+//   }
+
+// Обработчик удаления карточки, Слушатель submit удаления карточек
+  setEventListeners() {
+    this.deletePopupEl.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+    })
 }
+}
+
