@@ -6,10 +6,10 @@ export default class UserInfo {
   }
 
   getUserInfo() {
-    const inputName = document.querySelector('#name');
-    const inputProfession = document.querySelector('#profession');
-    inputName.value = this._name.textContent;
-    inputProfession.value = this._profession.textContent;
+    return {
+      name: this._name.textContent,
+      about: this._profession.textContent
+    }
   }
 
 
