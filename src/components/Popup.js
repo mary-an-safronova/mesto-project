@@ -6,18 +6,19 @@ export default class Popup {
     this._overlayElement = this.popup.querySelector('.popup__background');
     this._popupCloseIconElement = this.popup.querySelector('.popup__close-icon');
     this.form = this.popup.querySelector('.form');
-    this.button = this.popup.querySelector('.form__submit-button');
+    this._button = this.popup.querySelector('.form__submit-button');
   }
 
   // Открытие модального окна
   open() {
     this.popup.classList.add('popup_opened');
+    document.addEventListener('keydown', this._handleEscClose);
   }
 
   // Закрытие модального окна
   close() {
     this.popup.classList.remove('popup_opened');
-    this._removeEventListeners();
+    document.removeEventListener('keydown', this._handleEscClose);
   }
 
   // Закрытие модального окна при клике на escape
@@ -45,38 +46,19 @@ export default class Popup {
   // Отображение загрузки информации полей формы
   renderLoading(isLoading) {
     if (isLoading) {
-      this.button.textContent = 'Сохранение...'
-      this.button.disabled = true;
+      this._button.textContent = 'Сохранение...'
     } else {
-      this.button.textContent = 'Сохранить'
-      this.button.disabled = false;
+      this._button.textContent = 'Сохранить'
     }
   };
 
   // Добавление слушателей
   setEventListeners() {
-    document.addEventListener('keydown', (evt) => {
-      this._handleEscClose(evt)
-    });
-
     this._overlayElement.addEventListener('click', (evt) => {
       this._handleOverlayClose(evt);
     });
 
     this._popupCloseIconElement.addEventListener('click', (evt) => {
-      this._handleIconClose(evt);
-    });
-  }
-
-  // Удаление слушателей
-  _removeEventListeners() {
-    document.removeEventListener('keydown', this._handleEscClose);
-
-    this._overlayElement.removeEventListener('click', (evt) => {
-      this._handleOverlayClose(evt);
-    });
-
-    this._popupCloseIconElement.removeEventListener('click', (evt) => {
       this._handleIconClose(evt);
     });
   }
