@@ -23,7 +23,6 @@ export default class FormValidator {
   // Очистка полей и ошибок формы
   cleanForm() {
     this.resetFormValidation();
-    this.form.reset();
   }
 
   // Добавление класса с ошибкой
