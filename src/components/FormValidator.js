@@ -1,13 +1,10 @@
 // Функциональность валидации форм
 export default class FormValidator {
   constructor({ config, form }) {
-    // this.config = config;
     this._form = form;
 
     this._inactiveButtonClass = config.inactiveButtonClass;
-    // this._invalidInputClass = config.invalidInputClass;
     this._inputErrorClass = config.inputErrorClass;
-    // this._activeErrorClass = config.activeErrorClass;
     this._errorClass = config.errorClass;
 
     this._inputList = Array.from(this._form.querySelectorAll(config.inputSelector));
@@ -21,7 +18,6 @@ export default class FormValidator {
 
   resetFormValidation() {
     this._inputList.forEach(inputElement => {
-      // this.hideInputError(this._form, input);
       this.hideInputError(inputElement);
     });
     this._disableSubmitButton();
