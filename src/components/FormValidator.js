@@ -4,13 +4,13 @@ export default class FormValidator {
     this.config = config;
     this.form = form;
 
-    this._inputList = this.form.querySelectorAll(this.config.inputSelector);
-    this.submitBtn = this.form.querySelector(this.config.submitButtonSelector);
+    this._inputList = Array.from(this.form.querySelectorAll(this.config.inputSelector));
+    this._submitBtn = this.form.querySelector(this.config.submitButtonSelector);
   }
 
   _disableSubmitButton() {
-    this.submitBtn.disabled = true;
-    this.submitBtn.classList.add(this.config.inactiveButtonClass);
+    this._submitBtn.disabled = true;
+    this._submitBtn.classList.add(this.config.inactiveButtonClass);
   }
 
   resetFormValidation() {
@@ -74,25 +74,19 @@ export default class FormValidator {
   };
 
   // Добавление обработчиков всем инпутам
-  setEventListeners (formElement) {
-    const inputList = Array.from(formElement.querySelectorAll(this.config.inputSelector));
-    const buttonElement = formElement.querySelector(this.config.submitButtonSelector);
+  setEventListeners () {
+    this._toggleButtonState(this._inputList, this._submitBtn);
 
-    this._toggleButtonState(inputList, buttonElement);
-
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
-        this._isValid(formElement, inputElement);
-        this._toggleButtonState(inputList, buttonElement);
+        this._isValid(this.form, inputElement);
+        this._toggleButtonState(this._inputList, this._submitBtn);
       });
     });
   };
 
   // Добавление обработчиков всем формам
   enableValidation () {
-    const formList = Array.from(document.querySelectorAll(this.config.formSelector));
-    formList.forEach((formElement) => {
-      this.setEventListeners(formElement);
-    });
+    this.setEventListeners();
   }
 }
