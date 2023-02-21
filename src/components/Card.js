@@ -115,11 +115,5 @@ export default class Card {
 //     deleteBtnElement.addEventListener('click', this._openDeletePopup.bind(this, cardElement));
 //   }
 
-// Обработчик удаления карточки, Слушатель submit удаления карточек
-  setEventListeners() {
-    this.deletePopupEl.addEventListener('submit', function (evt) {
-      evt.preventDefault();
-    })
-}
 }
 

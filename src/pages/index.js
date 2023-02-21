@@ -205,9 +205,20 @@ export const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
     .then((result) => {
       let cardElId = result._id;
       let someUserId = result.owner._id;
-    //  const settings = { cardTemplate, data['card-name'], data['card-image'], cardCount, someUserId, cardElId, myUserId };
-      const cardElement = new Card(data).getElement();
 
+      const cardElement = new Card({
+        template: cardTemplate,
+        name: data['card-name'],
+        link: data['card-image'],
+        likes: cardCount,
+        id: someUserId,
+        cardId: cardElId,
+        myId: myUserId,
+        api: api,
+        openPopupImg: popupOpenImg.open.bind(popupOpenImg),
+        openPopupDelete: (cardElement, cardId) => popupDelete.open(cardElement, cardId), // Получаем элементы cardElement и cardId при вызове ф-ии popupDelete
+        deleteFormSubmitBtnEl: deleteFormSubmitBtnEl
+      }).getElement();
       sectionCards.addItem(cardElement);
       popupCardAdd.close()
     })
