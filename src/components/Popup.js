@@ -12,12 +12,13 @@ export default class Popup {
   // Открытие модального окна
   open() {
     this.popup.classList.add('popup_opened');
+    document.addEventListener('keydown', this._handleEscClose);
   }
 
   // Закрытие модального окна
   close() {
     this.popup.classList.remove('popup_opened');
-    this._removeEventListeners();
+    document.removeEventListener('keydown', this._handleEscClose);
   }
 
   // Закрытие модального окна при клике на escape
@@ -55,28 +56,11 @@ export default class Popup {
 
   // Добавление слушателей
   setEventListeners() {
-    document.addEventListener('keydown', (evt) => {
-      this._handleEscClose(evt)
-    });
-
     this._overlayElement.addEventListener('click', (evt) => {
       this._handleOverlayClose(evt);
     });
 
     this._popupCloseIconElement.addEventListener('click', (evt) => {
-      this._handleIconClose(evt);
-    });
-  }
-
-  // Удаление слушателей
-  _removeEventListeners() {
-    document.removeEventListener('keydown', this._handleEscClose);
-
-    this._overlayElement.removeEventListener('click', (evt) => {
-      this._handleOverlayClose(evt);
-    });
-
-    this._popupCloseIconElement.removeEventListener('click', (evt) => {
       this._handleIconClose(evt);
     });
   }
