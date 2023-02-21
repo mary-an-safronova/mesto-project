@@ -4,6 +4,7 @@ import PopupWithConfirm from "../components/PopupWithConfirm";
 import Card from '../components/Card';
 import FormValidator from '../components/FormValidator';
 import PopupWithForm from '../components/PopupWithForm';
+import PopupWithImage from "../components/PopupWithImage";
 import UserInfo from "../components/UserInfo";
 import Section from '../components/Section';
 import Api from '../components/Api';
@@ -24,7 +25,9 @@ import {
   cardsContainerEl,
   cardTemplate,
   cardAddFormEl,
-  deletePopupEl
+  deletePopupEl,
+  cardImgPopupEl,
+  deleteFormSubmitBtnEl
 } from '../utils/constants';
 
 export const api = new Api({
@@ -48,7 +51,29 @@ export const user = new UserInfo({
 
 let sectionCards;
 
-export const popupDelete = new PopupWithConfirm(deletePopupEl);
+
+export const popupOpenImg = new PopupWithImage(cardImgPopupEl);
+// Функция удаления ближайшей к корзине карточки
+export const popupDelete = new PopupWithConfirm(deletePopupEl, {
+  handleFormSubmit: function (cardElement, cardId) {
+    this.renderLoading(true);
+    api.deleteCards(cardId)
+      .then((result) => {
+        cardElement.remove();
+        console.log(result);
+      })
+      .then(this.close())
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        this.renderLoading(false);
+      })
+  }
+});
+
+popupDelete.setEventListeners();
+popupOpenImg.setEventListeners();
 
 // Загрузка информации о пользователе с сервера
 // Отображение предзагруженных карточек с сервера
@@ -61,7 +86,21 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
       {
         items : cards,
         renderer: ({ name, link, likes, owner, _id }) => {
-          return new Card(cardTemplate, name, link, likes, owner._id, _id, userInfo._id).getElement();
+
+          return new Card({
+            template: cardTemplate,
+            name: name,
+            link: link,
+            likes: likes,
+            id: owner._id,
+            cardId: _id,
+            myId: userInfo._id,
+            api: api,
+            openPopupImg: popupOpenImg.open.bind(popupOpenImg),
+            openPopupDelete: (cardElement, cardId) => popupDelete.open(cardElement, cardId), // Получаем элементы cardElement и cardId при вызове ф-ии popupDelete
+            //cardImgPopupEl: cardImgPopupEl,
+            deleteFormSubmitBtnEl: deleteFormSubmitBtnEl
+          }).getElement();
         },
       },
       cardsContainerEl
@@ -110,6 +149,7 @@ const avatarValidator = new FormValidator(
 );
 
 avatarValidator.enableValidation();
+
 
 // Обработчик отправки формы редактирования аватара профиля
 const popupWithFormAvatar = new PopupWithForm(avatarPopupEl, {
@@ -165,7 +205,20 @@ export const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
     .then((result) => {
       let cardElId = result._id;
       let someUserId = result.owner._id;
-      const cardElement = new Card(cardTemplate, data['card-name'], data['card-image'], cardCount, someUserId, cardElId, myUserId).getElement();
+
+      const cardElement = new Card({
+        template: cardTemplate,
+        name: data['card-name'],
+        link: data['card-image'],
+        likes: cardCount,
+        id: someUserId,
+        cardId: cardElId,
+        myId: myUserId,
+        api: api,
+        openPopupImg: popupOpenImg.open.bind(popupOpenImg),
+        openPopupDelete: (cardElement, cardId) => popupDelete.open(cardElement, cardId), // Получаем элементы cardElement и cardId при вызове ф-ии popupDelete
+        deleteFormSubmitBtnEl: deleteFormSubmitBtnEl
+      }).getElement();
       sectionCards.addItem(cardElement);
       popupCardAdd.close()
     })

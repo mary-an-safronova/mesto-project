@@ -30,3 +30,5 @@ export const cardImgPopupEl = document.querySelector('.popup-img');
 export const cardAddFormEl = document.forms['add-form'];
 export const deletePopupEl = document.querySelector('.popup-delete');
 export const deleteFormSubmitBtnEl = document.querySelector('.delete-form__submit-button');
+
+
