@@ -49,8 +49,8 @@ export const user = new UserInfo({
 
 let sectionCards;
 
-
 export const popupOpenImg = new PopupWithImage(cardImgPopupEl);
+
 // Функция удаления ближайшей к корзине карточки
 export const popupDelete = new PopupWithConfirm(deletePopupEl, {
   handleFormSubmit: function (cardElement, cardId) {
@@ -60,7 +60,7 @@ export const popupDelete = new PopupWithConfirm(deletePopupEl, {
         cardElement.remove();
         console.log(result);
       })
-      .then(this.close())
+      .then(() => this.close())
       .catch((err) => {
         console.log(err);
       })

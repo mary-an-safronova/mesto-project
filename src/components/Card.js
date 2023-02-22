@@ -9,111 +9,101 @@ export default class Card {
     this.cardId = cardId;
     this.myId = myId;
     this.api = api;
+    this.openPopupImg = openPopupImg;
+    this.openPopupDelete = openPopupDelete;
     this.cardImgPopupEl = cardImgPopupEl;
     this.deletePopupEl = deletePopupEl;
     this.deleteFormSubmitBtnEl = deleteFormSubmitBtnEl;
-    //this._cardElement = this.getElement();
-    this.openPopupImg = openPopupImg;
-    this.openPopupDelete = openPopupDelete;
+    this._cardElement = this._getElement();
   }
 
   getElement() {
-    const cardElement = this.template.querySelector('.place').cloneNode(true);
-    const cardImg = cardElement.querySelector('.place__image');
-    const likeElement = cardElement.querySelector('.place__like');
-    const likeCounterEl = cardElement.querySelector('.place__like-count');
-    const deleteBtnElement = cardElement.querySelector('.place__delete-button');
-    cardElement.querySelector('.place__name').textContent = this.name;
-    cardImg.src = this.link;
-    cardImg.classList.add('place__image_size');
-    cardImg.alt = this.name;
-    likeCounterEl.textContent = this.likes.length;
-    cardElement.id = this.cardId;
-    const cardLikes = Array.from(this.likes);
-
-    cardImg.addEventListener('click', this.openPopupImg.bind(this, this.link, this.name));
-    likeElement.addEventListener('click', this._handleLike.bind(this, likeElement, likeCounterEl));
-    deleteBtnElement.addEventListener('click', this.openPopupDelete.bind(this, cardElement, this.cardId));
-    //this._setEventListeners();
-
-    this._checkOwnerId(deleteBtnElement);
-    this._checkLikeOwnerId(cardLikes, likeElement);
-
-    return cardElement;
+    return this._cardElement;
   }
 
-    _handleLike(likeElement, likeCounterEl) {
-      if (likeElement.classList.contains('place__like_active')) {
-        this._handleDeleteLike(likeElement, likeCounterEl);
-      } else {
-        this._handlePutLike(likeElement, likeCounterEl);
-      }
+  _getElement() {
+    this._cardElement = this.template.querySelector('.place').cloneNode(true);
+    this.cardImg = this._cardElement.querySelector('.place__image');
+    this.likeElement = this._cardElement.querySelector('.place__like');
+    this.likeCounterEl = this._cardElement.querySelector('.place__like-count');
+    this.deleteBtnElement = this._cardElement.querySelector('.place__delete-button');
+    this._cardElement.querySelector('.place__name').textContent = this.name;
+    this.cardImg.src = this.link;
+    this.cardImg.classList.add('place__image_size');
+    this.cardImg.alt = this.name;
+    this.likeCounterEl.textContent = this.likes.length;
+    this._cardElement.id = this.cardId;
+
+    this._setEventListeners();
+    this._checkOwnerId();
+    this._checkLikeOwnerId();
+
+    return this._cardElement;
+  }
+
+  _handleLike() {
+    if (this.likeElement.classList.contains('place__like_active')) {
+      this._handleDeleteLike();
+    } else {
+      this._handlePutLike();
+    }
   }
 
   // Добавление лайка карточки на сервер
-  _handlePutLike(like, counter) {
-    const card = like.closest('.place');
+  _handlePutLike() {
+    const card = this.likeElement.closest('.place');
 
     return this.api.putLikes(card.id)
       .then((result) => {
-        like.classList.add('place__like_active');
-        counter.textContent = result.likes.length;
+        this.likeElement.classList.add('place__like_active');
+        this.likeCounterEl.textContent = result.likes.length;
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {
-        like.removeEventListener('click', function () {
-          this.removeClosestCard()
-        });
       })
   };
 
   // Удаление лайка карточки с сервера
-  _handleDeleteLike(like, counter) {
-    const card = like.closest('.place');
+  _handleDeleteLike() {
+    const card = this.likeElement.closest('.place');
 
     return this.api.deleteLikes(card.id)
       .then((result) => {
-        like.classList.remove('place__like_active');
-        counter.textContent = result.likes.length;
+        this.likeElement.classList.remove('place__like_active');
+        this.likeCounterEl.textContent = result.likes.length;
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {
-        like.removeEventListener('click', function () {
-          this.removeClosestCard()
-        });
       })
     };
 
   // Корзина
   // Функция проверки id пользователя для определения принадлежности карточки
-  _checkOwnerId (deleteBtnElement) {
+  _checkOwnerId () {
     if (this.ownerId !== this.myId) {
-      deleteBtnElement.classList.add('place__delete-button_hidden');
+      this.deleteBtnElement.classList.add('place__delete-button_hidden');
     } else {
-      deleteBtnElement.classList.remove('place__delete-button_hidden');
+      this.deleteBtnElement.classList.remove('place__delete-button_hidden');
     }
   }
 
   // Лайк
   // Проверка id пользователя у лайка карточки
-  _checkLikeOwnerId(cardLikes, likeElement) {
+  _checkLikeOwnerId() {
+    const cardLikes = Array.from(this.likes);
     cardLikes.forEach((element) => {
       if (element._id === this.myId) {
-        likeElement.classList.add('place__like_active');
+        this.likeElement.classList.add('place__like_active');
       }
     })
   }
 
-// // Обработчики добавлены в один метод
-//   _setEventListeners(cardImg, likeElement, likeCounterEl, deleteBtnElement, cardElement) {
-//     cardImg.addEventListener('click', this._openCardElementPopup.bind(this));
-//     likeElement.addEventListener('click', this._handleLike.bind(this, likeElement, likeCounterEl));
-//     deleteBtnElement.addEventListener('click', this._openDeletePopup.bind(this, cardElement));
-//   }
+// Обработчики добавлены в один метод
+  _setEventListeners() {
+    this.cardImg.addEventListener('click', this.openPopupImg.bind(this, this.link, this.name));
+    this.likeElement.addEventListener('click', this._handleLike.bind(this));
+    this.deleteBtnElement.addEventListener('click', this.openPopupDelete.bind(this, this._cardElement, this.cardId));
+  }
 
 }
 
