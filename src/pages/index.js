@@ -39,9 +39,6 @@ export const api = new Api({
 });
 
 let myUserId = '';
-let cardCount = cardTemplate.querySelector('.place__like-count');
-
-cardCount = '';
 
 export const user = new UserInfo({
   nameSelector: profileNameEl,
@@ -75,6 +72,22 @@ export const popupDelete = new PopupWithConfirm(deletePopupEl, {
 popupDelete.setEventListeners();
 popupOpenImg.setEventListeners();
 
+const createCard = ({ name, link, likes, owner, _id }, userId) => {
+  return new Card({
+    template: cardTemplate,
+    name: name,
+    link: link,
+    likes: likes,
+    id: owner._id,
+    cardId: _id,
+    myId: userId,
+    api: api,
+    openPopupImg: popupOpenImg.open.bind(popupOpenImg),
+    openPopupDelete: (cardElement, cardId) => popupDelete.open(cardElement, cardId), // Получаем элементы cardElement и cardId при вызове ф-ии popupDelete
+    deleteFormSubmitBtnEl: deleteFormSubmitBtnEl
+  }).getElement();
+};
+
 // Загрузка информации о пользователе с сервера
 // Отображение предзагруженных карточек с сервера
 Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -85,22 +98,8 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     sectionCards = new Section(
       {
         items : cards,
-        renderer: ({ name, link, likes, owner, _id }) => {
-
-          return new Card({
-            template: cardTemplate,
-            name: name,
-            link: link,
-            likes: likes,
-            id: owner._id,
-            cardId: _id,
-            myId: userInfo._id,
-            api: api,
-            openPopupImg: popupOpenImg.open.bind(popupOpenImg),
-            openPopupDelete: (cardElement, cardId) => popupDelete.open(cardElement, cardId), // Получаем элементы cardElement и cardId при вызове ф-ии popupDelete
-            //cardImgPopupEl: cardImgPopupEl,
-            deleteFormSubmitBtnEl: deleteFormSubmitBtnEl
-          }).getElement();
+        renderer: (item) => {
+          return createCard(item, myUserId);
         },
       },
       cardsContainerEl
@@ -203,23 +202,14 @@ export const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
 
     api.postCards(data['card-name'], data['card-image'])
     .then((result) => {
-      let cardElId = result._id;
-      let someUserId = result.owner._id;
-
-      const cardElement = new Card({
-        template: cardTemplate,
-        name: data['card-name'],
-        link: data['card-image'],
-        likes: cardCount,
-        id: someUserId,
-        cardId: cardElId,
-        myId: myUserId,
-        api: api,
-        openPopupImg: popupOpenImg.open.bind(popupOpenImg),
-        openPopupDelete: (cardElement, cardId) => popupDelete.open(cardElement, cardId), // Получаем элементы cardElement и cardId при вызове ф-ии popupDelete
-        deleteFormSubmitBtnEl: deleteFormSubmitBtnEl
-      }).getElement();
-      sectionCards.addItem(cardElement);
+      const {_id, owner} = result;
+      sectionCards.addItem({
+         name: data['card-name'],
+         link: data['card-image'],
+         likes: [],
+         owner,
+         _id,
+      });
       popupCardAdd.close()
     })
     .catch((err) => {
