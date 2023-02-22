@@ -9,7 +9,7 @@ export default class PopupWithConfirm extends Popup {
 
   open(cardElement, cardId) {
     super.open()
-    this.cardElement = cardElement;
+    this._cardElement = cardElement;
     this.cardId = cardId;
   }
 
@@ -20,7 +20,7 @@ export default class PopupWithConfirm extends Popup {
         evt.preventDefault();
         evt.stopImmediatePropagation();
 
-        this._handleFormSubmit(this.cardElement, this.cardId);
+        this._handleFormSubmit(this._cardElement, this.cardId);
     });
   }
 }
