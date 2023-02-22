@@ -51,6 +51,7 @@ export const popupOpenImg = new PopupWithImage(cardImgPopupEl);
 // Функция удаления ближайшей к корзине карточки
 export const popupDelete = new PopupWithConfirm(deletePopupEl, {
   handleFormSubmit: function (cardElement, cardId) {
+    popupDelete.renderLoading(true);
     api.deleteCards(cardId)
       .then((result) => {
         cardElement.remove();
@@ -59,6 +60,9 @@ export const popupDelete = new PopupWithConfirm(deletePopupEl, {
       .then(() => this.close())
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        popupDelete.renderLoading(false);
       })
   }
 });

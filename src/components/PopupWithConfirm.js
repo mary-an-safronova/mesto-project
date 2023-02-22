@@ -5,6 +5,8 @@ export default class PopupWithConfirm extends Popup {
     super(popup);
 
     this._handleFormSubmit = handleFormSubmit;
+    this._button = this.popup.querySelector('.form__submit-button');
+    this._submitBtnText = this._button.textContent
   }
 
   open(cardElement, cardId) {
@@ -22,5 +24,14 @@ export default class PopupWithConfirm extends Popup {
 
         this._handleFormSubmit(this._cardElement, this.cardId);
     });
+  }
+
+  // Отображение загрузки информации в кнопке submit
+  renderLoading(isLoading, loadingText='Удаление...') {
+    if (isLoading) {
+      this._button.textContent = loadingText;
+    } else {
+      this._button.textContent = this._submitBtnText;
+    }
   }
 }
