@@ -163,8 +163,8 @@ export const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
 
     api.postCards(data['card-name'], data['card-image'])
     .then((result) => {
-      let cardElId = result._id;
-      let someUserId = result.owner._id;
+      const cardElId = result._id;
+      const someUserId = result.owner._id;
       const cardElement = new Card(cardTemplate, data['card-name'], data['card-image'], cardCount, someUserId, cardElId, myUserId).getElement();
       sectionCards.addItem(cardElement);
       popupCardAdd.close()
