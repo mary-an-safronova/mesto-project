@@ -4,6 +4,7 @@ import PopupWithConfirm from "../components/PopupWithConfirm";
 import Card from '../components/Card';
 import FormValidator from '../components/FormValidator';
 import PopupWithForm from '../components/PopupWithForm';
+import PopupWithImage from "../components/PopupWithImage";
 import UserInfo from "../components/UserInfo";
 import Section from '../components/Section';
 import Api from '../components/Api';
@@ -11,7 +12,6 @@ import Api from '../components/Api';
 import {
   validationConfig,
   profileBtnEl,
-  profileFormEl,
   cardAddBtnEl,
   profilePopupEl,
   profileNameEl,
@@ -23,8 +23,9 @@ import {
   cardAddPopupEl,
   cardsContainerEl,
   cardTemplate,
-  cardAddFormEl,
-  deletePopupEl
+  deletePopupEl,
+  cardImgPopupEl,
+  deleteFormSubmitBtnEl
 } from '../utils/constants';
 
 export const api = new Api({
@@ -48,7 +49,29 @@ export const user = new UserInfo({
 
 let sectionCards;
 
-export const popupDelete = new PopupWithConfirm(deletePopupEl);
+export const popupOpenImg = new PopupWithImage(cardImgPopupEl);
+
+// Функция удаления ближайшей к корзине карточки
+export const popupDelete = new PopupWithConfirm(deletePopupEl, {
+  handleFormSubmit: function (cardElement, cardId) {
+    this.renderLoading(true);
+    api.deleteCards(cardId)
+      .then((result) => {
+        cardElement.remove();
+        console.log(result);
+      })
+      .then(() => this.close())
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        this.renderLoading(false);
+      })
+  }
+});
+
+popupDelete.setEventListeners();
+popupOpenImg.setEventListeners();
 
 // Загрузка информации о пользователе с сервера
 // Отображение предзагруженных карточек с сервера
@@ -61,7 +84,21 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
       {
         items : cards,
         renderer: ({ name, link, likes, owner, _id }) => {
-          return new Card(cardTemplate, name, link, likes, owner._id, _id, userInfo._id).getElement();
+
+          return new Card({
+            template: cardTemplate,
+            name: name,
+            link: link,
+            likes: likes,
+            id: owner._id,
+            cardId: _id,
+            myId: userInfo._id,
+            api: api,
+            openPopupImg: popupOpenImg.open.bind(popupOpenImg),
+            openPopupDelete: (cardElement, cardId) => popupDelete.open(cardElement, cardId), // Получаем элементы cardElement и cardId при вызове ф-ии popupDelete
+            //cardImgPopupEl: cardImgPopupEl,
+            deleteFormSubmitBtnEl: deleteFormSubmitBtnEl
+          }).getElement();
         },
       },
       cardsContainerEl
@@ -71,10 +108,26 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     console.log(err);
   });
 
+// Валидация форм
+const formValidators = {}
+
+// Включение валидации
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement)
+    const formName = formElement.getAttribute('name')
+    formValidators[formName] = validator;
+   validator.enableValidation();
+  });
+};
+
+enableValidation(validationConfig);
+
 // Функция отображения информации профиля в полях формы редактирования при открытии попапа
 function showProfileInfo() {
   popupWithFormProfile.open();
-  profileValidator.resetFormValidation();
+  formValidators['edit-form'].resetFormValidation();
   const userInformation = user.getUserInfo();
   const data = { 'user-name': userInformation['name'], 'user-profession': userInformation['about'] };
   popupWithFormProfile.setInputValues(data);
@@ -91,25 +144,6 @@ profileAvatarWrapEl.addEventListener('mouseover', () => {
 profileAvatarWrapEl.addEventListener('mouseout', () => {
   profileAvatarBtnEl.classList.remove('profile__avatar-cover_opened');
 });
-
-// Валидация форм
-export const profileValidator = new FormValidator(
-  { config: validationConfig, form: profileFormEl },
-);
-
-profileValidator.enableValidation();
-
-export const cardAddValidator = new FormValidator(
-  { config: validationConfig, form: cardAddFormEl },
-);
-
-cardAddValidator.enableValidation();
-
-const avatarValidator = new FormValidator(
-  { config: validationConfig, form: avatarPopupEl },
-);
-
-avatarValidator.enableValidation();
 
 // Обработчик отправки формы редактирования аватара профиля
 const popupWithFormAvatar = new PopupWithForm(avatarPopupEl, {
@@ -165,7 +199,20 @@ export const popupCardAdd = new PopupWithForm( cardAddPopupEl, {
     .then((result) => {
       const cardElId = result._id;
       const someUserId = result.owner._id;
-      const cardElement = new Card(cardTemplate, data['card-name'], data['card-image'], cardCount, someUserId, cardElId, myUserId).getElement();
+
+      const cardElement = new Card({
+        template: cardTemplate,
+        name: data['card-name'],
+        link: data['card-image'],
+        likes: cardCount,
+        id: someUserId,
+        cardId: cardElId,
+        myId: myUserId,
+        api: api,
+        openPopupImg: popupOpenImg.open.bind(popupOpenImg),
+        openPopupDelete: (cardElement, cardId) => popupDelete.open(cardElement, cardId), // Получаем элементы cardElement и cardId при вызове ф-ии popupDelete
+        deleteFormSubmitBtnEl: deleteFormSubmitBtnEl
+      }).getElement();
       sectionCards.addItem(cardElement);
       popupCardAdd.close()
     })
@@ -184,11 +231,11 @@ popupCardAdd.setEventListeners();
 // Слушатель кнопки редактирования аватара профиля
 profileAvatarBtnEl.addEventListener('click', () => {
   popupWithFormAvatar.open();
-  avatarValidator.cleanForm();
+  formValidators['avatar-form'].resetFormValidation();
 });
 
 // Добавления слушателя клика на кнопку добавления карточки
 cardAddBtnEl.addEventListener('click', () => {
   popupCardAdd.open();
-  cardAddValidator.cleanForm();
+  formValidators['add-form'].resetFormValidation();
 });
