@@ -1,6 +1,6 @@
 // Функциональность валидации форм
 export default class FormValidator {
-  constructor({ config, form }) {
+  constructor(config, form) {
     this._form = form;
 
     this._inactiveButtonClass = config.inactiveButtonClass;
@@ -11,21 +11,11 @@ export default class FormValidator {
     this._submitBtn = this._form.querySelector(config.submitButtonSelector);
   }
 
-  _disableSubmitButton() {
-    this._submitBtn.disabled = true;
-    this._submitBtn.classList.add(this._inactiveButtonClass);
-  }
-
   resetFormValidation() {
     this._inputList.forEach(inputElement => {
       this.hideInputError(inputElement);
     });
-    this._disableSubmitButton();
-  }
-
-  // Очистка полей и ошибок формы
-  cleanForm() {
-    this.resetFormValidation();
+    this._toggleButtonState();
   }
 
   // Добавление класса с ошибкой
