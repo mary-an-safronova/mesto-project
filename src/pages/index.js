@@ -12,7 +12,6 @@ import Api from '../components/Api';
 import {
   validationConfig,
   profileBtnEl,
-  profileFormEl,
   cardAddBtnEl,
   profilePopupEl,
   profileNameEl,
@@ -24,7 +23,6 @@ import {
   cardAddPopupEl,
   cardsContainerEl,
   cardTemplate,
-  cardAddFormEl,
   deletePopupEl,
   cardImgPopupEl,
   deleteFormSubmitBtnEl
@@ -109,10 +107,26 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     console.log(err);
   });
 
+// Валидация форм
+const formValidators = {}
+
+// Включение валидации
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement)
+    const formName = formElement.getAttribute('name')
+    formValidators[formName] = validator;
+   validator.enableValidation();
+  });
+};
+
+enableValidation(validationConfig);
+
 // Функция отображения информации профиля в полях формы редактирования при открытии попапа
 function showProfileInfo() {
   popupWithFormProfile.open();
-  profileValidator.resetFormValidation();
+  formValidators['edit-form'].resetFormValidation();
   const userInformation = user.getUserInfo();
   const data = { 'user-name': userInformation['name'], 'user-profession': userInformation['about'] };
   popupWithFormProfile.setInputValues(data);
@@ -129,26 +143,6 @@ profileAvatarWrapEl.addEventListener('mouseover', () => {
 profileAvatarWrapEl.addEventListener('mouseout', () => {
   profileAvatarBtnEl.classList.remove('profile__avatar-cover_opened');
 });
-
-// Валидация форм
-export const profileValidator = new FormValidator(
-  { config: validationConfig, form: profileFormEl },
-);
-
-profileValidator.enableValidation();
-
-export const cardAddValidator = new FormValidator(
-  { config: validationConfig, form: cardAddFormEl },
-);
-
-cardAddValidator.enableValidation();
-
-const avatarValidator = new FormValidator(
-  { config: validationConfig, form: avatarPopupEl },
-);
-
-avatarValidator.enableValidation();
-
 
 // Обработчик отправки формы редактирования аватара профиля
 const popupWithFormAvatar = new PopupWithForm(avatarPopupEl, {
@@ -227,11 +221,11 @@ popupCardAdd.setEventListeners();
 // Слушатель кнопки редактирования аватара профиля
 profileAvatarBtnEl.addEventListener('click', () => {
   popupWithFormAvatar.open();
-  avatarValidator.cleanForm();
+  formValidators['avatar-form'].resetFormValidation();
 });
 
 // Добавления слушателя клика на кнопку добавления карточки
 cardAddBtnEl.addEventListener('click', () => {
   popupCardAdd.open();
-  cardAddValidator.cleanForm();
+  formValidators['add-form'].resetFormValidation();
 });
