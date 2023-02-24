@@ -29,7 +29,7 @@
 .profile__container{display:flex;justify-content:space-between;width:83%}@media screen and (max-width:767px){.profile__container{flex-direction:column;width:100%}}
 .profile__edit-button{align-self:center;aspect-ratio:1/1;background:50% no-repeat url(8667ac4a523e8fc42e59.svg);background-size:inherit;border:1px solid #fff;width:24px}.profile__edit-button:hover{opacity:.6;transition:opacity .3s ease}@media screen and (max-width:767px){.profile__edit-button{width:18px}}
 .profile__add-button{align-self:center;background:50% no-repeat url(d86bb2edc2f6eadb96b7.svg);background-size:22px 22px;border:2px solid #fff;border-radius:2px;height:50px;width:150px}.profile__add-button:hover{opacity:.6;transition:opacity .3s ease}@media screen and (max-width:767px){.profile__add-button{background-size:16px 16px;width:100%}}
-.place__image{grid-area:image;position:relative;width:100%}
+.place__image{grid-area:image;position:relative;width:100%}.place__image:hover{cursor:pointer}
 .place__name-container{align-items:center;display:flex;justify-content:space-between;margin:auto;padding:25px 0 31px;width:87%}
 .place__name{font-size:24px;font-style:normal;font-weight:900;line-height:29px;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:76%}
 .place__like{background:50%/cover no-repeat url(9c2b079225ee1e2bdaf7.svg);border:none;height:19px;width:22px}.place__like:hover{opacity:.5;transition:opacity .3s ease}
@@ -53,5 +53,5 @@
 .form__submit-button_inactive{background:#fff;border:1px solid rgba(0,0,0,.15);border-radius:2px;color:rgba(0,0,0,.15);cursor:auto}
 .form__input-error_active{color:red;display:block;flex-wrap:wrap;font-size:12px;font-style:normal;font-weight:400;line-height:15px;max-width:358px;position:fixed;width:100%}@media screen and (max-width:425px){.form__input-error_active{max-width:74.31vw;position:relative;width:100%}}
 .form__textfield_type_error{border-bottom:1px solid red}
-.profile__avatar-cover_opened{display:block;opacity:1;transition:all .3s ease 0s;visibility:visible}
+.profile__avatar-cover_opened{cursor:pointer;display:block;opacity:1;transition:all .3s ease 0s;visibility:visible}
 
