@@ -10,14 +10,16 @@ const validationConfig = {
   errorClass: 'form__input-error_active'
 }
 
+export const profileConfig = {
+  nameSelector: '.profile__name',
+  professionSelector: '.profile__profession',
+  avatarSelector: '.profile__avatar'
+}
+
 export const profileBtnEl = document.querySelector('.profile__edit-button');
 export const cardAddBtnEl = document.querySelector('.profile__add-button');
 export const profilePopupEl = document.querySelector('.popup-edit');
 
-export const profileNameEl = document.querySelector('.profile__name');
-export const profileProfessionEl = document.querySelector('.profile__profession');
-
-export const profileAvatarEl = document.querySelector('.profile__avatar');
 export const profileAvatarWrapEl = document.querySelector('.profile__avatar-wrap');
 export const profileAvatarBtnEl = document.querySelector('.profile__avatar-cover');
 export const avatarPopupEl = document.querySelector('.popup-avatar');
