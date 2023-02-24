@@ -11,12 +11,10 @@ import Api from '../components/Api';
 
 import {
   validationConfig,
+  profileConfig,
   profileBtnEl,
   cardAddBtnEl,
   profilePopupEl,
-  profileNameEl,
-  profileProfessionEl,
-  profileAvatarEl,
   profileAvatarWrapEl,
   profileAvatarBtnEl,
   avatarPopupEl,
@@ -38,11 +36,7 @@ export const api = new Api({
 
 let myUserId = '';
 
-export const user = new UserInfo({
-  nameSelector: profileNameEl,
-  professionSelector: profileProfessionEl,
-  avatarSelector: profileAvatarEl
-});
+export const user = new UserInfo(profileConfig);
 
 let sectionCards;
 
@@ -57,7 +51,7 @@ export const popupDelete = new PopupWithConfirm(deletePopupEl, {
         cardElement.remove();
         console.log(result);
       })
-      .then(() => this.close())
+      .then(() => popupDelete.close())
       .catch((err) => {
         console.log(err);
       })
