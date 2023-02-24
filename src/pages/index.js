@@ -127,8 +127,8 @@ enableValidation(validationConfig);
 function showProfileInfo() {
   popupWithFormProfile.open();
   formValidators['edit-form'].resetFormValidation();
-  const userInformation = user.getUserInfo();
-  const data = { 'user-name': userInformation['name'], 'user-profession': userInformation['about'] };
+  const {name, about} = user.getUserInfo();
+  const data = { 'user-name': name, 'user-profession': about };
   popupWithFormProfile.setInputValues(data);
 }
 
