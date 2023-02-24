@@ -5,7 +5,6 @@ export default class Popup {
     this._handleEscClose = this._handleEscClose.bind(this);
     this._overlayElement = this.popup.querySelector('.popup__background');
     this._popupCloseIconElement = this.popup.querySelector('.popup__close-icon');
-    this.form = this.popup.querySelector('.form');
   }
 
   // Открытие модального окна
