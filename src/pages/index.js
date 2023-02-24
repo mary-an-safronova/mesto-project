@@ -51,7 +51,7 @@ export const popupDelete = new PopupWithConfirm(deletePopupEl, {
         cardElement.remove();
         console.log(result);
       })
-      .then(() => this.close())
+      .then(() => popupDelete.close())
       .catch((err) => {
         console.log(err);
       })
